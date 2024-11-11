@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="OkEye.Modules.ModuleCamera.Views.ViewMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ContentControl prism:RegionManager.RegionName="ContentRegionMain" ></ContentControl>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ContentControl  prism:RegionManager.RegionName="ContentRegionStatus" ></ContentControl>
+        </Grid>
+    </Grid>
+</UserControl>

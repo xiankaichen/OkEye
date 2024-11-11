@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using OK3DViewer;
 using OkEye.Services.Interfaces;
+using OkEye.Services.ZkrhCamera;
 using CameraInfoModel = OkEye.Services.Interfaces.CameraInfoModel;
 
 namespace OkEye.Services
@@ -29,7 +29,23 @@ namespace OkEye.Services
 
         public int ConnectCamera(CameraInfoModel cameraInfo)
         {
-            return 0;
+            int flag =  camera3DManager.ConnectCamera(cameraInfo.CameraIP);
+            if (flag == 0)
+            {
+                cameraInfo.Status = "已连接";
+                return 0;
+            }
+            else
+            {
+                cameraInfo.Status = "连接失败";
+                return -1;
+            }
+
+        }
+
+        public CameraInfoModel GetCameraInfo()
+        {
+            return camera3DManager.cameraInfoModel;
         }
 
         public int DisconnectCamera(CameraInfoModel cameraInfo)

@@ -1,4 +1,6 @@
-﻿using Prism.Mvvm;
+﻿using Microsoft.Extensions.Logging;
+using NLog;
+using Prism.Mvvm;
 
 namespace OkEye.ViewModels
 {
@@ -11,9 +13,12 @@ namespace OkEye.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        public MainWindowViewModel()
-        {
+        private Logger<MainWindowViewModel> _logger;
 
+        public MainWindowViewModel(Logger<MainWindowViewModel> logger)
+        {
+            _logger = logger;
+            _logger.LogInformation("启主程序VM模块");
         }
     }
 }

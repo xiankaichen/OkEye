@@ -1,4 +1,6 @@
-﻿using OkEye.Core;
+﻿using Microsoft.Extensions.Logging;
+using NLog;
+using OkEye.Core;
 using OkEye.Core.Mvvm;
 using OkEye.Services.Interfaces;
 using Prism.Commands;
@@ -15,12 +17,16 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
+        private Logger<ViewCameraViewModel> _logger;    // 日志记录器
+
         public DelegateCommand DisconnectCameraCommand { get; private set; }
 
-        public ViewCameraViewModel(IRegionManager regionManager, IMessageService messageService) :
+        public ViewCameraViewModel(IRegionManager regionManager, IMessageService messageService,
+            Logger<ViewCameraViewModel> logger) :
             base(regionManager)
         {
             Message = messageService.GetMessage();
+            _logger = logger;
 
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
 

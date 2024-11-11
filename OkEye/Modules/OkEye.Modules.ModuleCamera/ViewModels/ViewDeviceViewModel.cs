@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Threading;
+using Microsoft.Extensions.Logging;
+using NLog;
 using OkEye.Core;
 using OkEye.Core.Mvvm;
 using OkEye.Services.Interfaces;
@@ -70,24 +74,26 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand DisconnectCameraCommand { get; private set; }
         public DelegateCommand DiscoverCameraCommand{ get; private set; }
 
+
         private Thread scanDeviceThr;
 
+        private Logger<ViewDeviceViewModel> _logger;
+
         public ViewDeviceViewModel(IRegionManager regionManager, IMessageService messageService, ICameraService cameraService,
-            IDialogService dialogService) :
+            IDialogService dialogService, Logger<ViewDeviceViewModel> logger) :
             base(regionManager)
         {
             //Message = messageService.GetMessage();
             _cameraService = cameraService; ;
             _dialogService = dialogService;
+            _logger = logger;
 
+            _logger.LogInformation("启动设备模块");
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
 
-            ConnectCameraCommand = new DelegateCommand(() =>
-            {
-                RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera");
-            });
+            ConnectCameraCommand = new DelegateCommand(OnConnectCameraCommand);
 
-            DiscoverCameraCommand = new DelegateCommand(DiscoverCamera);
+            DiscoverCameraCommand = new DelegateCommand(OnDiscoverCamera);
 
             OpenIpConfigDialogCommand = new DelegateCommand(OnOpenIpConfigDialogCommand);
 
@@ -102,6 +108,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
         public void OnOpenIpConfigDialogCommand()
         {
+            _logger.LogInformation("配置相机IP或者电脑IP");
             DialogParameters param = new DialogParameters();
             param.Add("CameraIP", CameraInfo.CameraIP);
             param.Add("UserIP", CameraInfo.UserIP);
@@ -117,10 +124,68 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     var NewUserMask = r.Parameters.GetValue<string>("UserMask");
 
                     _cameraService.SetCameraIP(CameraInfo.CameraIP, NewCameraIP);
-                    DiscoverCamera();
+                    _logger.LogInformation("配置相机IP或者电脑IP完成");
+                    _logger.LogInformation("重新扫描设备...");
+                    OnDiscoverCamera();
+                    _logger.LogInformation("扫描设备完成");
+                }
+                else
+                {
+                    _logger.LogInformation("取消配置相机IP或者电脑IP");
                 }
             });
         }
+
+        public void OnConnectCameraCommand()
+        {
+            // 启动线程连接相机
+            Thread connectCameraThr = new Thread(() => StartConnectCamera());
+            connectCameraThr.Start();
+
+
+        }
+
+        //public CameraInfoModel GetCameraInfo()
+        //{
+        //    return CameraInfo;
+        //}
+
+        public void StartConnectCamera()
+        {
+            if (_cameraService == null)
+            {
+                _logger.LogError("相机服务模块未初始化！");
+                return;
+            }
+
+            if (CameraInfo == null)
+            {
+                _logger.LogError("未发现相机！请检查设备是否连接！");
+                return;
+            }
+
+            _cameraService.ConnectCamera(CameraInfo);
+            _logger.LogInformation("连接相机成功！");
+
+            CameraInfoModel curCameraInfo = _cameraService.GetCameraInfo();
+
+            //CameraInfo = null;
+            //CamList = null;
+            CameraInfo.Status = curCameraInfo.Status;
+            CamList[0].Status = curCameraInfo.Status;
+            ConnectCameraCallBack connectCameraCallBack = new ConnectCameraCallBack(ConnectCameraUpdate);
+            Dispatcher.CurrentDispatcher.Invoke(connectCameraCallBack, curCameraInfo);
+        }
+
+        delegate void ConnectCameraCallBack(CameraInfoModel caminfo);
+
+        public void ConnectCameraUpdate(CameraInfoModel cameraInfo)
+        {
+            CameraInfo.Status = cameraInfo.Status;
+            CamList[0].Status = CameraInfo.Status;
+            RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera");
+        }
+
 
         // 启动程序后，创建线程，定时扫描设备
         public void StartScanDevice()
@@ -128,7 +193,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             // 创建线程，定时扫描
             while (true)
             {
-                DiscoverCamera();
+
+                //_logger.LogInformation("扫描是否有新相机！");
+                //OnDiscoverCamera();
 
                 // 10秒扫描一次
                 Thread.Sleep(10000);
@@ -138,12 +205,16 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         }
 
         
-        public void DiscoverCamera()
+        public void OnDiscoverCamera()
         {
             lock (CamList)
             {
                 if (_cameraService == null)
+                {
+                    _logger.LogError("相机服务模块未初始化！");
                     return;
+                }
+
                 if (CamList == null)
                 {
                     CamList = new List<CameraInfoModel>();
@@ -152,11 +223,14 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 List<CameraInfoModel> camList = _cameraService.DiscoveryDeviceList();
                 CamList = camList;
                 if (camList.Count > 0)
+                {
                     CameraInfo = camList[0];
+                }
                 else
                 {
                     CameraInfo = null;
                 }
+                _logger.LogInformation("发现相机数量：" + camList.Count);
             }
         }
     }

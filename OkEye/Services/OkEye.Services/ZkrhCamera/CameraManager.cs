@@ -5,79 +5,88 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using gen3d;
+using OkEye.Services.Interfaces;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace OK3DViewer
+namespace OkEye.Services.ZkrhCamera
 {
     // CameraInfoModel is a class that stores the camera information, and is used to display the camera information in the property grid
     // CameraInfoModel is Model class
-    public class CameraInfoModel 
-    {
-        [Category("1设备参数"), PropertyOrder(11)]
-        [DisplayName("名称"), ReadOnly(true)]
-        public string Name { get; set; }
+    //public class CameraInfoModel
+    //{
+    //    [Category("1设备参数"), PropertyOrder(11)]
+    //    [DisplayName("状态"), ReadOnly(true)]
+    //    public string Status { get; set; }
 
-        [Category("1设备参数"), PropertyOrder(12)]
-        [DisplayName("IP地址"), ReadOnly(true)]
-        public string IP { get; set; }
+    //    [Category("1设备参数"), PropertyOrder(11)]
+    //    [DisplayName("名称"), ReadOnly(true)]
+    //    public string Name { get; set; }
 
-        // 相机序号
-        [Category("1设备参数"), PropertyOrder(13)]
-        [DisplayName("相机序号"), ReadOnly(true)]
-        public string Serial { get; set; }
+    //    [Category("1设备参数"), PropertyOrder(12)]
+    //    [DisplayName("相机IP"), ReadOnly(true)]
+    //    public string CameraIP { get; set; }
 
-        [Category("1设备参数"), PropertyOrder(14)]
-        [DisplayName("MAC地址"), ReadOnly(true)]
-        public string MacAdress { get; set; }
+    //    [Category("1设备参数"), PropertyOrder(12)]
+    //    [DisplayName("用户IP"), ReadOnly(true)]
+    //    public string UserIP { get; set; }
 
-        // 设置曝光
-        [Category("1设备参数"), PropertyOrder(15)]
-        [DisplayName("曝光(ms)")]
-        public string Exposure { get; set; }
+    //    // 相机序号
+    //    [Category("1设备参数"), PropertyOrder(13)]
+    //    [DisplayName("相机序号"), ReadOnly(true)]
+    //    public string Serial { get; set; }
 
-        // 增益
-        [Category("1设备参数"), PropertyOrder(16)]
-        [DisplayName("增益")]
-        public string Gain { get; set; }
+    //    [Category("1设备参数"), PropertyOrder(14)]
+    //    [DisplayName("MAC地址"), ReadOnly(true)]
+    //    public string MacAdress { get; set; }
 
-        // 拍照模式，两种：高精度，快速，默认高精度，下拉列表
-        [Category("1设备参数"), PropertyOrder(17)]
-        [DisplayName("拍照模式")]
-        public CameraMode CameMode { get; set; }
+    //    // 设置曝光
+    //    [Category("1设备参数"), PropertyOrder(15)]
+    //    [DisplayName("曝光(ms)")]
+    //    public string Exposure { get; set; }
 
-        // 图像宽度
-        [Category("2图像参数"), PropertyOrder(11)]
-        [DisplayName("图像宽度"), ReadOnly(true)]
-        public int textureWidth { get; set; }
+    //    // 增益
+    //    [Category("1设备参数"), PropertyOrder(16)]
+    //    [DisplayName("增益")]
+    //    public string Gain { get; set; }
 
-        // 图像高度
-        [Category("2图像参数"), PropertyOrder(12)]
-        [DisplayName("图像高度"), ReadOnly(true)]
-        public int textureHeight { get; set; }
+    //    // 拍照模式，两种：高精度，快速，默认高精度，下拉列表
+    //    [Category("1设备参数"), PropertyOrder(17)]
+    //    [DisplayName("拍照模式")]
+    //    public string CameMode { get; set; }
 
-        // ir宽度
-        [Category("2图像参数"), PropertyOrder(13)]
-        [DisplayName("IR宽度"), ReadOnly(true)]
-        public int irWidth { get; set; }
+    //    // 图像宽度
+    //    [Category("2图像参数"), PropertyOrder(11)]
+    //    [DisplayName("图像宽度"), ReadOnly(true)]
+    //    public int textureWidth { get; set; }
 
-        // ir高度
-        [Category("2图像参数"), PropertyOrder(14)]
-        [DisplayName("IR高度"), ReadOnly(true)]
-        public int irHeight { get; set; }
+    //    // 图像高度
+    //    [Category("2图像参数"), PropertyOrder(12)]
+    //    [DisplayName("图像高度"), ReadOnly(true)]
+    //    public int textureHeight { get; set; }
 
-        // irPerNum
-        [Category("2图像参数"), PropertyOrder(15)]
-        [DisplayName("IRPerNum"), ReadOnly(true)]
-        public int irPerNum { get; set; }
+    //    // ir宽度
+    //    [Category("2图像参数"), PropertyOrder(13)]
+    //    [DisplayName("IR宽度"), ReadOnly(true)]
+    //    public int irWidth { get; set; }
 
-    }
+    //    // ir高度
+    //    [Category("2图像参数"), PropertyOrder(14)]
+    //    [DisplayName("IR高度"), ReadOnly(true)]
+    //    public int irHeight { get; set; }
 
-    // 相机模式
-    public enum CameraMode
-    {
-        高精度,
-        快速
-    }
+    //    // irPerNum
+    //    [Category("2图像参数"), PropertyOrder(15)]
+    //    [DisplayName("IR像素位"), ReadOnly(true)]
+    //    public int irPerNum { get; set; }
+
+    //}
+
+    //// 相机模式
+    //public enum CameraMode
+    //{
+    //    高精度,
+    //    快速
+    //}
 
 
     public class Camera3DManager
@@ -196,7 +205,8 @@ namespace OK3DViewer
                 CameraInfoVector cameraInfos = DiscoverCameras();
                 if (cameraInfos.Count() <= 0)
                 {
-                    return 0;
+                    cameraInfoModel.Status = "无相机";
+                    return -1;
                 }
 
                 // 查找对应ip的相机信息
@@ -212,11 +222,13 @@ namespace OK3DViewer
                 if(cameraInfo.cameraIP != ip)
                 {
                     // 没有查找到对应ip的相机
-                    return 0;
+                    cameraInfoModel.Status = "未连接";
+                    return -1;
                 }
                 if (cam3d.cam.Open(cameraInfo) != CameraPro.AC_OK)
                 {
-                    return 0;
+                    cameraInfoModel.Status = "未连接";
+                    return -1;
                 }
                 currCamInfo = cameraInfo;
 
@@ -225,7 +237,7 @@ namespace OK3DViewer
             }
             catch (Exception ex)
             {
-                return 0;
+                return -1;
             }
         }
 
@@ -295,10 +307,13 @@ namespace OK3DViewer
                 {
                     return 0;
                 }
-                cameraInfoModel.IP = currCamInfo.cameraIP;
+
+                cameraInfoModel.Status = "已连接";
+                cameraInfoModel.CameraIP = currCamInfo.cameraIP;
+                cameraInfoModel.UserIP = currCamInfo.userIP;
                 cameraInfoModel.Serial = currCamInfo.serialNum;
                 cameraInfoModel.MacAdress = currCamInfo.macAddr;
-                cameraInfoModel.Name = "XK3DCamera9007";
+                cameraInfoModel.Name = currCamInfo.cameraName;
                 // 获取曝光值
                 float exposure = 0;
                 if (cam3d.cam.GetValue(currCamInfo, "Exposure", ref exposure) == 0)
@@ -319,10 +334,13 @@ namespace OK3DViewer
                 {
                     cameraInfoModel.Gain = "0";
                 }
+
+                cameraInfoModel.CameMode = currCamInfo.cameraModel;
                 cameraInfoModel.textureHeight = currCamInfo.camParam.textureHeight;
                 cameraInfoModel.textureWidth = currCamInfo.camParam.textureWidth;
                 cameraInfoModel.irHeight = currCamInfo.camParam.irHeight;
                 cameraInfoModel.irWidth = currCamInfo.camParam.irWidth;
+                cameraInfoModel.irPerNum = currCamInfo.camParam.irPerNum;
 
             }
             catch (Exception ex)

@@ -194,8 +194,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             while (true)
             {
 
-                //_logger.LogInformation("扫描是否有新相机！");
-                //OnDiscoverCamera();
+                _logger.LogInformation("扫描是否有新相机！");
+                OnDiscoverCamera();
 
                 // 10秒扫描一次
                 Thread.Sleep(10000);

@@ -27,6 +27,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         {
             Message = messageService.GetMessage();
             _logger = logger;
+            _logger.LogInformation("初始化相机模块");
 
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
 

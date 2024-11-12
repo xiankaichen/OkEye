@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -46,9 +47,11 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand YesDialogCommand { get; private set; }
         public DelegateCommand NoDialogCommand { get; private set; }
 
-
-        public IPConfigDialogViewModel()
+        private Logger<IPConfigDialogViewModel> _logger;
+        public IPConfigDialogViewModel(Logger<IPConfigDialogViewModel> logger)
         {
+            _logger = logger;
+            _logger.LogInformation("打开IP配置窗口");
             YesDialogCommand = new DelegateCommand(() =>
             {
                 DialogParameters param = new DialogParameters();

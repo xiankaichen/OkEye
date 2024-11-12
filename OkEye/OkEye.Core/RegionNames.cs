@@ -7,6 +7,7 @@
         public const string ContentRegionStatus = "ContentRegionStatus";
         public const string MenuRegion = "MenuRegion";
         public const string ToolBarRegion = "ToolBarRegion";
+        public const string ContentRegionLog = "ContentRegionLog";
     }
 
 

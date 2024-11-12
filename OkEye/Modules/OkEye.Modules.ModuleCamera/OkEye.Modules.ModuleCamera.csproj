@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OkEye.Core\OkEye.Core.csproj" />
     <ProjectReference Include="..\..\Services\OkEye.Services.Interfaces\OkEye.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\OkEye.Modules.NLogViewer\src\NLogViewer\OkEye.Modules.NLogViewer.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Kitware.mummy.Runtime">
@@ -30,5 +31,10 @@
     <Reference Include="WindowsFormsIntegration">
       <HintPath>C:\Windows\Microsoft.NET\Framework\v4.0.30319\WPF\WindowsFormsIntegration.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ViewLog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -7,9 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="800">
     <Grid Background="Azure">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" >
-                <Label Content="状态："></Label>
-            <Label Content="未连接" Foreground="Red"></Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label Content="状态：" Margin="0,0,10,0"></Label>
+            <Label Content="未连接" Foreground="Red" Margin="0,0,20,0"></Label>
+        </StackPanel>
+        <StackPanel Grid.Column="2"  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Label Content="CPU占用：" Margin="0,0,10,0" Width="60"></Label>
+            <Label Content="{Binding CpuRate}"  Foreground="Green" Margin="0,0,5,0" Width="50"></Label>
+            <Label Content="内存占用：" Margin="0,0,5,0" Width="60"></Label>
+            <Label Content="{Binding RamRate}" Foreground="Green " Width="50"></Label>
         </StackPanel>
     </Grid>
 </UserControl>

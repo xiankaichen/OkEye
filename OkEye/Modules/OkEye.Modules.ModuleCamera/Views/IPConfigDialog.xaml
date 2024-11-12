@@ -4,26 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="136.915" d:DesignWidth="417.867">
-    <Grid>
-        
-        <StackPanel Background="White" Grid.ColumnSpan="2">
+             mc:Ignorable="d" Width="310" Height="145" >
+    <Grid Margin="0,0,0,0">
+
+        <StackPanel Background="White" Margin="0,0,0,0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="相机IP地址" Width="100"></Label>
-                <TextBox x:Name="textBoxCameraIP" Text="{Binding CameraIP}"  TextWrapping="Wrap" Width="300"/>
+                <TextBox x:Name="textBoxCameraIP" Text="{Binding CameraIP}"  TextWrapping="Wrap" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="相机子网掩码：" Width="100"></Label>
-                <TextBox x:Name="textBoxCamMask" TextWrapping="Wrap" Text="{Binding UserIP}" Width="300"/>
+                <TextBox x:Name="textBoxCamMask" TextWrapping="Wrap" Text="{Binding UserIP}" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="用户IP地址：" Width="100"></Label>
-                <TextBox x:Name="textBoxUserIP" TextWrapping="Wrap" Text="{Binding UserIP}" Width="300"/>
+                <TextBox x:Name="textBoxUserIP" TextWrapping="Wrap" Text="{Binding UserIP}" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="用户子网掩码：" Width="100"></Label>
-                <TextBox x:Name="textBoxUserMask" TextWrapping="Wrap" Text="{Binding UserMask}" Width="300"/>
+                <TextBox x:Name="textBoxUserMask" TextWrapping="Wrap" Text="{Binding UserMask}" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="配置" Command="{Binding YesDialogCommand}" Margin="0,10,0,0"></Button>

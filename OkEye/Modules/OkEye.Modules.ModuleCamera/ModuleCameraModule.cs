@@ -23,7 +23,8 @@ namespace OkEye.Modules.ModuleCamera
             _regionManager.RequestNavigate(RegionNames.MainRegion, "ViewMain");
             _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewDevice");
             _regionManager.RequestNavigate(RegionNames.ContentRegionStatus, "ViewStatusBar");
-           
+            _regionManager.RequestNavigate(RegionNames.ContentRegionLog, "ViewLog");
+
 
         }
 
@@ -35,6 +36,7 @@ namespace OkEye.Modules.ModuleCamera
             containerRegistry.RegisterForNavigation<ViewDevice>();
             containerRegistry.RegisterForNavigation<ViewCamera>();
             containerRegistry.RegisterForNavigation<ViewStatusBar>();
+            containerRegistry.RegisterForNavigation<ViewLog>();
 
 
         }

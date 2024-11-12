@@ -1,0 +1,27 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Authors>Dominic Jonas</Authors>
+    <Company>Dominic Jonas</Company>
+    <Product>Sentinel.NLogViewer</Product>
+    <PackageProjectUrl>https://github.com/dojo90/NLogViewer</PackageProjectUrl>
+    <RepositoryUrl>git@github.com:dojo90/NLogViewer.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>sentinel nlog</PackageTags>
+    <Description>NlogViewer is a ui control library to visualize NLog logs</Description>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)/LICENSE.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>LICENSE.md</PackagePath>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+</Project>

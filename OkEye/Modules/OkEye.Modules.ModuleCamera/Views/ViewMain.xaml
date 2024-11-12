@@ -7,12 +7,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <ContentControl prism:RegionManager.RegionName="ContentRegionMain" ></ContentControl>
         </Grid>
         <Grid Grid.Row="1">
+            <ContentControl prism:RegionManager.RegionName="ContentRegionLog" ></ContentControl></Grid>
+        <Grid Grid.Row="2">
             <ContentControl  prism:RegionManager.RegionName="ContentRegionStatus" ></ContentControl>
         </Grid>
     </Grid>

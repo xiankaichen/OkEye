@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Documents;
@@ -108,32 +109,46 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
         public void OnOpenIpConfigDialogCommand()
         {
-            _logger.LogInformation("配置相机IP或者电脑IP");
-            DialogParameters param = new DialogParameters();
-            param.Add("CameraIP", CameraInfo.CameraIP);
-            param.Add("UserIP", CameraInfo.UserIP);
-            param.Add("UserMask", "255.255.255.0");
-            param.Add("CameraMask", "255.255.255.0");
-            _dialogService.ShowDialog("IPConfigDialog", param, r =>
+            try
             {
-                if (r.Result == ButtonResult.OK)
+                if (CameraInfo == null)
                 {
-                    var NewCameraIP = r.Parameters.GetValue<string>("CameraIP");
-                    var NewCameraMask = r.Parameters.GetValue<string>("CameraMask");
-                    var NewUserIP = r.Parameters.GetValue<string>("UserIP");
-                    var NewUserMask = r.Parameters.GetValue<string>("UserMask");
+                    _logger.LogWarning("无相相机可配置！");
+                    return;
+                }
+                _logger.LogInformation("配置相机IP或者电脑IP");
+                DialogParameters param = new DialogParameters();
+                param.Add("CameraIP", CameraInfo.CameraIP);
+                param.Add("UserIP", CameraInfo.UserIP);
+                param.Add("UserMask", "255.255.255.0");
+                param.Add("CameraMask", "255.255.255.0");
+                _dialogService.ShowDialog("IPConfigDialog", param, r =>
+                {
+                    if (r.Result == ButtonResult.OK)
+                    {
+                        var NewCameraIP = r.Parameters.GetValue<string>("CameraIP");
+                        var NewCameraMask = r.Parameters.GetValue<string>("CameraMask");
+                        var NewUserIP = r.Parameters.GetValue<string>("UserIP");
+                        var NewUserMask = r.Parameters.GetValue<string>("UserMask");
 
-                    _cameraService.SetCameraIP(CameraInfo.CameraIP, NewCameraIP);
-                    _logger.LogInformation("配置相机IP或者电脑IP完成");
-                    _logger.LogInformation("重新扫描设备...");
-                    OnDiscoverCamera();
-                    _logger.LogInformation("扫描设备完成");
-                }
-                else
-                {
-                    _logger.LogInformation("取消配置相机IP或者电脑IP");
-                }
-            });
+                        _cameraService.SetCameraIP(CameraInfo.CameraIP, NewCameraIP);
+                        _logger.LogInformation("配置相机IP或者电脑IP完成");
+                        _logger.LogInformation("重新扫描设备...");
+                        OnDiscoverCamera();
+                        _logger.LogInformation("扫描设备完成");
+                    }
+                    else
+                    {
+                        _logger.LogInformation("取消配置相机IP或者电脑IP");
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         public void OnConnectCameraCommand()

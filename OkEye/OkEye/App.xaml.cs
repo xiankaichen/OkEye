@@ -28,6 +28,7 @@ namespace OkEye
         {
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.RegisterSingleton<ICameraService, CameraService>();
+            containerRegistry.RegisterSingleton<ISystemInfoService, SystemInfoService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

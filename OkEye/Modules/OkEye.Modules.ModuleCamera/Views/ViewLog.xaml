@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="OkEye.Modules.ModuleCamera.Views.ViewLog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dj="clr-namespace:DJ;assembly=OkEye.Modules.NLogViewer"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+
+        <Grid Height="300">
+           
+            <Grid Grid.Row="0">
+                <dj:NLogViewer/>
+            </Grid>
+        </Grid>
+</UserControl>

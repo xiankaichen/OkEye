@@ -27,10 +27,10 @@
             <FlowDocument>
 
                 <Paragraph>
-                    <Run  Text="软件版本：V5.3"/>
+                    <Run  Text="软件版本：V1.2"/>
                 </Paragraph>
                 <Paragraph>
-                    <Run  Text="算法版本：V3.3"/>
+                    <Run  Text="算法版本：V1.3"/>
                 </Paragraph>
                 <Paragraph>
                     <Run  Text="© OK Vision Technology Co., Ltd"/>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
+             
              mc:Ignorable="d" Width="310" Height="145" >
     <Grid Margin="0,0,0,0">
 

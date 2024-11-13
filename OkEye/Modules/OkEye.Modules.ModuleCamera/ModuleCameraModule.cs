@@ -21,7 +21,8 @@ namespace OkEye.Modules.ModuleCamera
         public void OnInitialized(IContainerProvider containerProvider)
         {
             _regionManager.RequestNavigate(RegionNames.MainRegion, "ViewMain");
-            _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewDevice");
+            _regionManager.RequestNavigate(RegionNames.ContentRegionMenu, "ViewMenu");
+            _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera");
             _regionManager.RequestNavigate(RegionNames.ContentRegionStatus, "ViewStatusBar");
             _regionManager.RequestNavigate(RegionNames.ContentRegionLog, "ViewLog");
 
@@ -31,11 +32,14 @@ namespace OkEye.Modules.ModuleCamera
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialog<IPConfigDialog, IPConfigDialogViewModel>();
+            containerRegistry.RegisterDialog<AboutDialog, AboutDialogViewModel>();
+            
 
             containerRegistry.RegisterForNavigation<ViewMain>();
             containerRegistry.RegisterForNavigation<ViewDevice>();
             containerRegistry.RegisterForNavigation<ViewCamera>();
             containerRegistry.RegisterForNavigation<ViewStatusBar>();
+            containerRegistry.RegisterForNavigation<ViewMenu>();
             containerRegistry.RegisterForNavigation<ViewLog>();
 
 

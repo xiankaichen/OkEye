@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="OkEye.Modules.ModuleCamera.Views.AboutDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
+             xmlns:dialogs="http://prismlibrary.com/"
+             mc:Ignorable="d"
+             Height="240" Width="429"
+             
+>
+    <Grid Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="22*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <RichTextBox x:Name="richTextBox" Margin="46,22,0,0"  IsReadOnly="True" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234" Height="44">
+            <FlowDocument>
+                <Paragraph >
+                    <Run  Text="OkEye  3D Viewer" FontWeight="Bold" FontSize="24" />
+                </Paragraph>
+
+            </FlowDocument>
+        </RichTextBox>
+        <RichTextBox x:Name="richTextBoxDetail_" IsReadOnly="True" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="111" Width="334" Margin="46,71,0,0" Grid.ColumnSpan="3">
+            <FlowDocument>
+
+                <Paragraph>
+                    <Run  Text="软件版本：V5.3"/>
+                </Paragraph>
+                <Paragraph>
+                    <Run  Text="算法版本：V3.3"/>
+                </Paragraph>
+                <Paragraph>
+                    <Run  Text="© OK Vision Technology Co., Ltd"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="/Resources/image/logo.png" Margin="250,49,0,0" RenderTransformOrigin="1.988,0.864" Grid.ColumnSpan="3"/>
+
+
+    </Grid>
+</UserControl>

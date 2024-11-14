@@ -6,38 +6,7 @@
     <ApplicationIcon>Resources\image\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\image\3dchart.png" />
-    <None Remove="Resources\image\3dserver.png" />
-    <None Remove="Resources\image\add.png" />
-    <None Remove="Resources\image\camera.png" />
-    <None Remove="Resources\image\camera3d.png" />
-    <None Remove="Resources\image\com.png" />
-    <None Remove="Resources\image\connect.png" />
-    <None Remove="Resources\image\continue.png" />
-    <None Remove="Resources\image\copy.png" />
-    <None Remove="Resources\image\cut.png" />
-    <None Remove="Resources\image\cycleplay.png" />
-    <None Remove="Resources\image\disconnect.png" />
-    <None Remove="Resources\image\locate.png" />
     <None Remove="Resources\image\logo.ico" />
-    <None Remove="Resources\image\logo.png" />
-    <None Remove="Resources\image\new-project.png" />
-    <None Remove="Resources\image\open-project.png" />
-    <None Remove="Resources\image\past.png" />
-    <None Remove="Resources\image\path-plan.png" />
-    <None Remove="Resources\image\play.png" />
-    <None Remove="Resources\image\point-cloud.png" />
-    <None Remove="Resources\image\read-image.png" />
-    <None Remove="Resources\image\recg.png" />
-    <None Remove="Resources\image\redo.png" />
-    <None Remove="Resources\image\save.png" />
-    <None Remove="Resources\image\search.png" />
-    <None Remove="Resources\image\settings.png" />
-    <None Remove="Resources\image\stop.png" />
-    <None Remove="Resources\image\undo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\image\logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="8.0.0-preview-03" />
@@ -56,34 +25,6 @@
     <ProjectReference Include="..\Services\OkEye.Services\OkEye.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\image\3dchart.png" />
-    <Resource Include="Resources\image\3dserver.png" />
-    <Resource Include="Resources\image\add.png" />
-    <Resource Include="Resources\image\camera.png" />
-    <Resource Include="Resources\image\camera3d.png" />
-    <Resource Include="Resources\image\com.png" />
-    <Resource Include="Resources\image\connect.png" />
-    <Resource Include="Resources\image\continue.png" />
-    <Resource Include="Resources\image\copy.png" />
-    <Resource Include="Resources\image\cut.png" />
-    <Resource Include="Resources\image\cycleplay.png" />
-    <Resource Include="Resources\image\disconnect.png" />
-    <Resource Include="Resources\image\locate.png" />
     <Resource Include="Resources\image\logo.ico" />
-    <Resource Include="Resources\image\logo.png" />
-    <Resource Include="Resources\image\new-project.png" />
-    <Resource Include="Resources\image\open-project.png" />
-    <Resource Include="Resources\image\past.png" />
-    <Resource Include="Resources\image\path-plan.png" />
-    <Resource Include="Resources\image\play.png" />
-    <Resource Include="Resources\image\point-cloud.png" />
-    <Resource Include="Resources\image\read-image.png" />
-    <Resource Include="Resources\image\recg.png" />
-    <Resource Include="Resources\image\redo.png" />
-    <Resource Include="Resources\image\save.png" />
-    <Resource Include="Resources\image\search.png" />
-    <Resource Include="Resources\image\settings.png" />
-    <Resource Include="Resources\image\stop.png" />
-    <Resource Include="Resources\image\undo.png" />
   </ItemGroup>
 </Project>

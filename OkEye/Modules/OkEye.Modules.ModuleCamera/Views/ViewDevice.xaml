@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views" 
              xmlns:viewmodels="clr-namespace:OkEye.Modules.ModuleCamera.ViewModels"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=viewmodels:ViewDeviceViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -23,17 +25,19 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
                     <Grid >
-                        <xctk:PropertyGrid x:Name="_propertyGrid" Background="Transparent" SelectedObject="{Binding CameraInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" />
-
+                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding CameraInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" />
+                        <!--<hc:PropertyGrid SelectedObject="{Binding DemoModel}"/>-->
+                        <!--<hc:PropertyGrid HorizontalAlignment="Left" Margin="135,91,0,0" VerticalAlignment="Top"/>-->
                     </Grid>
                 </DockPanel>
-                <StackPanel Grid.Row ="2" Orientation="Horizontal">
-                    <Button  Content="连接" FontSize="12" Width="80" Height="30"
+                <StackPanel Grid.Row ="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button   FontSize="12" Width="80" Height="30" Margin="0,0,10,0" Content="{materialDesign:PackIcon Tune, Size=24}" ToolTip ="配置网络"
+                              Command="{Binding OpenIpConfigDialogCommand}"></Button>
+                    <Button   FontSize="12" Width="80" Height="30" Content="{materialDesign:PackIcon LinkVariant, Size=24}" ToolTip ="打开相机"
                              Command="{Binding ConnectCameraCommand}" Margin="5,0,0,0"></Button>
-                    <Button  Content="断开"  FontSize="12" Width="80" Height="30"
-                             Command="{Binding DisconnectCameraCommand}" Margin="6,0,0,0"></Button>
-                    <Button  Content="配置"  FontSize="12" Width="80" Height="30" Margin="74,0,0,0"
-                             Command="{Binding OpenIpConfigDialogCommand}"></Button>
+                    <Button    FontSize="12" Width="80" Height="30" Content="{materialDesign:PackIcon LinkVariantOff, Size=24}" ToolTip ="关闭相机"
+                             Command="{Binding DisconnectCameraCommand}" Margin="5,0,0,0"></Button>
+                    
                 </StackPanel>
 
             </Grid>
@@ -49,14 +53,10 @@
                 <DockPanel Grid.Row="1">
 
 
-                    <ListView ItemsSource="{Binding Path=CamList , Mode=TwoWay}">
-
+                    <ListView ItemsSource="{Binding Path=CamList }">
                         <ListView.View>
-
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="相机信息">
-
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Serial}" Header="相机序号" Width="150"/>
-
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=CameraIP}" Width="120">
                                     <GridViewColumnHeader> 相机IP
                                         <GridViewColumnHeader.ContextMenu>
@@ -67,22 +67,20 @@
                                         </GridViewColumnHeader.ContextMenu>
                                     </GridViewColumnHeader>
                                 </GridViewColumn>
-
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="状态" Width="120"/>
                             </GridView>
-
                         </ListView.View>
                     </ListView>
-
                 </DockPanel>
                 <StackPanel Grid.Row ="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="刷新" FontSize="12" Width="80" Height="30"
-                            Command="{Binding DiscoverCameraCommand}" Margin="0,0,5,0"></Button>
+                    <Button Name="BtnIcon" Content="{materialDesign:PackIcon CameraFlip, Size=24}"
+                            Command="{Binding DiscoverCameraCommand}"
+                            Width="80"
+                            ToolTip="发现新相机，并更新列表"/>
+                    <!--<Button Content="刷新" FontSize="12" Width="80" Height="30"
+                            Command="{Binding DiscoverCameraCommand}" Margin="0,0,5,0"></Button>-->
                 </StackPanel>
-                
             </Grid>
-            
-            
         </Grid>
     </Grid>
 </UserControl>

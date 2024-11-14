@@ -50,6 +50,10 @@ namespace OkEye.Services
 
         public int DisconnectCamera(CameraInfoModel cameraInfo)
         {
+            if (0 != camera3DManager.DisconnectCamera())
+            {
+                return -1;
+            }
             return 0;
         }
 

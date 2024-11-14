@@ -249,7 +249,11 @@ namespace OkEye.Services.ZkrhCamera
                 {
                     return 0;
                 }
+                
+                cam3d.cam.Close(currCamInfo);
                 CameraPro.DestoryCamera(cam3d.cam);
+                cam3d = null;
+                cameraInfoModel.Status = "未连接";
                 return 0;
             }
             catch (Exception ex)

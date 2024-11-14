@@ -18,6 +18,8 @@ namespace OkEye.Services
 
         public int Capture()
         {
+            FrameData framedata = new FrameData();
+            camera3DManager.CapturePointCloud(ref framedata);
             return 0;
         }
 

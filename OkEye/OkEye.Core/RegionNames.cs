@@ -8,6 +8,7 @@
         public const string ContentRegionMenu = "ContentRegionMenu";
         public const string ToolBarRegion = "ToolBarRegion";
         public const string ContentRegionLog = "ContentRegionLog";
+        public const string FrameDataRegion = "FrameDataRegion";  // 相机数据显示区域
 
     }
 

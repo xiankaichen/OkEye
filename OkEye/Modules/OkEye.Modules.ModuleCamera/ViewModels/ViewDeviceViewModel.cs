@@ -15,6 +15,7 @@ using OkEye.Services.Interfaces;
 using Prism.Commands;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
@@ -105,8 +106,10 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             }
         }
 
+        private IRegionManager _regionManager;
         private ICameraService _cameraService;
         public IDialogService _dialogService;
+        private Logger<ViewDeviceViewModel> _logger;
 
         public DelegateCommand OpenIpConfigDialogCommand { get; private set; }
         public DelegateCommand ConnectCameraCommand { get; private set; }
@@ -115,9 +118,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
         private Thread scanDeviceThr;
 
-        private Logger<ViewDeviceViewModel> _logger;
-
         delegate void ConnectCameraCallBack(CameraInfoModel caminfo);
+
+        ConnectCameraCallBack connectCameraCallBack;
 
 
         /// <summary>
@@ -133,7 +136,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             IDialogService dialogService, Logger<ViewDeviceViewModel> logger) :
             base(regionManager)
         {
-            
+            _regionManager = regionManager;
+
 
             _cameraService = cameraService; ;
             _dialogService = dialogService;
@@ -146,6 +150,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand);
             DiscoverCameraCommand = new DelegateCommand(OnDiscoverCamera);
             OpenIpConfigDialogCommand = new DelegateCommand(OnOpenIpConfigDialogCommand);
+
 
             // 扫描相机
             OnDiscoverCamera();
@@ -194,15 +199,18 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 {
                     _logger.LogInformation("关闭相机成功！");
 
+                    // 更新界面
+                    System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        CameraInfoModel curCameraInfo = _cameraService.GetCameraInfo();
+                        CameraInfo = null;
+                        CameraInfo = curCameraInfo;
 
-                    CameraInfoModel curCameraInfo = _cameraService.GetCameraInfo();
-                    CameraInfo = null;
-                    CameraInfo = curCameraInfo;
-
-                    List<CameraInfoModel> tmpcamlist = CamList;
-                    tmpcamlist[0] = curCameraInfo;
-                    CamList = new List<CameraInfoModel>();
-                    CamList = tmpcamlist;
+                        List<CameraInfoModel> tmpcamlist = CamList;
+                        tmpcamlist[0] = curCameraInfo;
+                        CamList = new List<CameraInfoModel>();
+                        CamList = tmpcamlist;
+                    }));
                 }
                 else
                 {
@@ -306,14 +314,24 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             }
 
             CameraInfoModel curCameraInfo = _cameraService.GetCameraInfo();
-            CameraInfo = null;
-            CameraInfo = curCameraInfo;
-            List<CameraInfoModel> tmpcamlist = CamList;
-            tmpcamlist[0] = curCameraInfo;
-            CamList = new List<CameraInfoModel>();
-            CamList = tmpcamlist;
-            //ConnectCameraCallBack connectCameraCallBack = new ConnectCameraCallBack(ConnectCameraUpdate);
-            //Dispatcher.CurrentDispatcher.Invoke(connectCameraCallBack, curCameraInfo);
+
+            // 更新界面
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                CameraInfo = null;
+                CameraInfo = curCameraInfo;
+                List<CameraInfoModel> tmpcamlist = CamList;
+                tmpcamlist[0] = curCameraInfo;
+                CamList = new List<CameraInfoModel>();
+                CamList = tmpcamlist;
+                RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera",
+                    (NavigationResult nr) =>
+                    {
+                        var error = nr.Error;
+                        var result = nr.Result;
+                    });
+
+            }));
 
 
         }
@@ -326,7 +344,14 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         {
             CameraInfo.Status = cameraInfo.Status;
             CamList[0].Status = CameraInfo.Status;
-            RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera");
+            _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera",
+                (NavigationResult nr) =>
+                {
+                    var error = nr.Error;
+                    var result = nr.Result;
+                    // put a breakpoint here and checkout what NavigationResult contains
+                });
+
         }
 
         /// <summary>

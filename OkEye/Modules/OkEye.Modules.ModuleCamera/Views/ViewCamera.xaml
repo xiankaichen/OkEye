@@ -7,9 +7,11 @@
              xmlns:vtk="clr-namespace:Kitware.VTK;assembly=Kitware.VTK"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:regions="http://prismlibrary.com/"
+             xmlns:core="clr-namespace:OkEye.Core;assembly=OkEye.Core"
 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -33,7 +35,7 @@
                     <Button Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon CloudOutline, Size=24}"
                             ToolTip="点云"
-                            Command="{Binding ShowPointCloudCommand}" Margin="20,0,0,0" ></Button>
+                            Command="{Binding ShowCloudCommand}" Margin="20,0,0,0" ></Button>
                     <Button Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon ImageMultiple, Size=24}"
                             ToolTip="深度图"
@@ -52,29 +54,12 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="400" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*"/>
-                                <ColumnDefinition Width="17*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TabControl  x:Name="DataShower" Grid.ColumnSpan="2"  >
-                                <TabItem  x:Name="Cloud" Visibility="Collapsed" BorderThickness="0">
-                                    <Grid>
-                                        <Frame Background="DimGray"></Frame>
-                                    </Grid>
-                                </TabItem>
-                                <TabItem  x:Name="Image" Visibility="Collapsed" BorderThickness="0" >
-                                    <Grid >
-                                        <Image x:Name="imageTexture" Source="/Resources/image/logo.png"/>
-                                    </Grid>
-                                </TabItem>
-
-                            </TabControl>
-                        </Grid>
+                        <DockPanel>
+                            <ContentControl regions:RegionManager.RegionName="{x:Static core:RegionNames.FrameDataRegion}" />
+                        </DockPanel>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid>
@@ -86,7 +71,10 @@
                             <Label Content="相机参数" FontSize="18" Grid.Row="0"></Label>
                             <DockPanel Grid.Row="1">
                                 <Grid >
-                                    <xctk:PropertyGrid x:Name="_propertyGrid" SelectedObject="{Binding CameraInfo}"   Margin="10,10,0,0"   ShowTitle="False" ShowSummary="False" />
+                                    <xctk:PropertyGrid x:Name="_propertyGrid" 
+                                                       SelectedObject="{Binding CameraInfo}"   
+                                                       Foreground="DimGray" FontSize="12"
+                                                       Margin="10,10,0,0"   ShowTitle="False" ShowSummary="False" />
 
                                 </Grid>
                             </DockPanel>

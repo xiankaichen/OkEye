@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows7.0</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\image\3dchart.png" />
@@ -56,15 +57,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OkEye.Core\OkEye.Core.csproj" />
     <ProjectReference Include="..\..\Services\OkEye.Services.Interfaces\OkEye.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Kitware.mummy.Runtime\Kitware.mummy.Runtime.csproj" />
+    <ProjectReference Include="..\Kitware.VTK\Kitware.VTK.csproj" />
     <ProjectReference Include="..\OkEye.Modules.NLogViewer\src\NLogViewer\OkEye.Modules.NLogViewer.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Kitware.mummy.Runtime">
-      <HintPath>C:\Program Files\ActiViz.NET 9.3.2024 Trial Edition\bin\Kitware.mummy.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitware.VTK">
-      <HintPath>C:\Program Files\ActiViz.NET 9.3.2024 Trial Edition\bin\Kitware.VTK.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsFormsIntegration">
       <HintPath>C:\Windows\Microsoft.NET\Framework\v4.0.30319\WPF\WindowsFormsIntegration.dll</HintPath>
     </Reference>

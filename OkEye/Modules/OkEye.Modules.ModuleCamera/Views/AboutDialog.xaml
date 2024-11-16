@@ -43,7 +43,7 @@
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="/OkEye.Modules.ModuleCamera;component/Resources/image/logo.png" Margin="250,49,0,0" RenderTransformOrigin="1.988,0.864" Grid.ColumnSpan="3"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="/OkEye.Modules.ModuleCamera;component/Resources/image/logo128.png" Margin="250,49,0,0" RenderTransformOrigin="1.988,0.864" Grid.ColumnSpan="3"/>
 
 
     </Grid>

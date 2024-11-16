@@ -20,6 +20,7 @@
     <None Remove="Resources\image\locate.png" />
     <None Remove="Resources\image\logo.ico" />
     <None Remove="Resources\image\logo.png" />
+    <None Remove="Resources\image\logo128.png" />
     <None Remove="Resources\image\new-project.png" />
     <None Remove="Resources\image\open-project.png" />
     <None Remove="Resources\image\past.png" />
@@ -106,6 +107,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\image\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\image\logo128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\image\new-project.png">

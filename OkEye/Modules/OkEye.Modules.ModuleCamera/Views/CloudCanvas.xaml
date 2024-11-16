@@ -1,17 +1,19 @@
-﻿<UserControl x:Class="OkEye.Modules.ModuleCamera.Views.ViewCloud"
+﻿<UserControl x:Class="OkEye.Modules.ModuleCamera.Views.CloudCanvas"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
              xmlns:vtk="clr-namespace:Kitware.VTK;assembly=Kitware.VTK"
-
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" >
 
     <Grid >
-        <local:CloudCanvas Cloud ="{Binding Cloud}"  HorizontalAlignment="Center"  VerticalAlignment="Center" Height="450" Width="800">
-            
-        </local:CloudCanvas>
+        <WindowsFormsHost x:Name="wfh">
+            <vtk:RenderWindowControl x:Name="pcViewerControl" Load="Init3DViewer_Loaded"  />
+        </WindowsFormsHost>
     </Grid>
+
 </UserControl>
+
+

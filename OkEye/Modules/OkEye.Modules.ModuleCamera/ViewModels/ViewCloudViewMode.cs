@@ -1,66 +1,68 @@
-﻿using Microsoft.Extensions.Logging;
-using NLog;
-using OkEye.Core;
+﻿using System;
+using Microsoft.Extensions.Logging;
 using OkEye.Core.Mvvm;
 using OkEye.Services.Interfaces;
-using Prism.Commands;
 using Prism.Regions;
-using System.Diagnostics;
-using System.Threading;
-using System;
-using System.Collections.Generic;
-using Kitware.VTK;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Media;
+using OkEye.Modules.ModuleCamera.Events;
+using OpenCvSharp;
+using Prism.Events;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
+using Kitware.VTK;
+using OpenCvSharp.Extensions;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
-    public class ViewCloudViewModel : RegionViewModelBase
+    public class ViewCloudViewMode : RegionViewModelBase
     {
-
-       private vtkRenderWindow _cloudRenderWindow;
-        public vtkRenderWindow CloudRenderWindow
+        private Mat _cloud;
+        public Mat Cloud
         {
-            get { return _cloudRenderWindow; }
-            set { SetProperty(ref _cloudRenderWindow, value); }
+            get { return _cloud; }
+            set { SetProperty(ref _cloud, value); }
         }
 
-        private ICameraService _cameraService;
+        ICameraService _cameraService;
+        ILogger _logger;
+        private IEventAggregator _cloudAggregator;
 
-        private Logger<ViewCloudViewModel> _logger;    // 日志记录器
 
-
-        public DelegateCommand OnInit3DViewerrCommand { get; private set; }
-
-        public ViewCloudViewModel(IRegionManager regionManager, ICameraService cameraService,
-            Logger<ViewCloudViewModel> logger) :
+        public ViewCloudViewMode(IRegionManager regionManager, ICameraService cameraService,
+            ILogger<ImageCanvasViewMode> logger, IEventAggregator cloudAggregator) :
             base(regionManager)
         {
             _cameraService = cameraService;
-
             _logger = logger;
-            _logger.LogInformation("初始化点云页面模块");
+            _cloudAggregator = cloudAggregator;
+            _cloudAggregator.GetEvent<CloudPubSubEvent>().Subscribe(UpdateCloudAsync);
 
-            CloudRenderWindow = new vtkRenderWindow(); // RenderWindowControl -> vtkRenderWindow
-
-
-
-            // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
-
-            //OnInit3DViewerrCommand = new DelegateCommand(OnInit3DViewerr);
+            _cloud = null;
         }
 
-        //private void OnInit3DViewerr()
-        //{
-        //    // 启动线程连接相机
-        //    Thread connectCameraThr = new Thread(() => Init3DViewer());
-        //    connectCameraThr.Start();
-        //}
+        public async void UpdateCloudAsync(Mat cloud)
+        {
+            
+            await Task.Run(() =>
+            {
+                Cloud = cloud;
+                
+            });
+
+            //DepthFrame = imageSource;
+        }
+
+        
+
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //do something
 
-            //RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
         }
     }
 }

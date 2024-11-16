@@ -8,5 +8,14 @@ namespace OkEye.Modules.ModuleCamera.Events
 
     }
 
+    public class DepthPubSubEvent : PubSubEvent<Mat>
+    {
+
+    }
+
+    public class CloudPubSubEvent : PubSubEvent<Mat>
+    {
+
+    }
 
 }

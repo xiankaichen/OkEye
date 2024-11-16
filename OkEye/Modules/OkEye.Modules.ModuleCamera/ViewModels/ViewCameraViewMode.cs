@@ -67,6 +67,10 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             });
 
             CameraInfo = _cameraService.GetCameraInfo();
+
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
         }
 
         private void OnSnapOnceCommand()
@@ -97,6 +101,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
 
                 _imageAggregator.GetEvent<ImagePubSubEvent>().Publish(frameData.image);
+                _imageAggregator.GetEvent<DepthPubSubEvent>().Publish(frameData.depth);
+                _imageAggregator.GetEvent<CloudPubSubEvent>().Publish(frameData.cloud);
                 _logger.LogInformation("拍照成功！");
             }
             else

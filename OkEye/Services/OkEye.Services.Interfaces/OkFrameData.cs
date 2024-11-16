@@ -9,7 +9,7 @@ namespace OkEye.Services.Interfaces
     {
         public Mat image;
         public Mat depth;
-        public Vector<Point3d> cloud;
+        public Mat cloud;
 
     }
 }

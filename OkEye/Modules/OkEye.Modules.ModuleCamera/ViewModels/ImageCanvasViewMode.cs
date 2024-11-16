@@ -50,9 +50,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ImageSource imageSource = null;
             await Task.Run(() =>
                 {
-                    image.ImWrite("textrue.png");
+                    //image.ImWrite("textrue.png");
                     Bitmap bmp = image.ToBitmap();
-                    bmp.Save("texture.bmp");
+                    //bmp.Save("texture.bmp");
                     System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         imageSource = BitmapToImageSource(bmp);

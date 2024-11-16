@@ -6,13 +6,12 @@
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black"/>
-                <GradientStop Color="White" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <local:ImageCanvas x:Name="canvas"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" ClipToBounds="True">
+            <DockPanel>
+                <Image Source="{Binding DepthFrame}"></Image>
+            </DockPanel>
+        </local:ImageCanvas>
 
     </Grid>
 </UserControl>

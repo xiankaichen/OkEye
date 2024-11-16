@@ -9,5 +9,8 @@ OkEye基于Prism架构开发，支持插件化开发，用户可以根据自己的需求开发插件，扩展OkEy
 软件主界面，如下图所示：
 ![软件主界面](OkEye/Doc/MainPage.png "软件主界面，设备连接界面")
 
-软件相机界面，如下图所示：
-![软件主界面](OkEye/Doc/CameraPage.png "软件相机看界面")
+软件相机点云界面，如下图所示：
+![软件主界面](OkEye/Doc/CameraCloudPage.png "软件相机点云看界面")
+
+软件相机图像界面，如下图所示：
+![软件主界面](OkEye/Doc/CameraImagePage.png "软件相机图像看界面")

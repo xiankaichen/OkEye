@@ -9,7 +9,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:regions="http://prismlibrary.com/"
              xmlns:core="clr-namespace:OkEye.Core;assembly=OkEye.Core"
-
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>

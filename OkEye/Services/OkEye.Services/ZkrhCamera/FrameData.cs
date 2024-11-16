@@ -1,4 +1,4 @@
-using System;
+using System;using OkEye.Services.Interfaces;
 
 /* "FrameData" is the data structure used to store the frame data returned from the camera. It will automatically allocate and free memory*/
 /* The length below does not include the number of bytes of the data type .

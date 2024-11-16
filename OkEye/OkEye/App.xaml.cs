@@ -11,6 +11,9 @@ using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using OkEye.Modules.ModuleCamera.ViewModels;
+using OkEye.Modules.ModuleCamera.Views;
+using Prism.Mvvm;
 
 namespace OkEye
 {
@@ -59,6 +62,12 @@ namespace OkEye
                 .WithTrackingDisposableTransients()
                 //.WithoutFastExpressionCompiler()
                 .WithFactorySelector(Rules.SelectLastRegisteredFactory());
+        }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
+            ViewModelLocationProvider.Register<ViewImage, ImageCanvasViewMode>();
         }
     }
 }

@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views" 
              xmlns:viewmodels="clr-namespace:OkEye.Modules.ModuleCamera.ViewModels"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:hc="https://handyorg.github.io/handycontrol"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DataContext="{d:DesignInstance Type=viewmodels:ViewDeviceViewModel}"
              mc:Ignorable="d" 

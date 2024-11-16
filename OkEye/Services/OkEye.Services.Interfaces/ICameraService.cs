@@ -15,6 +15,7 @@ namespace OkEye.Services.Interfaces
         CameraInfoModel GetCameraInfo();
 
         int SetCameraIP(string oldip, string newip);
-        int Capture();
+
+        int Capture(ref OkFrameData frame);
     }
 }

@@ -9,12 +9,18 @@ using System.Diagnostics;
 using System.Threading;
 using System;
 using System.Collections.Generic;
+using OpenCvSharp;
+using Prism.Events;
+using OkEye.Modules.ModuleCamera.Events;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
     public class ViewCameraViewModel : RegionViewModelBase
     {
         private ICameraService _cameraService;
+        private IEventAggregator _imageAggregator;
+
+
 
         private Logger<ViewCameraViewModel> _logger;    // 日志记录器
 
@@ -34,14 +40,15 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand ShowImageCommand { get; private set; }
 
         public ViewCameraViewModel(IRegionManager regionManager, ICameraService cameraService,
-            Logger<ViewCameraViewModel> logger) :
+            Logger<ViewCameraViewModel> logger, IEventAggregator imageAggregator) :
             base(regionManager)
         {
             _cameraService = cameraService;
-
             _logger = logger;
             _logger.LogInformation("初始化相机模块");
 
+
+            _imageAggregator = imageAggregator;
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
 
             DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand );
@@ -84,8 +91,12 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 _logger.LogInformation("相机未连接");
                 return;
             }
-            if (0 == _cameraService.Capture())
+
+            OkFrameData frameData = new OkFrameData();
+            if (0 == _cameraService.Capture(ref frameData))
             {
+
+                _imageAggregator.GetEvent<ImagePubSubEvent>().Publish(frameData.image);
                 _logger.LogInformation("拍照成功！");
             }
             else

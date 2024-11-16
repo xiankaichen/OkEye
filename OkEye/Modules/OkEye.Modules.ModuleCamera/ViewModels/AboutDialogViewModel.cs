@@ -20,19 +20,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         {
             Title = "关于";
 
-            // 去掉最小化和最大化按钮，只保留关闭按钮
-            // 为了避免在窗口标题栏上显示最小化和最大化按钮，需要在窗口的Style属性中设置WindowStyle属性为None
-            // 为了避免在窗口标题栏上显示关闭按钮，需要在窗口的Style属性中设置ResizeMode属性为NoResize
-            // 为了避免在窗口标题栏上显示图标，需要在窗口的Style属性中设置ShowIcon属性为False
-            // 为了避免在窗口标题栏上显示标题，需要在窗口的Style属性中设置ShowInTaskbar属性为False
-
-            
             _logger = logger;
             _logger.LogInformation("打开关于窗口窗口");
-            
         }
-        
-        
 
         public event Action<IDialogResult> RequestClose;
 
@@ -50,6 +40,5 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         {
         }
 
-        
     }
 }

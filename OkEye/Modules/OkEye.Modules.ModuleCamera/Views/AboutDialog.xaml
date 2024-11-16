@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
              xmlns:dialogs="http://prismlibrary.com/"
              mc:Ignorable="d"
-             Height="240" Width="429"
+             Height="200" Width="429"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="{DynamicResource MaterialDesignPaper}"
@@ -39,11 +39,11 @@
                     <Run  Text="算法版本：V1.3"/>
                 </Paragraph>
                 <Paragraph>
-                    <Run  Text="© OK Vision Technology Co., Ltd"/>
+                    <Run  Text="© OK Vision Org"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="/Resources/image/logo.png" Margin="250,49,0,0" RenderTransformOrigin="1.988,0.864" Grid.ColumnSpan="3"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="/OkEye.Modules.ModuleCamera;component/Resources/image/logo.png" Margin="250,49,0,0" RenderTransformOrigin="1.988,0.864" Grid.ColumnSpan="3"/>
 
 
     </Grid>

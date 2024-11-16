@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Threading;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using OpenCvSharp;
 using Prism.Events;
 using OkEye.Modules.ModuleCamera.Events;
@@ -31,8 +32,11 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             set { SetProperty(ref cameraInfo, value); }
         }
 
+        private bool isSnapRepeat = false;
+
         public DelegateCommand DisconnectCameraCommand { get; private set; }
         public DelegateCommand SnapOnceCommand { get; private set; }
+        public DelegateCommand SnapRepeatCommand { get; private set; }
 
         // 数据显示切换命令
         public DelegateCommand ShowCloudCommand { get; private set; }
@@ -53,6 +57,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
             DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand );
             SnapOnceCommand = new DelegateCommand(OnSnapOnceCommand);
+            SnapRepeatCommand = new DelegateCommand(OnSnapRepeatCommand);
             ShowCloudCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
@@ -71,6 +76,42 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
             RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
             RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
+        }
+
+        private void OnSnapRepeatCommand()
+        {
+            // 启动任务连续拍照，每次拍照结束后等待1s，然后再次拍照，直到再次按下拍照按钮，停止拍照
+           
+            if(isSnapRepeat == true)
+            {
+                isSnapRepeat = !isSnapRepeat;
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                isSnapRepeat = !isSnapRepeat;
+                while (true)
+                {
+
+                    StartSnapOnce();
+                    Thread.Sleep(1000);
+                    SnapRepeatCommand.CanExecute();
+
+                    // 按钮再执行一次，停止拍照
+
+                    // 检查是否需要停止拍照
+                    if (isSnapRepeat == false)
+                    {
+                        break;
+                    }
+                }
+            });
+        }
+
+        public void StartSnapRepeat()
+        {
+
         }
 
         private void OnSnapOnceCommand()

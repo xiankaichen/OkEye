@@ -30,7 +30,7 @@
                     <Button Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon Repeat, Size=24}"
                             ToolTip="连续拍照"
-                            Command="{Binding SnapContinueCommand}" Margin="5,0,0,0"></Button>
+                            Command="{Binding SnapRepeatCommand}" Margin="5,0,0,0"></Button>
                     <Button Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon CloudOutline, Size=24}"
                             ToolTip="点云"

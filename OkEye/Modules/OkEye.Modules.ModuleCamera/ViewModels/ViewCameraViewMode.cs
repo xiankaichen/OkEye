@@ -95,7 +95,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 _logger.LogInformation("相机未连接");
                 return;
             }
-
+            // 计算拍照耗时，单位ms
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             OkFrameData frameData = new OkFrameData();
             if (0 == _cameraService.Capture(ref frameData))
             {
@@ -109,6 +111,10 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
                 _logger.LogWarning("拍照失败！");
             }
+            sw.Stop();
+            _logger.LogInformation("拍照耗时：" + sw.ElapsedMilliseconds + "ms");
+            // 点云数量打印到日志
+            _logger.LogInformation("点云数量：" + frameData.cloudSize);
         }
 
         private void OnDisconnectCameraCommand()

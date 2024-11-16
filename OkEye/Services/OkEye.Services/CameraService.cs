@@ -63,6 +63,7 @@ namespace OkEye.Services
                 CameraParam cameraParam = camera3DManager.currCamInfo.camParam;
                GetPointsByRGB(ref framedata, ref cameraParam, ref outPointMat);
                frame.cloud = outPointMat;
+               frame.cloudSize = (int)framedata.point3DSize;
             }
             return 0;
         }

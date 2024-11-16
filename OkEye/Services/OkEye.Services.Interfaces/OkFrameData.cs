@@ -10,6 +10,7 @@ namespace OkEye.Services.Interfaces
         public Mat image;
         public Mat depth;
         public Mat cloud;
+        public int cloudSize;
 
     }
 }

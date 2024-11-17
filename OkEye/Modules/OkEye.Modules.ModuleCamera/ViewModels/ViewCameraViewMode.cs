@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using OpenCvSharp;
 using Prism.Events;
 using OkEye.Modules.ModuleCamera.Events;
+using System.Windows.Media;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
@@ -21,7 +22,38 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private ICameraService _cameraService;
         private IEventAggregator _imageAggregator;
 
+        SolidColorBrush _onceSnapButtonBackground;
+        public SolidColorBrush OnceSnapButtonBackground
+        {
+            get { return _onceSnapButtonBackground; }
+            set { SetProperty(ref _onceSnapButtonBackground, value); }
+        }
 
+        SolidColorBrush _repeatSnapButtonBackground;
+        public SolidColorBrush RepeatSnapButtonBackground
+        {
+            get { return _repeatSnapButtonBackground; }
+            set { SetProperty(ref _repeatSnapButtonBackground, value); }
+        }
+
+        SolidColorBrush _depthButtonBackground;
+        public SolidColorBrush DepthButtonBackground
+        {
+            get { return _depthButtonBackground; }
+            set { SetProperty(ref _depthButtonBackground, value); }
+        }
+        SolidColorBrush _cloudButtonBackground;
+        public SolidColorBrush CloudButtonBackground
+        {
+            get { return _cloudButtonBackground; }
+            set { SetProperty(ref _cloudButtonBackground, value); }
+        }
+        SolidColorBrush _imageButtonBackground;
+        public SolidColorBrush ImageButtonBackground
+        {
+            get { return _imageButtonBackground; }
+            set { SetProperty(ref _imageButtonBackground, value); }
+        }
 
         private Logger<ViewCameraViewModel> _logger;    // 日志记录器
 
@@ -51,6 +83,12 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             _logger = logger;
             _logger.LogInformation("初始化相机模块");
 
+            OnceSnapButtonBackground = new SolidColorBrush(Color.FromRgb(103,58,183));
+            RepeatSnapButtonBackground = new SolidColorBrush(Color.FromRgb(103,58,183));
+
+            DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200,103,58,183));
+            CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103,58,183));
+            ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103,58,183));
 
             _imageAggregator = imageAggregator;
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
@@ -61,14 +99,24 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowCloudCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
+                DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
+                CloudButtonBackground = new SolidColorBrush(Colors.Orange); 
+                ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
             });
             ShowDepthCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
+                DepthButtonBackground = new SolidColorBrush(Colors.Orange);
+                CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
+                ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
+
             });
             ShowImageCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
+                DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
+                CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
+                ImageButtonBackground = new SolidColorBrush(Colors.Orange); 
             });
 
             CameraInfo = _cameraService.GetCameraInfo();
@@ -87,6 +135,10 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 isSnapRepeat = !isSnapRepeat;
                 return;
             }
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                RepeatSnapButtonBackground = new SolidColorBrush(Colors.Orange);
+            }));
 
             Task.Run(() =>
             {
@@ -103,22 +155,39 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     // 检查是否需要停止拍照
                     if (isSnapRepeat == false)
                     {
+                        System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            RepeatSnapButtonBackground = new SolidColorBrush(Color.FromRgb(103,58,183));
+                        }));
                         break;
                     }
                 }
             });
+            
         }
 
-        public void StartSnapRepeat()
-        {
-
-        }
 
         private void OnSnapOnceCommand()
         {
             // 启动线程连接相机
-            Thread connectCameraThr = new Thread(() => StartSnapOnce());
+            Thread connectCameraThr = new Thread(() => SnapOnce());
             connectCameraThr.Start();
+        }
+
+        private void SnapOnce()
+        {
+            // 更新界面
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                OnceSnapButtonBackground = new SolidColorBrush(Colors.Orange);
+            }));
+            StartSnapOnce();
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                OnceSnapButtonBackground = new SolidColorBrush(Color.FromRgb(103,58,183));
+            }));
+          
+            
         }
 
         private void StartSnapOnce()

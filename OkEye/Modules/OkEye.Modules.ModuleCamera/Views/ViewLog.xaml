@@ -6,12 +6,10 @@
              xmlns:dj="clr-namespace:DJ;assembly=OkEye.Modules.NLogViewer"
 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="800">
+             d:DesignHeight="800.714" d:DesignWidth="1000.5"
+             >
 
-        <Grid Height="300">
-           
-            <Grid Grid.Row="0">
-                <dj:NLogViewer/>
-            </Grid>
-        </Grid>
+    <Grid >
+            <dj:NLogViewer />
+    </Grid>
 </UserControl>

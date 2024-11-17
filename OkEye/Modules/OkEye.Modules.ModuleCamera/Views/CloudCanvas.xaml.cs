@@ -145,7 +145,18 @@ namespace OkEye.Modules.ModuleCamera.Views
 
         public void AddCloud2RendWindow(Mat cloud)
         {
-            if(cloud == null)
+            // 启动一个任务，将点云数据添加到vtkRenderer中
+            Task.Factory.StartNew(() =>
+            {
+                ShowCloud(cloud);
+            });
+
+            
+        }
+
+        public void ShowCloud(Mat cloud)
+        {
+            if (cloud == null)
             {
                 return;
             }
@@ -154,7 +165,11 @@ namespace OkEye.Modules.ModuleCamera.Views
                 renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
 
             // 清空界面上的点云
-            renderer.RemoveAllViewProps();
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                renderer.RemoveAllViewProps();
+            }));
+            
 
             // 将点云转成vtkPoints 
             vtkPoints points = new vtkPoints();
@@ -165,7 +180,7 @@ namespace OkEye.Modules.ModuleCamera.Views
                 for (int j = 0; j < cloud.Cols; j++)
                 {
                     Vec3f pixel = cloud.At<Vec3f>(i, j);
-                    if(pixel.Item0 > 0 || pixel.Item1 > 0 || pixel.Item2 > 0)
+                    if (pixel.Item0 > 0 || pixel.Item1 > 0 || pixel.Item2 > 0)
                     {
                         points.InsertNextPoint(pixel.Item0, pixel.Item1, pixel.Item2);
                         vtkCellArray.InsertNextCell(1);
@@ -229,10 +244,15 @@ namespace OkEye.Modules.ModuleCamera.Views
             camera.Zoom(1);
 
             points.Modified();
-            renderer.Render();
-            // 刷新界面
-            pcViewerControl.RenderWindow.Render();
-            pcViewerControl.Refresh();
+
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                renderer.Render();
+                // 刷新界面
+                pcViewerControl.RenderWindow.Render();
+                pcViewerControl.Refresh();
+            }));
+           
         }
     }
 }

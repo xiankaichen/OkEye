@@ -8,7 +8,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -17,9 +18,17 @@
         <Grid Grid.Row="1">
             <ContentControl prism:RegionManager.RegionName="ContentRegionMain" ></ContentControl>
         </Grid>
-        <Grid Grid.Row="2">
-            <ContentControl prism:RegionManager.RegionName="ContentRegionLog" ></ContentControl></Grid>
+        <GridSplitter Grid.Row="2"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      Background="DimGray" 
+                      ShowsPreview="True"
+                      Height="5"
+        />
         <Grid Grid.Row="3">
+            <ContentControl prism:RegionManager.RegionName="ContentRegionLog" ></ContentControl>
+        </Grid>
+        <Grid Grid.Row="4">
             <ContentControl  prism:RegionManager.RegionName="ContentRegionStatus" ></ContentControl>
         </Grid>
     </Grid>

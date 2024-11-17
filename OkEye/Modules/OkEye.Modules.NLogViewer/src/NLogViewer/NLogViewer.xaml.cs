@@ -29,12 +29,22 @@ namespace DJ
         // ##############################################################################################################################
 
         #region Dependency Properties
-            
+
         // ##########################################################################################
         // Colors
         // ##########################################################################################
 
         #region Colors
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.WidthChanged || e.HeightChanged)
+            {
+                // 在这里调整控件内部元素的大小或位置以适应新的尺寸
+                LayoutRoot.Width = ActualWidth;
+                LayoutRoot.Height = ActualHeight;
+            }
+        }
 
         /// <summary>
         /// The background for the trace output

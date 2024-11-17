@@ -24,7 +24,11 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
                     <Grid >
-                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding CameraInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" />
+                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding CameraInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" Background="{x:Null}" BorderBrush="{x:Null}" >
+                            <xctk:PropertyGrid.Foreground>
+                                <ImageBrush/>
+                            </xctk:PropertyGrid.Foreground>
+                        </xctk:PropertyGrid>
                         <!--<hc:PropertyGrid SelectedObject="{Binding DemoModel}"/>-->
                         <!--<hc:PropertyGrid HorizontalAlignment="Left" Margin="135,91,0,0" VerticalAlignment="Top"/>-->
                     </Grid>
@@ -36,7 +40,7 @@
                              Command="{Binding ConnectCameraCommand}" Margin="5,0,0,0"></Button>
                     <Button    FontSize="12" Width="80" Height="30" Content="{materialDesign:PackIcon LinkVariantOff, Size=24}" ToolTip ="关闭相机"
                              Command="{Binding DisconnectCameraCommand}" Margin="5,0,0,0"></Button>
-                    
+
                 </StackPanel>
 
             </Grid>
@@ -57,7 +61,7 @@
                             <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="相机信息">
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=Serial}" Header="相机序号" Width="150"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Path=CameraIP}" Width="120">
-                                    <GridViewColumnHeader> 相机IP
+                                    <GridViewColumnHeader>相机IP
                                         <GridViewColumnHeader.ContextMenu>
                                             <ContextMenu  Name="LastNameCM">
                                                 <MenuItem Header="Ascending" />

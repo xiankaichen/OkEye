@@ -11,7 +11,12 @@
              xmlns:core="clr-namespace:OkEye.Core;assembly=OkEye.Core"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
-
+    <UserControl.Resources>
+        <Style x:Key="PropertyGridItemStyle" TargetType="xctk:PropertyGrid">
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Resources>
     
     <Grid>
         <Grid>
@@ -79,8 +84,11 @@
                                 <Grid >
                                     <xctk:PropertyGrid x:Name="_propertyGrid" 
                                                        SelectedObject="{Binding CameraInfo}"   
-                                                       Foreground="DimGray" FontSize="12"
-                                                       Margin="10,10,0,0"   ShowTitle="False" ShowSummary="False" />
+                                                       Style="{StaticResource PropertyGridItemStyle}"
+                                                       FontSize="12"
+                                                       Margin="10,10,0,0"   ShowTitle="False" ShowSummary="False" >
+                                        
+                                    </xctk:PropertyGrid>
 
                                 </Grid>
                             </DockPanel>

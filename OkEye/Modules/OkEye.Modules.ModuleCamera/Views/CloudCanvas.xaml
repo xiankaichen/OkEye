@@ -10,7 +10,7 @@
 
     <Grid >
         <WindowsFormsHost x:Name="wfh">
-            <vtk:RenderWindowControl x:Name="pcViewerControl" />
+            <vtk:RenderWindowControl x:Name="pcViewerControl" Load="pcViewerControl_Load" />
         </WindowsFormsHost>
     </Grid>
 

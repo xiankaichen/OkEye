@@ -25,5 +25,9 @@ namespace OkEye.Modules.ModuleCamera.Views
             InitializeComponent();
         }
 
+        private void _propertyGrid_PropertyValueChanged(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventArgs e)
+        {
+
+        }
     }
 }

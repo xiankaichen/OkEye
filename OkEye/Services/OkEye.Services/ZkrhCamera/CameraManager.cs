@@ -94,7 +94,7 @@ namespace OkEye.Services.ZkrhCamera
         // CameraManager is a singleton class
         private static Camera3DManager? instance;
         // List of cameras
-        private  Gen3DCamera? cam3d;
+        public  Gen3DCamera? cam3d;
         public CameraInfo? currCamInfo;
         public CameraInfoVector? camInfoVector;
 
@@ -339,7 +339,8 @@ namespace OkEye.Services.ZkrhCamera
                     cameraInfoModel.Gain = "0";
                 }
 
-                cameraInfoModel.CameMode = currCamInfo.cameraModel;
+                cameraInfoModel.Model =  currCamInfo.cameraModel; 
+                //cameraInfoModel.ScanMode = currCamInfo.moduleID
                 cameraInfoModel.textureHeight = currCamInfo.camParam.textureHeight;
                 cameraInfoModel.textureWidth = currCamInfo.camParam.textureWidth;
                 cameraInfoModel.irHeight = currCamInfo.camParam.irHeight;

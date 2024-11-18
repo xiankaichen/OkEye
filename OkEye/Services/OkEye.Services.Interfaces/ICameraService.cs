@@ -43,6 +43,13 @@ namespace OkEye.Services.Interfaces
         CameraInfoModel GetCameraInfo();
 
         /// <summary>
+        /// 设置相机参数
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        int SetCameraParam(CameraInfoModel  param);
+
+        /// <summary>
         /// 设置相机IP
         /// </summary>
         /// <param name="oldip"></param>

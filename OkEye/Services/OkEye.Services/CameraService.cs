@@ -193,6 +193,27 @@ namespace OkEye.Services
             return camera3DManager.cameraInfoModel;
         }
 
+        public int SetCameraParam(CameraInfoModel param)
+        {
+            string value = param.Exposure;
+            // 转整数
+            int xvalue = int.Parse(value);
+            StringVector paramGroupNames = new StringVector();
+            camera3DManager.cam3d.cam.GetParamGroups(camera3DManager.currCamInfo, paramGroupNames);
+            if (0 == camera3DManager.cam3d.cam.SetValue(camera3DManager.currCamInfo, "Exposure", xvalue))
+            {
+
+                int ret = camera3DManager.cam3d.cam.ApplyParamGroup(camera3DManager.currCamInfo, "HighQualityConfig");
+                if (ret != CameraPro.AC_OK)
+                {
+                    return -1;
+                }
+            }
+            else
+                return -1;
+            return 0;
+        }
+
         /// <summary>
         /// 断开相机
         /// </summary>
@@ -230,7 +251,7 @@ namespace OkEye.Services
                 cameraInfoModel.textureWidth = cameraInfoVector[i].camParam.textureWidth;
                 cameraInfoModel.textureHeight = cameraInfoVector[i].camParam.textureHeight;
                 cameraInfoModel.irPerNum = cameraInfoVector[i].camParam.irPerNum;
-                cameraInfoModel.CameMode = cameraInfoVector[i].cameraModel;
+                cameraInfoModel.Model =  cameraInfoVector[i].cameraModel;
                 cameraInfoModel.Status = "未连接";
                 list.Add(cameraInfoModel);
             }

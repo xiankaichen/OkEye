@@ -47,10 +47,10 @@ namespace OkEye.Modules.ModuleCamera.Views
         {
             InitializeComponent();
             // 初始化3D视图，启动一个任务
-            Task.Factory.StartNew(() =>
-            {
-                Init3DViewer();
-            });
+            //Task.Factory.StartNew(() =>
+            //{
+            //Init3DViewer();
+            //});
         }
 
         /// <summary>
@@ -133,10 +133,7 @@ namespace OkEye.Modules.ModuleCamera.Views
                 camera.Azimuth(30);
                 camera.Elevation(30);
                 camera.Zoom(1);
-                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    renderer.Render();
-                }));
+                
 
             }
             catch (Exception ex)
@@ -254,6 +251,14 @@ namespace OkEye.Modules.ModuleCamera.Views
                 pcViewerControl.RenderWindow.Render();
                 pcViewerControl.Refresh();
             }));
+        }
+
+        private void pcViewerControl_Load(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                Init3DViewer();
+            });
         }
     }
 }

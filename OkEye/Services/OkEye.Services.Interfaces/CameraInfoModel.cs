@@ -39,37 +39,41 @@ namespace OkEye.Services.Interfaces
         public string Exposure { get; set; }
 
         // 增益
-        [Category("1设备参数"), PropertyOrder(16)]
+        [Category("1相机参数"), PropertyOrder(16)]
         [DisplayName("增益")]
         public string Gain { get; set; }
 
+        [Category("1设备参数"), PropertyOrder(17)]
+        [DisplayName("相机类型")]
+        public string Model { get; set; }
+
         // 拍照模式，两种：高精度，快速，默认高精度，下拉列表
         [Category("1设备参数"), PropertyOrder(17)]
-        [DisplayName("拍照模式")]
-        public string CameMode { get; set; }
+        [DisplayName("扫描类型")]
+        public ScanMode ScanMode { get; set; }
 
         // 图像宽度
-        [Category("2图像参数"), PropertyOrder(11)]
+        [Category("2相机参数"), PropertyOrder(11)]
         [DisplayName("图像宽度"), ReadOnly(true)]
         public int textureWidth { get; set; }
 
         // 图像高度
-        [Category("2图像参数"), PropertyOrder(12)]
+        [Category("2相机参数"), PropertyOrder(12)]
         [DisplayName("图像高度"), ReadOnly(true)]
         public int textureHeight { get; set; }
 
         // ir宽度
-        [Category("2图像参数"), PropertyOrder(13)]
+        [Category("2相机参数"), PropertyOrder(13)]
         [DisplayName("IR宽度"), ReadOnly(true)]
         public int irWidth { get; set; }
 
         // ir高度
-        [Category("2图像参数"), PropertyOrder(14)]
+        [Category("2相机参数"), PropertyOrder(14)]
         [DisplayName("IR高度"), ReadOnly(true)]
         public int irHeight { get; set; }
 
         // irPerNum
-        [Category("2图像参数"), PropertyOrder(15)]
+        [Category("2相机参数"), PropertyOrder(15)]
         [DisplayName("IR像素位"), ReadOnly(true)]
         public int irPerNum { get; set; }
 
@@ -78,11 +82,12 @@ namespace OkEye.Services.Interfaces
     /// <summary>
     /// 相机拍摄模式
     /// </summary>
-    public class CameraMode
+    public enum ScanMode
     {
         // 高精度和快速模式
-        public string HightAccuracy;
-        public string HightSpeed;
-
+        Speed,
+        Quality,
+        Balance,
+        HightQuality,
     }
 }

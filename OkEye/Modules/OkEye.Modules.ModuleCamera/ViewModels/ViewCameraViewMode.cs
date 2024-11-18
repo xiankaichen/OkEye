@@ -84,6 +84,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             set { SetProperty(ref cameraInfo, value); }
         }
 
+        // 相机属性窗口值发生改变
+        public DelegateCommand<CameraInfoModel> PropertyValueChangedCommand { get; private set; }
+
         /// <summary>
         /// 相机页面的构造函数，包含相机拍照，断开，显示图像，相机参数，拍照参数的显示与设置
         /// </summary>
@@ -108,6 +111,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
             _imageAggregator = imageAggregator;
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
+
+            PropertyValueChangedCommand = new DelegateCommand<CameraInfoModel>(OnPropertyValueChangedCommand);
 
             DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand );
             SnapOnceCommand = new DelegateCommand(OnSnapOnceCommand);
@@ -299,6 +304,26 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
                 _logger.LogWarning("关闭相机失败！");
             }
+        }
+
+
+        public void OnPropertyValueChangedCommand(CameraInfoModel camInfos)
+        {
+            if (camInfos == null )
+            {
+                return;
+            }
+
+            int flag = _cameraService.SetCameraParam(camInfos);
+            if (flag == 0)
+            {
+                _logger.LogInformation("相机参数设置成功");
+            }
+            else
+            {
+                _logger.LogWarning("参数设置失败!");
+            }
+
         }
 
         /// <summary>

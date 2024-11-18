@@ -3,7 +3,9 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace OkEye.Services.Interfaces
 {
-    
+    /// <summary>
+    /// 相机信息
+    /// </summary>
     public class CameraInfoModel
     {
         [Category("1设备参数"), PropertyOrder(11)]
@@ -73,6 +75,9 @@ namespace OkEye.Services.Interfaces
 
     }
 
+    /// <summary>
+    /// 相机拍摄模式
+    /// </summary>
     public class CameraMode
     {
         // 高精度和快速模式

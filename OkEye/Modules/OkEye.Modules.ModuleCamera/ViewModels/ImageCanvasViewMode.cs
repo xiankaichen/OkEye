@@ -18,61 +18,70 @@ using OpenCvSharp.Extensions;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
-    public  class ImageCanvasViewMode : RegionViewModelBase
+    /// <summary>
+    /// 图像画布视图模型
+    /// </summary>
+    public class ImageCanvasViewMode : RegionViewModelBase
     {
-        private ImageSource _imageFrame;
+        ICameraService _cameraService;               // 相机服务
+        ILogger _logger;                                        // 日志服务
+        IEventAggregator _imageAggregator;      // 图像事件聚合器
+
+        /// <summary>
+        /// 图像数据
+        /// </summary>
+        private ImageSource _imageFrame;    
         public ImageSource ImageFrame
         {
             get { return _imageFrame; }
             set { SetProperty(ref _imageFrame, value); }
         }
 
-        ICameraService _cameraService;
-        ILogger _logger;
-        private IEventAggregator _imageAggregator;
-
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="regionManager"></param>
+        /// <param name="cameraService"></param>
+        /// <param name="logger"></param>
+        /// <param name="imageAggregator"></param>
         public ImageCanvasViewMode(IRegionManager regionManager, ICameraService cameraService, 
             ILogger<ImageCanvasViewMode> logger, IEventAggregator imageAggregator) :
             base(regionManager)
         {
-            _cameraService = cameraService;
-            _logger = logger;
-            _imageAggregator = imageAggregator;
-            _imageAggregator.GetEvent<ImagePubSubEvent>().Subscribe(UpdateImageAsync);
+            _cameraService = cameraService;             // 注入相机服务
+            _logger = logger;                                      // 注入日志服务
+            _imageAggregator = imageAggregator;  // 注入图像事件聚合器
+            _imageAggregator.GetEvent<ImagePubSubEvent>().Subscribe(UpdateImageAsync);  // 订阅更新图像事件
 
-            ImageFrame = null;
-            //ImageFrame = LoadBitmap("background.png");
+            ImageFrame = null;  // 初始化图像画布视图，图像数据为空
+
+            _logger.LogInformation("初始化图像画布视图");
         }
 
+        /// <summary>
+        /// 更新图像数据
+        /// </summary>
+        /// <param name="image"></param>    图像数据
         public async void UpdateImageAsync(Mat image)
         {
             ImageSource imageSource = null;
             await Task.Run(() =>
                 {
-                    //image.ImWrite("textrue.png");
                     Bitmap bmp = image.ToBitmap();
-                    //bmp.Save("texture.bmp");
                     System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         imageSource = BitmapToImageSource(bmp);
                     }));
                     
                 });
-
             ImageFrame = imageSource;
         }
-        //public BitmapFrame LoadBitmap(string fileName)
-        //{
 
-        //    Stream pngStream = new System.IO.FileStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-        //    PngBitmapDecoder pngDecoder = new PngBitmapDecoder(pngStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-        //    BitmapFrame pngFrame = pngDecoder.Frames[0];
-
-        //    return pngFrame;
-        //}
-
-
+        /// <summary>
+        /// Bitmap转换为ImageSource
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public ImageSource BitmapToImageSource(System.Drawing.Bitmap bitmap)
         {
             try
@@ -88,23 +97,13 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             return null;
         }
 
-    ////将Bitmap对象转换成bitmapImage对象
-    //public BitmapImage ConvertBitmapToBitmapImage(Bitmap bitmap)
-    //{
-    //    MemoryStream stream = new MemoryStream();
-    //    bitmap.Save(stream, ImageFormat.Bmp);
-    //    BitmapImage image = new BitmapImage();
-    //    image.BeginInit();
-    //    image.StreamSource = stream;
-    //    image.EndInit();
-    //    return image;
-    //}
-
-    public override void OnNavigatedTo(NavigationContext navigationContext)
+        /// <summary>
+        /// 导航到页面的事件
+        /// </summary>
+        /// <param name="navigationContext"></param>
+        public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //do something
-
-            //RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
+            //TODO: do something
         }
     }
 }

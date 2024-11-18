@@ -89,7 +89,5 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             UserIP = parameters.GetValue<string>("UserIP");
             UserMask = parameters.GetValue<string>("UserMask");
         }
-
-        
     }
 }

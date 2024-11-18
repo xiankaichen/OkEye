@@ -18,16 +18,14 @@ using System.Windows.Shapes;
 namespace OkEye.Modules.ModuleCamera.Views
 {
     /// <summary>
-    /// Interaktionslogik für ImageCanvas.xaml
-    /// https://stackoverflow.com/questions/35165349/how-to-drag-rendertransform-with-mouse-in-wpf
+    /// 点云显示控件
     /// </summary>
     public partial class CloudCanvas : UserControl
     {
+        vtkRenderer renderer;                                       // vtkRenderer对象，用于显示点云
+        vtkOrientationMarkerWidget orientWidget;    // vtkOrientationMarkerWidget对象，用于显示坐标系
 
-        vtkRenderer renderer;
-        vtkOrientationMarkerWidget orientWidget;
-
-        // 设置依赖属性 public vtkRenderWindow RenderWindow
+        // 点云依赖属性
         public Mat Cloud
         {
             get { return (Mat)GetValue(CloudProperty); }
@@ -37,26 +35,32 @@ namespace OkEye.Modules.ModuleCamera.Views
             }
         }
 
+        /// <summary>
+        /// 点云依赖属性声明
+        /// </summary>
         public static readonly DependencyProperty CloudProperty;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public CloudCanvas()
         {
             InitializeComponent();
-            
-
+            // 初始化3D视图，启动一个任务
+            Task.Factory.StartNew(() =>
+            {
+                Init3DViewer();
+            });
         }
 
+        /// <summary>
+        /// 依赖属性注册
+        /// </summary>
         static CloudCanvas()
         {
-            #region 注册事件以及依赖属性
-
             CloudProperty = DependencyProperty.Register("Cloud",
-
                 typeof(Mat), typeof(CloudCanvas), new PropertyMetadata(new Mat(), 
                     new PropertyChangedCallback(OnCloudChanged)));
-
-            #endregion
-
         }
 
         /// <summary>
@@ -70,20 +74,21 @@ namespace OkEye.Modules.ModuleCamera.Views
 
             if (p != null)
             {
-               
                Mat cloud  = (Mat)e.NewValue;
                p.AddCloud2RendWindow(cloud);
             }
         }
 
-        unsafe private void Init3DViewer_Loaded(object sender, EventArgs e)
+        /// <summary>
+        /// 初始化3D视图
+        /// </summary>
+        unsafe private void Init3DViewer()
         {
             try
             {
                 // 使用vtkRenderer将vtkActor添加到vtkRenderer中
                 if (renderer == null)
                     renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
-
 
                 // 添加一个独立的坐标系到右下角，缩放不改变大小，有x/y/z标签
                 vtkAxesActor axes = vtkAxesActor.New();
@@ -115,15 +120,10 @@ namespace OkEye.Modules.ModuleCamera.Views
                 // 坐标系axes放在右下角窗口的位置
                 renderer.AddActor(axes);
 
-
-
-
-
                 // 打开渐变色背景开关
                 renderer.GradientBackgroundOn();
                 renderer.SetBackground2(10.0 / 255, 102.0 / 255, 148.0 / 255);
                 renderer.SetBackground(0, 0, 0);
-
 
                 // 添加一个视角，设置相机位置
                 vtkCamera camera = renderer.GetActiveCamera();
@@ -133,16 +133,22 @@ namespace OkEye.Modules.ModuleCamera.Views
                 camera.Azimuth(30);
                 camera.Elevation(30);
                 camera.Zoom(1);
+                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    renderer.Render();
+                }));
 
             }
             catch (Exception ex)
             {
                
             }
-
-
         }
 
+        /// <summary>
+        /// 将点云数据添加到vtkRenderer中，启动一个任务
+        /// </summary>
+        /// <param name="cloud"></param>
         public void AddCloud2RendWindow(Mat cloud)
         {
             // 启动一个任务，将点云数据添加到vtkRenderer中
@@ -150,10 +156,12 @@ namespace OkEye.Modules.ModuleCamera.Views
             {
                 ShowCloud(cloud);
             });
-
-            
         }
 
+        /// <summary>
+        /// 显示点云
+        /// </summary>
+        /// <param name="cloud"></param>
         public void ShowCloud(Mat cloud)
         {
             if (cloud == null)
@@ -169,7 +177,6 @@ namespace OkEye.Modules.ModuleCamera.Views
             {
                 renderer.RemoveAllViewProps();
             }));
-            
 
             // 将点云转成vtkPoints 
             vtkPoints points = new vtkPoints();
@@ -186,9 +193,6 @@ namespace OkEye.Modules.ModuleCamera.Views
                         vtkCellArray.InsertNextCell(1);
                         vtkCellArray.InsertCellPoint(i);
                     }
-                    //points.InsertNextPoint(pixel.Item0, pixel.Item1, pixel.Item2);
-                    //vtkCellArray.InsertNextCell(1);
-                    //vtkCellArray.InsertCellPoint(i);
                 }
             }
 
@@ -206,7 +210,6 @@ namespace OkEye.Modules.ModuleCamera.Views
             elevationFilter.SetLowPoint(0, 0, minmax[4]);
             elevationFilter.SetHighPoint(0, 0, minmax[5]);
 
-
             // 使用vtkPolyDataMapper将vtkPolyData转成vtkActor
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
             vtkAlgorithmOutput algoutput = elevationFilter.GetOutputPort(0);
@@ -221,7 +224,6 @@ namespace OkEye.Modules.ModuleCamera.Views
             //actor.GetProperty().SetColor(0, 1, 0);
             // 点云的点大小，设置为2
             actor.GetProperty().SetPointSize(2);
-
 
             renderer.AddActor(actor);
 
@@ -252,7 +254,6 @@ namespace OkEye.Modules.ModuleCamera.Views
                 pcViewerControl.RenderWindow.Render();
                 pcViewerControl.Refresh();
             }));
-           
         }
     }
 }

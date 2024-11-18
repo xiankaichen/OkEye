@@ -19,8 +19,19 @@ using OpenCvSharp.Extensions;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
+    /// <summary>
+    /// 点云显示的视图模型
+    /// </summary>
     public class ViewCloudViewMode : RegionViewModelBase
     {
+        
+        ICameraService _cameraService;  // 相机服务
+        ILogger _logger;                            // 日志服务
+        private IEventAggregator _cloudAggregator;  // 点云事件聚合器
+
+        /// <summary>
+        /// 点云数据
+        /// </summary>
         private Mat _cloud;
         public Mat Cloud
         {
@@ -28,41 +39,56 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             set { SetProperty(ref _cloud, value); }
         }
 
-        ICameraService _cameraService;
-        ILogger _logger;
-        private IEventAggregator _cloudAggregator;
-
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="regionManager"></param>    区域管理器
+        /// <param name="cameraService"></param>      相机服务
+        /// <param name="logger"></param>                   日志服务
+        /// <param name="cloudAggregator"></param>  点云事件聚合器
         public ViewCloudViewMode(IRegionManager regionManager, ICameraService cameraService,
             ILogger<ImageCanvasViewMode> logger, IEventAggregator cloudAggregator) :
             base(regionManager)
         {
-            _cameraService = cameraService;
-            _logger = logger;
-            _cloudAggregator = cloudAggregator;
-            _cloudAggregator.GetEvent<CloudPubSubEvent>().Subscribe(UpdateCloudAsync);
+            _cameraService = cameraService;          // 注入相机服务
+            _logger = logger;                                   // 注入日志服务
+            _cloudAggregator = cloudAggregator; // 注入点云事件聚合器
+
+            _cloudAggregator.GetEvent<CloudPubSubEvent>().Subscribe(UpdateCloudAsync);  // 订阅更新点云事件
 
             _cloud = null;
         }
 
+        /// <summary>
+        /// 更新点云数据，异步处理
+        /// </summary>
+        /// <param name="cloud"></param>
         public async void UpdateCloudAsync(Mat cloud)
         {
-            
+            if(cloud == null)
+            {
+                _logger.LogWarning("点云数据为空");
+                return;
+            }
+
+            if (cloud.Empty())
+            {
+                _logger.LogWarning("点云数据为空");
+                return;
+            }
             await Task.Run(() =>
             {
                 Cloud = cloud;
-                
             });
-
-            //DepthFrame = imageSource;
         }
 
-        
-
-
+        /// <summary>
+        /// 页面导航到此页面时，触发事件
+        /// </summary>
+        /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-
+            //TODO: do something
         }
     }
 }

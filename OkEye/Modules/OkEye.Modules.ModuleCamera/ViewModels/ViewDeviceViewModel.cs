@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -19,33 +20,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
-    public class PropertyGridDemoModel
-    {
-        [Category("Category1")]
-        public string String { get; set; }
-
-        [Category("Category2")]
-        public int Integer { get; set; }
-
-        [Category("Category2")]
-        public bool Boolean { get; set; }
-
-        [Category("Category1")]
-        public Gender Enum { get; set; }
-
-        public HorizontalAlignment HorizontalAlignment { get; set; }
-
-        public VerticalAlignment VerticalAlignment { get; set; }
-
-        public ImageSource ImageSource { get; set; }
-    }
-
-    public enum Gender
-    {
-        Male,
-        Female
-    }
-
+    
     public class DeviceInfo
     {
         private string id;
@@ -73,8 +48,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
     public class ViewDeviceViewModel : RegionViewModelBase
     {
-        public PropertyGridDemoModel DemoModel { get; private set; }
-
         private string _message;
         public string Message { get; private set; }
 
@@ -122,7 +95,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
         ConnectCameraCallBack connectCameraCallBack;
 
-
         /// <summary>
         /// 构造函数，注入依赖，包含区域管理器，消息服务，相机服务，对话框服务，日志记录器
         /// </summary>
@@ -136,45 +108,33 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             IDialogService dialogService, Logger<ViewDeviceViewModel> logger) :
             base(regionManager)
         {
-            _regionManager = regionManager;
-
-
-            _cameraService = cameraService; ;
-            _dialogService = dialogService;
+            _regionManager = regionManager; // 区域服务
+            _cameraService = cameraService; ;   // 相机服务
+            _dialogService = dialogService;        // 对话框服务
             _logger = logger;
-
-            _logger.LogInformation("启动设备模块");
-            // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
-
-            ConnectCameraCommand = new DelegateCommand(OnConnectCameraCommand);
-            DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand);
-            DiscoverCameraCommand = new DelegateCommand(OnDiscoverCamera);
-            OpenIpConfigDialogCommand = new DelegateCommand(OnOpenIpConfigDialogCommand);
-
+            
+            ConnectCameraCommand = new DelegateCommand(OnConnectCameraCommand);                 // 连接相机命令
+            DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand);        // 断开相机命令
+            DiscoverCameraCommand = new DelegateCommand(OnDiscoverCamera);                                 // 发现相机命令
+            OpenIpConfigDialogCommand = new DelegateCommand(OnOpenIpConfigDialogCommand);  // 打开IP配置对话框命令
 
             // 扫描相机
             OnDiscoverCamera();
-
-            DemoModel = new PropertyGridDemoModel
-            {
-                String = "TestString",
-                Enum = Gender.Female,
-                Boolean = true,
-                Integer = 98,
-                VerticalAlignment = VerticalAlignment.Stretch
-            };
-
+            
+            _logger.LogInformation("启动设备模块");
         }
 
         private void OnDisconnectCameraCommand()
         {
             // 启动线程连接相机
-            Thread connectCameraThr = new Thread(() => StartDisconnectCamera());
+            Thread connectCameraThr = new Thread(() => DisconnectCameraTask());
             connectCameraThr.Start();
-
         }
 
-        private void StartDisconnectCamera()
+        /// <summary>
+        /// 断开相机
+        /// </summary>
+        private void DisconnectCameraTask()
         {
             lock (CamList)
             {
@@ -219,11 +179,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            //do something
-        }
-
+        /// <summary>
+        /// 打开IP配置对话框
+        /// </summary>
         public void OnOpenIpConfigDialogCommand()
         {
             try
@@ -272,15 +230,17 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// </summary>
         public void OnConnectCameraCommand()
         {
-            // 启动线程连接相机
-            Thread connectCameraThr = new Thread(() => StartConnectCamera());
-            connectCameraThr.Start();
+            // 连接相机，启动一个任务
+            Task.Factory.StartNew(() =>
+            {
+                ConnectCameraTask();
+            });
         }
 
         /// <summary>
         /// 连接相机
         /// </summary>
-        public void StartConnectCamera()
+        public void ConnectCameraTask()
         {
             if (_cameraService == null)
             {
@@ -330,10 +290,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                         var error = nr.Error;
                         var result = nr.Result;
                     });
-
             }));
-
-
         }
 
         /// <summary>
@@ -349,7 +306,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 {
                     var error = nr.Error;
                     var result = nr.Result;
-                    // put a breakpoint here and checkout what NavigationResult contains
                 });
 
         }
@@ -359,16 +315,18 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// </summary>
         public void OnDiscoverCamera()
         {
-            scanDeviceThr = new Thread(() => StartScanDevice());
-            scanDeviceThr.Start();
+            // 启动任务，扫描设备
+            Task.Factory.StartNew(() =>
+            {
+                ScanDeviceTask();
+            });
         }
 
         /// <summary>
         /// 启动程序后，创建线程，定时扫描设备
         /// </summary>
-        public void StartScanDevice()
+        public void ScanDeviceTask()
         {
-
             _logger.LogInformation("扫描相机...");
             // 创建线程，定时扫描
             int count = 0;
@@ -436,6 +394,15 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 导航到视图
+        /// </summary>
+        /// <param name="navigationContext"></param>
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            //TODO: do something
         }
     }
 }

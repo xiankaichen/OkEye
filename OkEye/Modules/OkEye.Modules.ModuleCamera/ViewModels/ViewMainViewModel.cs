@@ -8,30 +8,28 @@ using Prism.Regions;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
+    /// <summary>
+    /// 主页面视图模型
+    /// </summary>
     public class ViewMainViewModel : RegionViewModelBase
     {
-        private string _message;
-        public string Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
-
-        private Logger<ViewMainViewModel> _logger;
-
-        public ViewMainViewModel(IRegionManager regionManager, IMessageService messageService, 
-            ICameraService cameraService, Logger<ViewMainViewModel> logger) :
+        private Logger<ViewMainViewModel> _logger;  // 日志服务
+        
+        public ViewMainViewModel(IRegionManager regionManager, Logger<ViewMainViewModel> logger) :
             base(regionManager)
         {
-            Message = messageService.GetMessage();
-            _logger = logger;
+            _logger = logger;   // 注入日志服务
 
             _logger.LogInformation("初始化主界面模块");
         }
 
+        /// <summary>
+        /// 页面导航到触发事件
+        /// </summary>
+        /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //do something
+            //TODO: do something
         }
     }
 }

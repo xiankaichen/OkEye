@@ -16,8 +16,7 @@ using System.Windows.Shapes;
 namespace OkEye.Modules.ModuleCamera.Views
 {
     /// <summary>
-    /// Interaktionslogik für ImageCanvas.xaml
-    /// https://stackoverflow.com/questions/35165349/how-to-drag-rendertransform-with-mouse-in-wpf
+    /// 图像显示控件
     /// </summary>
     public partial class ImageCanvas : Canvas
     {
@@ -36,6 +35,9 @@ namespace OkEye.Modules.ModuleCamera.Views
 
         #endregion
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public ImageCanvas()
         {
             InitializeComponent();
@@ -125,6 +127,10 @@ namespace OkEye.Modules.ModuleCamera.Views
             }
         }
 
+        /// <summary>
+        /// 设置网格可见性
+        /// </summary>
+        /// <param name="value"></param>
         public void SetGridVisibility(Visibility value)
         {
             foreach (Line line in _gridLines)
@@ -133,6 +139,11 @@ namespace OkEye.Modules.ModuleCamera.Views
             }
         }
 
+        /// <summary>
+        /// 鼠标按下事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Right)
@@ -155,12 +166,22 @@ namespace OkEye.Modules.ModuleCamera.Views
             }
         }
 
+        /// <summary>
+        /// 鼠标抬起事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _dragging = false;
             _selectedElement = null;
         }
 
+        /// <summary>
+        /// 鼠标移动事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
@@ -189,6 +210,11 @@ namespace OkEye.Modules.ModuleCamera.Views
             }
         }
 
+        /// <summary>
+        /// 鼠标滚轮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImageCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             float scaleFactor = Zoomfactor;

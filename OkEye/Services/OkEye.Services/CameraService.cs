@@ -9,15 +9,26 @@ using CameraInfoModel = OkEye.Services.Interfaces.CameraInfoModel;
 
 namespace OkEye.Services
 {
+    /// <summary>
+    /// 相机服务
+    /// </summary>
     public class CameraService : ICameraService
     {
         private Camera3DManager camera3DManager;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public CameraService()
         {
             camera3DManager = Camera3DManager.Instance;
         }
 
+        /// <summary>
+        /// 拍照
+        /// </summary>
+        /// <param name="frame"></param>  帧数据
+        /// <returns></returns>
         public int Capture(ref OkFrameData frame)
         {
             FrameData framedata = new FrameData();
@@ -35,7 +46,12 @@ namespace OkEye.Services
             int irheight = camera3DManager.currCamInfo.camParam.irHeight;
 
             uint texturesize = framedata.textureSize;
+            if (framedata.textureSize == 0)
+            {
+                // 图像数据无效
+                return -1;
 
+            }
             unsafe
             {
                 Util util = new Util();
@@ -109,8 +125,12 @@ namespace OkEye.Services
             return 0;
         }
 
-
-
+        /// <summary>
+        /// 图像byte转Mat
+        /// </summary>
+        /// <param name="rgb"></param>
+        /// <param name="camparam"></param>
+        /// <returns></returns>
         unsafe public Mat textureByte2Mat(byte* rgb, CameraParam camparam)
         {
             int length = camparam.textureWidth * camparam.textureHeight * 3;
@@ -131,12 +151,23 @@ namespace OkEye.Services
             return matpic;
         }
 
+        /// <summary>
+        /// 设置相机IP
+        /// </summary>
+        /// <param name="oldip"></param>
+        /// <param name="newip"></param>
+        /// <returns></returns>
         public int SetCameraIP(string oldip, string newip)
         {
             camera3DManager.SetCameraIP(oldip, newip);
             return 0;
         }
 
+        /// <summary>
+        /// 连接相机
+        /// </summary>
+        /// <param name="cameraInfo"></param>
+        /// <returns></returns>
         public int ConnectCamera(CameraInfoModel cameraInfo)
         {
             int flag =  camera3DManager.ConnectCamera(cameraInfo.CameraIP);
@@ -153,11 +184,20 @@ namespace OkEye.Services
 
         }
 
+        /// <summary>
+        /// 获取相机信息
+        /// </summary>
+        /// <returns></returns>
         public CameraInfoModel GetCameraInfo()
         {
             return camera3DManager.cameraInfoModel;
         }
 
+        /// <summary>
+        /// 断开相机
+        /// </summary>
+        /// <param name="cameraInfo"></param>   相机信息
+        /// <returns></returns>
         public int DisconnectCamera(CameraInfoModel cameraInfo)
         {
             if (0 != camera3DManager.DisconnectCamera())
@@ -167,6 +207,10 @@ namespace OkEye.Services
             return 0;
         }
 
+        /// <summary>
+        /// 发现设备列表
+        /// </summary>
+        /// <returns></returns>
         public List<CameraInfoModel> DiscoveryDeviceList()
         {
             List<CameraInfoModel> list = new List<CameraInfoModel>();
@@ -191,11 +235,6 @@ namespace OkEye.Services
                 list.Add(cameraInfoModel);
             }
             return list;
-        }
-
-        public int Capture(ref FrameData frame)
-        {
-            throw new NotImplementedException();
         }
     }
 }

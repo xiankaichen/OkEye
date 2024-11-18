@@ -31,19 +31,31 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         ILogger _logger;
         private IEventAggregator _depthAggregator;
 
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="regionManager"></param>    区域管理器
+        /// <param name="cameraService"></param>      相机服务
+        /// <param name="logger"></param>                   日志服务
+        /// <param name="depthAggregator"></param>  深度事件聚合器
         public DepthCanvasViewMode(IRegionManager regionManager, ICameraService cameraService, 
             ILogger<ImageCanvasViewMode> logger, IEventAggregator depthAggregator) :
             base(regionManager)
         {
-            _cameraService = cameraService;
-            _logger = logger;
-            _depthAggregator = depthAggregator;
-            _depthAggregator.GetEvent<DepthPubSubEvent>().Subscribe(UpdateDepthAsync);
+            _cameraService = cameraService;             // 注入相机服务
+            _logger = logger;                                       // 注入日志服务
+            _depthAggregator = depthAggregator;    // 注入深度事件聚合器
+            _depthAggregator.GetEvent<DepthPubSubEvent>().Subscribe(UpdateDepthAsync);  // 订阅更新深度事件
 
             DepthFrame = null;
+
+            _logger.LogInformation("初始化深度画布视图");
         }
 
+        /// <summary>
+        /// 更新深度图像
+        /// </summary>
+        /// <param name="image"></param>
         public async void UpdateDepthAsync(Mat image)
         {
             ImageSource imageSource = null;
@@ -59,6 +71,11 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             DepthFrame = imageSource;
         }
 
+        /// <summary>
+        /// Bitmap转ImageSource
+        /// </summary>
+        /// <param name="bitmap"></param>   位图
+        /// <returns></returns>
         public ImageSource BitmapToImageSource(System.Drawing.Bitmap bitmap)
         {
             try
@@ -75,10 +92,13 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             return null;
         }
 
-
+        /// <summary>
+        /// 导航到页面的事件
+        /// </summary>
+        /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-
+            //TODO: do something
         }
     }
 }

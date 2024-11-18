@@ -11,6 +11,5 @@ namespace OkEye.Views
         {
             InitializeComponent();
         }
-
     }
 }

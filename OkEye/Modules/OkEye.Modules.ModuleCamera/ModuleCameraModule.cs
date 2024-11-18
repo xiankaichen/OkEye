@@ -25,7 +25,7 @@ namespace OkEye.Modules.ModuleCamera
             _regionManager.RequestNavigate(RegionNames.ContentRegionMenu, "ViewMenu");
             _regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud"); ;
             _regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage"); ;
-            _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewDevice"); ;
+            _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera"); ;
             _regionManager.RequestNavigate(RegionNames.ContentRegionStatus, "ViewStatusBar");
             _regionManager.RequestNavigate(RegionNames.ContentRegionLog, "ViewLog");
         }

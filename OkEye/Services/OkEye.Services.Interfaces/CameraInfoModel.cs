@@ -33,24 +33,24 @@ namespace OkEye.Services.Interfaces
         [DisplayName("MAC地址"), ReadOnly(true)]
         public string MacAdress { get; set; }
 
-        // 设置曝光
-        [Category("1设备参数"), PropertyOrder(15)]
-        [DisplayName("曝光(ms)")]
-        public string Exposure { get; set; }
-
-        // 增益
-        [Category("1相机参数"), PropertyOrder(16)]
-        [DisplayName("增益")]
-        public string Gain { get; set; }
-
         [Category("1设备参数"), PropertyOrder(17)]
-        [DisplayName("相机类型")]
+        [DisplayName("相机类型"), ReadOnly(true)]
         public string Model { get; set; }
 
         // 拍照模式，两种：高精度，快速，默认高精度，下拉列表
         [Category("1设备参数"), PropertyOrder(17)]
         [DisplayName("扫描类型")]
         public ScanMode ScanMode { get; set; }
+
+        // 设置曝光
+        [Category("2相机参数"), PropertyOrder(15)]
+        [DisplayName("曝光(ms)")]
+        public string Exposure { get; set; }
+
+        // 增益
+        [Category("2相机参数"), PropertyOrder(16)]
+        [DisplayName("增益")]
+        public string Gain { get; set; }
 
         // 图像宽度
         [Category("2相机参数"), PropertyOrder(11)]

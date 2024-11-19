@@ -12,19 +12,27 @@ namespace OkEye.Modules.ModuleCamera
 {
     public class ModuleCameraModule : IModule
     {
-        private readonly IRegionManager _regionManager; 
+        private readonly IRegionManager _regionManager;
+        private readonly IContainerExtension _container;
 
-        public ModuleCameraModule(IRegionManager regionManager)
+        public ModuleCameraModule(IRegionManager regionManager, IContainerExtension container)
         {
             _regionManager = regionManager;
+            _container = container;
+            
+           
+
+
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
+
+            RegionManager.UpdateRegions();
             _regionManager.RequestNavigate(RegionNames.MainRegion, "ViewMain");
             _regionManager.RequestNavigate(RegionNames.ContentRegionMenu, "ViewMenu");
-            _regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud"); ;
-            _regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage"); ;
+            //_regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud"); ;
+            //_regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage"); ;
             _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewDevice"); ;
             _regionManager.RequestNavigate(RegionNames.ContentRegionStatus, "ViewStatusBar");
             _regionManager.RequestNavigate(RegionNames.ContentRegionLog, "ViewLog");

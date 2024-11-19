@@ -18,7 +18,7 @@ using OpenCvSharp.Extensions;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
-    public  class DepthCanvasViewMode : RegionViewModelBase
+    public  class ViewDepthViewModel : RegionViewModelBase
     {
         private ImageSource depthFrame;
         public ImageSource DepthFrame
@@ -38,8 +38,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="cameraService"></param>      相机服务
         /// <param name="logger"></param>                   日志服务
         /// <param name="depthAggregator"></param>  深度事件聚合器
-        public DepthCanvasViewMode(IRegionManager regionManager, ICameraService cameraService, 
-            ILogger<ImageCanvasViewMode> logger, IEventAggregator depthAggregator) :
+        public ViewDepthViewModel(IRegionManager regionManager, ICameraService cameraService, 
+            ILogger<ViewDepthViewModel> logger, IEventAggregator depthAggregator) :
             base(regionManager)
         {
             _cameraService = cameraService;             // 注入相机服务

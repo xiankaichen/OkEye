@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Prism.Ioc;
+using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,13 @@ namespace OkEye.Modules.ModuleCamera.Views
     /// </summary>
     public partial class ViewCamera : UserControl
     {
-        public ViewCamera()
+        public ViewCamera(IRegionManager regionManager, IContainerExtension container)
         {
             InitializeComponent();
+
+            //重新刷新区域，否则导航点云图像和深度图页面失败
+            RegionManager.SetRegionManager(this, container.Resolve<IRegionManager>());
+            RegionManager.UpdateRegions();
         }
 
         private void _propertyGrid_PropertyValueChanged(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventArgs e)

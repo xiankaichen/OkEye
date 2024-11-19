@@ -22,7 +22,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
     /// <summary>
     /// 点云显示的视图模型
     /// </summary>
-    public class ViewCloudViewMode : RegionViewModelBase
+    public class ViewCloudViewModel : RegionViewModelBase
     {
         
         ICameraService _cameraService;  // 相机服务
@@ -46,8 +46,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="cameraService"></param>      相机服务
         /// <param name="logger"></param>                   日志服务
         /// <param name="cloudAggregator"></param>  点云事件聚合器
-        public ViewCloudViewMode(IRegionManager regionManager, ICameraService cameraService,
-            ILogger<ImageCanvasViewMode> logger, IEventAggregator cloudAggregator) :
+        public ViewCloudViewModel(IRegionManager regionManager, ICameraService cameraService,
+            ILogger<ViewImageViewModel> logger, IEventAggregator cloudAggregator) :
             base(regionManager)
         {
             _cameraService = cameraService;          // 注入相机服务

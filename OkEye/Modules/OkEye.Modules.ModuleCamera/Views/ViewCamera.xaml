@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:regions="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:core="clr-namespace:OkEye.Core;assembly=OkEye.Core"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
@@ -70,7 +70,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <DockPanel>
-                            <ContentControl regions:RegionManager.RegionName="{x:Static core:RegionNames.FrameDataRegion}" />
+                            <ContentControl prism:RegionManager.RegionName="FrameDataRegion" ></ContentControl>
                         </DockPanel>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -91,7 +91,7 @@
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PropertyValueChanged">
-                                                <regions:InvokeCommandAction Command="{Binding PropertyValueChangedCommand}"
+                                                <prism:InvokeCommandAction Command="{Binding PropertyValueChangedCommand}"
                                                                            CommandParameter="{Binding CameraInfo}"
                                                                            
                                                                            AutoEnable="true" />

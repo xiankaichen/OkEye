@@ -21,7 +21,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
     /// <summary>
     /// 图像画布视图模型
     /// </summary>
-    public class ImageCanvasViewMode : RegionViewModelBase
+    public class ViewImageViewModel : RegionViewModelBase
     {
         ICameraService _cameraService;               // 相机服务
         ILogger _logger;                                        // 日志服务
@@ -44,8 +44,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="cameraService"></param>
         /// <param name="logger"></param>
         /// <param name="imageAggregator"></param>
-        public ImageCanvasViewMode(IRegionManager regionManager, ICameraService cameraService, 
-            ILogger<ImageCanvasViewMode> logger, IEventAggregator imageAggregator) :
+        public ViewImageViewModel(IRegionManager regionManager, ICameraService cameraService, 
+            ILogger<ViewImageViewModel> logger, IEventAggregator imageAggregator) :
             base(regionManager)
         {
             _cameraService = cameraService;             // 注入相机服务

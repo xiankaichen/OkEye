@@ -284,12 +284,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 tmpcamlist[0] = curCameraInfo;
                 CamList = new List<CameraInfoModel>();
                 CamList = tmpcamlist;
-                RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera",
-                    (NavigationResult nr) =>
-                    {
-                        var error = nr.Error;
-                        var result = nr.Result;
-                    });
+                RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera");
             }));
         }
 

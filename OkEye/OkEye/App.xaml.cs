@@ -88,9 +88,9 @@ namespace OkEye
         protected override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.Register<ViewImage, ImageCanvasViewMode>();
-            ViewModelLocationProvider.Register<ViewDepth, DepthCanvasViewMode>();
-            ViewModelLocationProvider.Register<ViewCloud, ViewCloudViewMode>();
+            //ViewModelLocationProvider.Register<ViewImage, ImageCanvasViewMode>();
+            //ViewModelLocationProvider.Register<ViewDepth, DepthCanvasViewMode>();
+            //ViewModelLocationProvider.Register<ViewCloud, ViewCloudViewMode>();
 
         }
     }

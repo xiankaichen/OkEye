@@ -17,6 +17,8 @@ using System.Windows.Media;
 using HandyControl.Controls;
 using System.Windows;
 using MessageBox = System.Windows.MessageBox;
+using OkEye.Modules.ModuleCamera.Views;
+using Prism.Ioc;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
@@ -28,6 +30,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private ICameraService _cameraService;                       // 相机服务
         private IEventAggregator _imageAggregator;              // 图片聚合器，支持更新图片，深度图和点云数据的发送
         private Logger<ViewCameraViewModel> _logger;      // 日志记录器
+        private readonly IContainerExtension _container;        // 容器扩展
+
 
         private bool isSnapRepeat = false;  // 是否在连续拍照
 
@@ -37,7 +41,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand ShowCloudCommand { get; private set; }                   // 按钮事件，显示点云命令
         public DelegateCommand ShowDepthCommand { get; private set; }                   // 按钮事件，显示深度图命令
         public DelegateCommand ShowImageCommand { get; private set; }                   // 按钮事件，显示图像命令
-
+        
         // 单次拍照按钮背景色
         SolidColorBrush _onceSnapButtonBackground;
         public SolidColorBrush OnceSnapButtonBackground
@@ -94,10 +98,13 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="cameraService"></param>           相机服务
         /// <param name="logger"></param>                        日志服务
         /// <param name="imageAggregator"></param>      显示图像聚合事件
-        public ViewCameraViewModel(IRegionManager regionManager, ICameraService cameraService,
+        public ViewCameraViewModel(IRegionManager regionManager,
+            ICameraService cameraService,
             Logger<ViewCameraViewModel> logger, IEventAggregator imageAggregator) :
             base(regionManager)
         {
+            _imageAggregator = imageAggregator;
+
             _cameraService = cameraService;
             _logger = logger;
             _logger.LogInformation("初始化相机模块");
@@ -109,7 +116,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103,58,183));
             ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103,58,183));
 
-            _imageAggregator = imageAggregator;
             // 将ViewDevice 和 ViewMain 两个视图添加到MainContentRegion中
 
             PropertyValueChangedCommand = new DelegateCommand<CameraInfoModel>(OnPropertyValueChangedCommand);
@@ -120,6 +126,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowCloudCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
+                //_region.Activate(_viewCloud);
                 DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 CloudButtonBackground = new SolidColorBrush(Colors.Orange); 
                 ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
@@ -127,6 +134,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowDepthCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
+                //_region.Activate(_viewDepth);
                 DepthButtonBackground = new SolidColorBrush(Colors.Orange);
                 CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
@@ -135,16 +143,18 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowImageCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
+                //_region.Activate(_viewImage);
                 DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 ImageButtonBackground = new SolidColorBrush(Colors.Orange); 
             });
+            
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
 
             CameraInfo = _cameraService.GetCameraInfo();
 
-            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
-            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
-            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
         }
         
         /// <summary>

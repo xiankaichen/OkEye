@@ -1,33 +1,61 @@
+![LOGO](OkEye/Doc/logo128.png )
 # OkEye
 
-## �������
-![LOGO](OkEye/Doc/logo128.png )
+## 目录
 
-OkEye ��һ��3D����鿴ƽ̨��֧��������֣�����������鿴���ͼƬ�����ơ����ͼ�ȹ����ܣ�֧�ֵ������ա��������ա�����ͼƬ��������ơ��������ͼ�ȹ��ܡ�
-OkEye����Prism�ܹ�������֧�ֲ�����������û����Ը����Լ������󿪷��������չOkEye�Ĺ��ܡ�֧�ָ������Ʒ���ͺŽ��룬����ӿڻ���׼��
+1. [软件简介](#section_1)
+2. [软件功能](#section_2)
+3. [运行环境](#section_3)
+4. [软件演示](#section_4)
+5. [软件界面](#section_5)
 
-## ���л���
-����������Visual Studio 2022
-�����⣺Prism��VL.OpenCV��Activiz
-����ϵͳ��Windows 10/11
+<a name="section_1"></a>
+## 软件简介
+OkEye 是一个3D相机查看平台，支持相机发现，连接相机，查看相机图片、点云、深度图等功功能；支持单次拍照、连续拍照、保存图片、保存点云、保存深度图等功能。
+OkEye基于Prism架构开发，支持插件化开发，用户可以根据自己的需求开发插件，扩展OkEye的功能。支持各类相机品牌型号接入，相机接口化标准。
+
+<a name="section_2"></a>
+## 软件功能
+
+设备管理
+* 发现设备
+* 设备链接
+* 设备断开
+    
+相机管理
+* 单次拍照
+* 连续拍照
+* 点云显示
+* 深度图显示
+* 图像显示
+* 相机参数设置
+
+<a name="section_3"></a>
+## 运行环境
+开发环境：Visual Studio 2022
+依赖库：Prism、VL.OpenCV、Activiz
+操作系统：Windows 10/11
+
+<a name="section_4"></a>
+## 软件演示
+软件演示，如下图所示：
+![软件演示](OkEye/Doc/Demo.gif "软件演示，软件显示界面")
+
+<a name="section_5"></a>
+## 软件界面
+软件主界面，如下图所示：
+![软件主界面](OkEye/Doc/MainPage.png "软件主界面，设备连接界面")
+
+软件相机点云界面，如下图所示：
+![软件相机点云界面](OkEye/Doc/CameraCloudPage.png "软件相机点云看界面")
+
+软件相机深度图界面，如下图所示：
+![软件相机深度图界面](OkEye/Doc/CameraDepthPage.png "软件相机深度图界面")
+
+软件相机图像界面，如下图所示：
+![软件相机图像界面](OkEye/Doc/CameraImagePage.png "软件相机图像看界面")
+
+软件关于界面，如下图所示：
+![软件关于](OkEye/Doc/AboutDialog.png "软件相机图像看界面")
 
 
-## ������ʾ
-������ʾ������ͼ��ʾ��
-![������ʾ](OkEye/Doc/Demo.gif "������ʾ��������ʾ����")
-
-## ��������
-���������棬����ͼ��ʾ��
-![����������](OkEye/Doc/MainPage.png "���������棬�豸���ӽ���")
-
-����������ƽ��棬����ͼ��ʾ��
-![����������ƽ���](OkEye/Doc/CameraCloudPage.png "����������ƿ�����")
-
-����������ͼ���棬����ͼ��ʾ��
-![����������ͼ����](OkEye/Doc/CameraDepthPage.png "����������ͼ����")
-
-�������ͼ����棬����ͼ��ʾ��
-![�������ͼ�����](OkEye/Doc/CameraImagePage.png "�������ͼ�񿴽���")
-
-�������ڽ��棬����ͼ��ʾ��
-![��������](OkEye/Doc/AboutDialog.png "�������ͼ�񿴽���")

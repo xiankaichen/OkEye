@@ -322,21 +322,21 @@ namespace OkEye.Services.ZkrhCamera
                 float exposure = 0;
                 if (cam3d.cam.GetValue(currCamInfo, "Exposure", ref exposure) == 0)
                 {
-                    cameraInfoModel.Exposure = exposure.ToString();
+                    cameraInfoModel.Exposure = exposure;
                 }
                 else
                 {
-                    cameraInfoModel.Exposure = "0";
+                    cameraInfoModel.Exposure = 0;
                 }
                 // 设置增益
                 float gain = 0;
                 if (cam3d.cam.GetValue(currCamInfo, "Gain", ref gain) == 0)
                 {
-                    cameraInfoModel.Gain = gain.ToString();
+                    cameraInfoModel.Gain = gain;
                 }
                 else
                 {
-                    cameraInfoModel.Gain = "0";
+                    cameraInfoModel.Gain = 0;
                 }
 
                 cameraInfoModel.Model =  currCamInfo.cameraModel; 

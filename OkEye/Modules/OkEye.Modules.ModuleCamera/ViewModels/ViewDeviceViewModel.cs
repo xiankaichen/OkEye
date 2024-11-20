@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,38 +22,15 @@ using static System.Net.Mime.MediaTypeNames;
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
     
-    public class DeviceInfo
-    {
-        private string id;
-
-        public string Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        private string camIP;
-        public string CameraIP
-        {
-            get { return camIP; }
-            set { camIP = value; }
-        }
-
-        private string camStatus;
-        public string CameraStatus
-        {
-            get { return camStatus; }
-            set { camStatus = value; }
-        }
-    }
+    
 
     public class ViewDeviceViewModel : RegionViewModelBase
     {
         private string _message;
         public string Message { get; private set; }
 
-        private DeviceInfo _deviceInfo;
-        public DeviceInfo DeviceInfo
+        private DeviceInfoModel _deviceInfo;
+        public DeviceInfoModel DeviceInfo
         {
             get { return _deviceInfo; }
             set { SetProperty(ref _deviceInfo, value); }
@@ -163,8 +141,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         CameraInfoModel curCameraInfo = _cameraService.GetCameraInfo();
-                        CameraInfo = null;
                         CameraInfo = curCameraInfo;
+                        DeviceInfo = null;
+                        DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
 
                         List<CameraInfoModel> tmpcamlist = CamList;
                         tmpcamlist[0] = curCameraInfo;
@@ -177,6 +156,24 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     _logger.LogWarning("关闭相机失败！");
                 }
             }
+        }
+
+        public DeviceInfoModel ConvertCameraInfo2DeviceInfo(CameraInfoModel cameraInfo)
+        {
+            DeviceInfoModel deviceinfo = new DeviceInfoModel();
+            deviceinfo.CameraIP = cameraInfo.CameraIP;
+            deviceinfo.MacAdress = cameraInfo.MacAdress;
+            deviceinfo.Model = cameraInfo.Model;
+            deviceinfo.Name = cameraInfo.Name;
+            deviceinfo.Serial = cameraInfo.Serial;
+            deviceinfo.Status = cameraInfo.Status;
+            deviceinfo.UserIP = cameraInfo.UserIP;
+            deviceinfo.irHeight = cameraInfo.irHeight;
+            deviceinfo.irWidth = cameraInfo.irWidth;
+            deviceinfo.irPerNum = cameraInfo.irPerNum;
+            deviceinfo.textureHeight = cameraInfo.textureHeight;
+            deviceinfo.textureWidth = cameraInfo.textureWidth;
+            return deviceinfo;
         }
 
         /// <summary>
@@ -278,8 +275,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             // 更新界面
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                CameraInfo = null;
                 CameraInfo = curCameraInfo;
+                DeviceInfo = null;
+                DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
                 List<CameraInfoModel> tmpcamlist = CamList;
                 tmpcamlist[0] = curCameraInfo;
                 CamList = new List<CameraInfoModel>();
@@ -371,7 +369,13 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 CamList = camList;
                 if (camList.Count > 0)
                 {
-                    CameraInfo = camList[0];
+
+                    CameraInfoModel tmpCameraInfo = camList[0];
+
+
+                    CameraInfo = tmpCameraInfo;
+                    DeviceInfo = null;
+                    DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
                 }
                 else
                 {

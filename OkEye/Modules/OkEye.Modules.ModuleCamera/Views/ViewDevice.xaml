@@ -24,7 +24,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
                     <Grid >
-                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding CameraInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" Background="{x:Null}" BorderBrush="{x:Null}" >
+                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding DeviceInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" Background="{x:Null}" BorderBrush="{x:Null}" >
                             <xctk:PropertyGrid.Foreground>
                                 <ImageBrush/>
                             </xctk:PropertyGrid.Foreground>

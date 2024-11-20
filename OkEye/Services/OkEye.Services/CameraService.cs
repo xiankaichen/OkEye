@@ -195,12 +195,10 @@ namespace OkEye.Services
 
         public int SetCameraParam(CameraInfoModel param)
         {
-            string value = param.Exposure;
-            // 转整数
-            int xvalue = int.Parse(value);
+            float value = param.Exposure;
             StringVector paramGroupNames = new StringVector();
             camera3DManager.cam3d.cam.GetParamGroups(camera3DManager.currCamInfo, paramGroupNames);
-            if (0 == camera3DManager.cam3d.cam.SetValue(camera3DManager.currCamInfo, "Exposure", xvalue))
+            if (0 == camera3DManager.cam3d.cam.SetValue(camera3DManager.currCamInfo, "Exposure", value))
             {
 
                 int ret = camera3DManager.cam3d.cam.ApplyParamGroup(camera3DManager.currCamInfo, "HighQualityConfig");
@@ -253,6 +251,8 @@ namespace OkEye.Services
                 cameraInfoModel.irPerNum = cameraInfoVector[i].camParam.irPerNum;
                 cameraInfoModel.Model =  cameraInfoVector[i].cameraModel;
                 cameraInfoModel.Status = "未连接";
+                cameraInfoModel.Gain = 0;
+                cameraInfoModel.Exposure = 0;
                 list.Add(cameraInfoModel);
             }
             return list;

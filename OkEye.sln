@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kitware.mummy.Runtime", "Ok
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kitware.VTK", "OkEye\Modules\Kitware.VTK\Kitware.VTK.csproj", "{16515888-EF38-4A3D-8FD0-C9DB75744844}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OkEye.Services.VirtualCamera", "OkEye\Services\OkEye.Services.VirtualCamera\OkEye.Services.VirtualCamera.csproj", "{CBA8E666-A9AA-4E19-A6DC-D38C9ED6C901}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{16515888-EF38-4A3D-8FD0-C9DB75744844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16515888-EF38-4A3D-8FD0-C9DB75744844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16515888-EF38-4A3D-8FD0-C9DB75744844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA8E666-A9AA-4E19-A6DC-D38C9ED6C901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA8E666-A9AA-4E19-A6DC-D38C9ED6C901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA8E666-A9AA-4E19-A6DC-D38C9ED6C901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA8E666-A9AA-4E19-A6DC-D38C9ED6C901}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{5B256CD2-86C6-4D4E-B214-A5ECF5871D75} = {DDDF77D7-3C0E-49AC-ACC9-3889E0906C5B}
 		{41E8C9D5-6A49-43C5-9357-A841767FA53B} = {DDDF77D7-3C0E-49AC-ACC9-3889E0906C5B}
 		{16515888-EF38-4A3D-8FD0-C9DB75744844} = {DDDF77D7-3C0E-49AC-ACC9-3889E0906C5B}
+		{CBA8E666-A9AA-4E19-A6DC-D38C9ED6C901} = {236F5A62-5065-4A1E-A1B5-D71CF58CB7D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D1992E6-FF59-429A-AF4D-D10429D78B97}

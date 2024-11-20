@@ -9,19 +9,27 @@ namespace OkEye.Services.VirtualCamera
 {
     public class VirtualCamera
     {
-        private CameraInfoModel camerainfo;
-        private OkFrameData framedata;
-        private List<CameraInfoModel> camerainfolist;
+        private CameraInfoModel camerainfo;                     // 相机信息
+        private OkFrameData framedata;                              // 帧数据
+        private List<CameraInfoModel> camerainfolist;       // 相机列表
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public VirtualCamera()
         {
-            camerainfo = new CameraInfoModel(model:"CS-虚拟相机",irHeight:1024,irWidth:1280,
-                textureHeight:2280,textureWidth:3000);
+            camerainfo = new CameraInfoModel(model: "CS-虚拟相机", irHeight: 1024, irWidth: 1280,
+                textureHeight: 2280, textureWidth: 3000);
             camerainfolist = new List<CameraInfoModel>();
             camerainfolist.Add(camerainfo);
 
             framedata = new OkFrameData();
         }
 
+        /// <summary>
+        /// 发现设备列表
+        /// </summary>
+        /// <returns></returns>
         public List<CameraInfoModel> DiscoveryDeviceList()
         {
             if (camerainfolist.Count == 0)
@@ -31,6 +39,11 @@ namespace OkEye.Services.VirtualCamera
             return camerainfolist;
         }
 
+        /// <summary>
+        /// 连接相机
+        /// </summary>
+        /// <param name="incamerainfo"></param>   相机信息
+        /// <returns></returns>
         public int ConnectCamera(CameraInfoModel incamerainfo)
         {
             // CameraIP和UserIP的子网段如果不相同，那么返回
@@ -51,14 +64,20 @@ namespace OkEye.Services.VirtualCamera
                     break;
                 }
             }
-            if(camerainfo.Status == "未连接")
+            if (camerainfo.Status == "未连接")
             {
                 return -1;
             }
             return 0;
         }
 
-        public int DisconnectCamera(CameraInfoModel incamerainfo) {
+        /// <summary>
+        ///  发现设备列表
+        /// </summary>
+        /// <param name="incamerainfo"></param> 相机信息
+        /// <returns></returns>
+        public int DisconnectCamera(CameraInfoModel incamerainfo)
+        {
             foreach (var camera in DiscoveryDeviceList())
             {
                 if (camera.CameraIP == incamerainfo.CameraIP)
@@ -74,6 +93,12 @@ namespace OkEye.Services.VirtualCamera
             }
             return 0;
         }
+
+        /// <summary>
+        /// 捕获图像
+        /// </summary>
+        /// <param name="framedata"></param>    帧数据
+        /// <returns></returns>
         public int Capture(ref OkFrameData framedata)
         {
             // 如果相机未连接，返回-1
@@ -91,6 +116,11 @@ namespace OkEye.Services.VirtualCamera
             return 0;
         }
 
+        /// <summary>
+        /// 读取tiff文件
+        /// </summary>
+        /// <param name="path"></param> 文件路径
+        /// <returns></returns>
         private Mat readTiff2Mat(string path)
         {
             Mat image = new Mat();
@@ -107,7 +137,7 @@ namespace OkEye.Services.VirtualCamera
                 int samplesPerPixel = tif.GetField(TiffTag.SAMPLESPERPIXEL)[0].ToInt();
                 int bitsPerSample = tif.GetField(TiffTag.BITSPERSAMPLE)[0].ToInt();
                 int photo = tif.GetField(TiffTag.PHOTOMETRIC)[0].ToInt();
-                int stride = width * samplesPerPixel*4;
+                int stride = width * samplesPerPixel * 4;
                 byte[] scanline = new byte[stride];
                 image = new Mat(height, width, MatType.CV_32FC3);
                 // 将点云存入Mat
@@ -129,6 +159,12 @@ namespace OkEye.Services.VirtualCamera
             return image;
         }
 
+        /// <summary>
+        /// 设置相机IP
+        /// </summary>
+        /// <param name="oldip"></param>
+        /// <param name="newip"></param>
+        /// <returns></returns>
         public int SetCameraIP(string oldip, string newip)
         {
             // 从camerainfolist中找到对应的相机，并修改
@@ -143,22 +179,29 @@ namespace OkEye.Services.VirtualCamera
             return 0;
         }
 
+        /// <summary>
+        /// 获取相机信息
+        /// </summary>
+        /// <returns></returns>
         public CameraInfoModel GetCameraInfo()
         {
             // 如果相机未连接，返回空
             return camerainfo;
         }
 
+        /// <summary>
+        /// 设置相机参数
+        /// </summary>
+        /// <param name="param"></param>    相机参数
+        /// <returns></returns>
         public int SetCameraParam(CameraInfoModel param)
         {
-            if(camerainfo.Status == "未连接")
+            if (camerainfo.Status == "未连接")
             {
                 return -1;
             }
             camerainfo = param;
             return 0;
         }
-
-
     }
 }

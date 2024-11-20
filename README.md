@@ -1,4 +1,4 @@
-![LOGO](OkEye/Doc/logo128.png )
+![LOGO](OkEye/Doc/logo128.png ) [![Build status](https://ci.appveyor.com/api/projects/status/j00uyvqnm54rdlkb?svg=true)](https://ci.appveyor.com/project/khellang/scrutor)
 # OkEye
 
 ## 目录

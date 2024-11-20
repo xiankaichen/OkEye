@@ -1,4 +1,7 @@
 ![LOGO](OkEye/Doc/logo128.png ) [![Build status](https://ci.appveyor.com/api/projects/status/j00uyvqnm54rdlkb?svg=true)](https://ci.appveyor.com/project/khellang/scrutor)
+> OkEye - 一个框架完善的3D相机查看程序，Prism框架，可无缝接入各家品牌相机的SDK。  
+> 从这个软件还可学习到现代软件架构的方法和思想。
+
 # OkEye
 
 ## 目录

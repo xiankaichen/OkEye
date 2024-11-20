@@ -24,8 +24,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Modules\OkEye.Modules.ModuleCamera\OkEye.Modules.ModuleCamera.csproj" />
     <ProjectReference Include="..\OkEye.Core\OkEye.Core.csproj" />
+    <ProjectReference Include="..\Services\OkEye.Services.AinsCamera\OkEye.Services.AinsCamera.csproj" />
+    <ProjectReference Include="..\Services\OkEye.Services.Common\OkEye.Services.Common.csproj" />
     <ProjectReference Include="..\Services\OkEye.Services.Interfaces\OkEye.Services.Interfaces.csproj" />
-    <ProjectReference Include="..\Services\OkEye.Services\OkEye.Services.csproj" />
+    <ProjectReference Include="..\Services\OkEye.Services.VirtualCamera\OkEye.Services.VirtualCamera.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\image\logo.ico" />

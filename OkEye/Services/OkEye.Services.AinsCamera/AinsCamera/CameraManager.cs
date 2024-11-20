@@ -8,7 +8,7 @@ using gen3d;
 using OkEye.Services.Interfaces;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
-namespace OkEye.Services.ZkrhCamera
+namespace OkEye.Services.AinsCamera
 {
     // CameraInfoModel is a class that stores the camera information, and is used to display the camera information in the property grid
     // CameraInfoModel is Model class

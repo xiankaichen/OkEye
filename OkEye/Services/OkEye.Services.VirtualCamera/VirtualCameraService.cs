@@ -53,7 +53,7 @@ namespace OkEye.Services.VirtualCamera
         /// <returns></returns>
         public int ConnectCamera(CameraInfoModel cameraInfo)
         {
-            int flag =  camera3DManager.ConnectCamera(ref cameraInfo);
+            int flag =  camera3DManager.ConnectCamera(cameraInfo);
             if (flag == 0)
                 return 0;
             else
@@ -96,7 +96,7 @@ namespace OkEye.Services.VirtualCamera
         /// <returns></returns>
         public List<CameraInfoModel> DiscoveryDeviceList()
         {
-            List<CameraInfoModel> list  = DiscoveryDeviceList();
+            List<CameraInfoModel> list  = camera3DManager.DiscoveryDeviceList();
             return list;
         }
     }

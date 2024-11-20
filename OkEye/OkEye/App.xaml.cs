@@ -11,9 +11,7 @@ using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
-using OkEye.Modules.ModuleCamera.ViewModels;
-using OkEye.Modules.ModuleCamera.Views;
-using Prism.Mvvm;
+using OkEye.Services.VirtualCamera;
 
 namespace OkEye
 {
@@ -38,7 +36,7 @@ namespace OkEye
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
-            containerRegistry.RegisterSingleton<ICameraService, CameraService>();
+            containerRegistry.RegisterSingleton<ICameraService, VirtualCameraService>();
             containerRegistry.RegisterSingleton<ISystemInfoService, SystemInfoService>();
         }
 

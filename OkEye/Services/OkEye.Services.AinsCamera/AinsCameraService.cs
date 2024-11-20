@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using gen3d;
 using OkEye.Services.Interfaces;
-using OkEye.Services.ZkrhCamera;
+using OkEye.Services.AinsCamera;
 using OpenCvSharp;
 using CameraInfoModel = OkEye.Services.Interfaces.CameraInfoModel;
 
@@ -12,14 +12,14 @@ namespace OkEye.Services
     /// <summary>
     /// 相机服务
     /// </summary>
-    public class CameraService : ICameraService
+    public class AinsCameraService : ICameraService
     {
         private Camera3DManager camera3DManager;
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        public CameraService()
+        public AinsCameraService()
         {
             camera3DManager = Camera3DManager.Instance;
         }

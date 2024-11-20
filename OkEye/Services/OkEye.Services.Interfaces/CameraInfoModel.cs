@@ -47,7 +47,7 @@ namespace OkEye.Services.Interfaces
         public string Model { get; set; }
 
         // 拍照模式，两种：高精度，快速，默认高精度，下拉列表
-        [Category("1设备参数"), PropertyOrder(17)]
+        [Category("2相机参数"), PropertyOrder(17)]
         [DisplayName("扫描类型")]
         [Browsable(true)]
         public ScanMode ScanMode { get; set; }

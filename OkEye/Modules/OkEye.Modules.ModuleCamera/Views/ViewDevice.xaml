@@ -52,6 +52,11 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
+                <!--<Label Content="虚拟相机" FontSize="16" Grid.Row="0"></Label>
+                <DockPanel Grid.Row="1">
+                    <ListView ItemsSource="{Binding Path=CamList }">
+                        </ListView>
+                    </DockPanel>-->
                 <Label Content="设备列表" FontSize="16" Grid.Row="0"></Label>
                 <DockPanel Grid.Row="1">
 

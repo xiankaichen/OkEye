@@ -18,4 +18,9 @@ namespace OkEye.Modules.ModuleCamera.Events
 
     }
 
+    public class CameraPubSubEvent : PubSubEvent<string>
+    {
+
+    }
+
 }

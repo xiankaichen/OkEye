@@ -13,8 +13,10 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using OkEye.Core;
 using OkEye.Core.Mvvm;
+using OkEye.Modules.ModuleCamera.Events;
 using OkEye.Services.Interfaces;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using static System.Net.Mime.MediaTypeNames;
@@ -61,6 +63,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private ICameraService _cameraService;
         public IDialogService _dialogService;
         private Logger<ViewDeviceViewModel> _logger;
+        private IEventAggregator _aggregator;
 
         public DelegateCommand OpenIpConfigDialogCommand { get; private set; }
         public DelegateCommand ConnectCameraCommand { get; private set; }
@@ -83,30 +86,71 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="logger"></param>
         public ViewDeviceViewModel(IRegionManager regionManager, IMessageService messageService,
             ICameraService cameraService,
-            IDialogService dialogService, Logger<ViewDeviceViewModel> logger) :
+            IDialogService dialogService, Logger<ViewDeviceViewModel> logger
+            ,IEventAggregator aggregator) :
             base(regionManager)
         {
             _regionManager = regionManager; // 区域服务
             _cameraService = cameraService; ;   // 相机服务
             _dialogService = dialogService;        // 对话框服务
             _logger = logger;
-            
-            ConnectCameraCommand = new DelegateCommand(OnConnectCameraCommand);                 // 连接相机命令
-            DisconnectCameraCommand = new DelegateCommand(OnDisconnectCameraCommand);        // 断开相机命令
-            DiscoverCameraCommand = new DelegateCommand(OnDiscoverCamera);                                 // 发现相机命令
-            OpenIpConfigDialogCommand = new DelegateCommand(OnOpenIpConfigDialogCommand);  // 打开IP配置对话框命令
+            _aggregator = aggregator;
 
+            // 绑定命令
+            BindingCommand();
             // 扫描相机
-            OnDiscoverCamera();
-            
+            _aggregator.GetEvent<CameraPubSubEvent>().Publish("DiscoverCamera");
+
             _logger.LogInformation("启动设备模块");
         }
 
-        private void OnDisconnectCameraCommand()
+        public void BindingCommand()
         {
-            // 启动线程连接相机
-            Thread connectCameraThr = new Thread(() => DisconnectCameraTask());
-            connectCameraThr.Start();
+            // 订阅事件
+            // 订阅断开相机事件
+            _aggregator.GetEvent<CameraPubSubEvent>().Subscribe(OnDisconnectCamera,
+                commandType => commandType == "DisconnectCamera");
+            // 订阅连接相机事件
+            _aggregator.GetEvent<CameraPubSubEvent>().Subscribe(OnConnectCamera,
+                commandType => commandType == "ConnectCamera");
+            // 订阅刷新相机事件
+            _aggregator.GetEvent<CameraPubSubEvent>().Subscribe(OnDiscoverCamera,
+                commandType => commandType == "DiscoverCamera");
+            // 订阅打开IP配置对话框事件 
+            _aggregator.GetEvent<CameraPubSubEvent>().Subscribe(OnOpenIpConfigDialog,
+                commandType => commandType == "OpenIpConfigDialog");
+
+            // 断开相机命令
+            DisconnectCameraCommand = new DelegateCommand(() =>
+            {
+                _aggregator.GetEvent<CameraPubSubEvent>().Publish("DisconnectCamera");
+            });
+            // 连接相机命令
+            ConnectCameraCommand = new DelegateCommand(() =>
+            {
+                _aggregator.GetEvent<CameraPubSubEvent>().Publish("ConnectCamera");
+            });
+            // 刷新相机命令
+            DiscoverCameraCommand = new DelegateCommand(() =>
+            {
+                _aggregator.GetEvent<CameraPubSubEvent>().Publish("DiscoverCamera");
+            });
+            // 打开IP配置对话框命令
+            OpenIpConfigDialogCommand = new DelegateCommand(() =>
+            {
+                _aggregator.GetEvent<CameraPubSubEvent>().Publish("OpenIpConfigDialog");
+            });
+
+
+        }
+
+        private void OnDisconnectCamera(string commandType)
+        {
+            // 启动任务断开相机
+            Task.Factory.StartNew(() =>
+            {
+                DisconnectCameraTask();
+            });
         }
 
         /// <summary>
@@ -179,7 +223,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <summary>
         /// 打开IP配置对话框
         /// </summary>
-        public void OnOpenIpConfigDialogCommand()
+        public void OnOpenIpConfigDialog(string commandType)
         {
             try
             {
@@ -207,7 +251,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
                         _cameraService.SetCameraIP(CameraInfo.CameraIP, NewCameraIP);
                         _logger.LogInformation("配置相机IP或者电脑IP完成");
-                        OnDiscoverCamera();
+                        OnDiscoverCamera("DiscoverCamera");
                     }
                     else
                     {
@@ -225,7 +269,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <summary>
         /// 连接相机命令
         /// </summary>
-        public void OnConnectCameraCommand()
+        public void OnConnectCamera(string commandType)
         {
             // 连接相机，启动一个任务
             Task.Factory.StartNew(() =>
@@ -306,7 +350,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <summary>
         /// 发现相机事件,启动线程扫描设备
         /// </summary>
-        public void OnDiscoverCamera()
+        public void OnDiscoverCamera(string commandType)
         {
             // 启动任务，扫描设备
             Task.Factory.StartNew(() =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using BitMiracle.LibTiff.Classic;
 using OkEye.Services.Interfaces;
@@ -18,7 +19,10 @@ namespace OkEye.Services.VirtualCamera
         /// </summary>
         public VirtualCamera()
         {
-            camerainfo = new CameraInfoModel(model: "CS-虚拟相机", irHeight: 1024, irWidth: 1280,
+            // 程序所在目
+            string path = System.AppDomain.CurrentDomain.BaseDirectory;
+            string picpath = path + "data\\virtual3dcam.png";
+            camerainfo = new CameraInfoModel(band:"VirtualCamera", pic: picpath, model: "CS-虚拟相机", irHeight: 1024, irWidth: 1280,
                 textureHeight: 2280, textureWidth: 3000);
             camerainfolist = new List<CameraInfoModel>();
             camerainfolist.Add(camerainfo);

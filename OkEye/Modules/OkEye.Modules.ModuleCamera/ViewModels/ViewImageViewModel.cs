@@ -23,7 +23,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
     /// </summary>
     public class ViewImageViewModel : RegionViewModelBase
     {
-        ICameraService _cameraService;               // 相机服务
         ILogger _logger;                                        // 日志服务
         IEventAggregator _imageAggregator;      // 图像事件聚合器
 
@@ -41,14 +40,12 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// 构造函数
         /// </summary>
         /// <param name="regionManager"></param>
-        /// <param name="cameraService"></param>
         /// <param name="logger"></param>
         /// <param name="imageAggregator"></param>
-        public ViewImageViewModel(IRegionManager regionManager, ICameraService cameraService, 
+        public ViewImageViewModel(IRegionManager regionManager,
             ILogger<ViewImageViewModel> logger, IEventAggregator imageAggregator) :
             base(regionManager)
         {
-            _cameraService = cameraService;             // 注入相机服务
             _logger = logger;                                      // 注入日志服务
             _imageAggregator = imageAggregator;  // 注入图像事件聚合器
             _imageAggregator.GetEvent<ImagePubSubEvent>().Subscribe(UpdateImageAsync);  // 订阅更新图像事件

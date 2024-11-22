@@ -87,7 +87,7 @@
                                                        SelectedObject="{Binding CameraInfo}"   
                                                        Style="{StaticResource PropertyGridItemStyle}"
                                                        FontSize="12"
-                                                       Margin="10,10,0,0"   ShowTitle="False" ShowSummary="False" PropertyValueChanged="_propertyGrid_PropertyValueChanged"  >
+                                                       Margin="10,10,0,0"   ShowTitle="False" ShowSummary="False"   >
 
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PropertyValueChanged">

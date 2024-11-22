@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,17 +11,21 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
 using NLog;
 using OkEye.Core;
 using OkEye.Core.Mvvm;
 using OkEye.Modules.ModuleCamera.Events;
 using OkEye.Services.Interfaces;
+using OkEye.Services.VirtualCamera;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using static System.Net.Mime.MediaTypeNames;
+using Application = System.Windows.Application;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
@@ -31,12 +37,14 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private string _message;
         public string Message { get; private set; }
 
-        private DeviceInfoModel _deviceInfo;
-        public DeviceInfoModel DeviceInfo
+        private int _selectedIndex;
+        public int SelectedIndex
         {
-            get { return _deviceInfo; }
-            set { SetProperty(ref _deviceInfo, value); }
+            get { return _selectedIndex; }
+            set { SetProperty(ref _selectedIndex, value); }
         }
+
+        private List<string> _camBandList = new List<string>();
 
         List<CameraInfoModel> _camList = new List<CameraInfoModel>();
         public List<CameraInfoModel> CamList
@@ -59,16 +67,17 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             }
         }
 
-        private IRegionManager _regionManager;
-        private ICameraService _cameraService;
+        public ICameraService _cameraService { get; set; }
         public IDialogService _dialogService;
         private Logger<ViewDeviceViewModel> _logger;
         private IEventAggregator _aggregator;
+        private IContainerExtension _container;
 
         public DelegateCommand OpenIpConfigDialogCommand { get; private set; }
         public DelegateCommand ConnectCameraCommand { get; private set; }
         public DelegateCommand DisconnectCameraCommand { get; private set; }
         public DelegateCommand DiscoverCameraCommand { get; private set; }
+        public DelegateCommand CameraSelectionChangedCommand { get; private set; }
 
         private Thread scanDeviceThr;
 
@@ -80,21 +89,24 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// 构造函数，注入依赖，包含区域管理器，消息服务，相机服务，对话框服务，日志记录器
         /// </summary>
         /// <param name="regionManager"></param>
-        /// <param name="messageService"></param>
         /// <param name="cameraService"></param>
         /// <param name="dialogService"></param>
         /// <param name="logger"></param>
-        public ViewDeviceViewModel(IRegionManager regionManager, IMessageService messageService,
-            ICameraService cameraService,
+        public ViewDeviceViewModel(IRegionManager regionManager, 
             IDialogService dialogService, Logger<ViewDeviceViewModel> logger
-            ,IEventAggregator aggregator) :
+            ,IEventAggregator aggregator, IContainerExtension container) :
             base(regionManager)
         {
-            _regionManager = regionManager; // 区域服务
-            _cameraService = cameraService; ;   // 相机服务
             _dialogService = dialogService;        // 对话框服务
             _logger = logger;
             _aggregator = aggregator;
+            _container = container;
+
+            _camBandList.Add("VirtualCamera");
+            _camBandList.Add("AinsCamera");
+            _cameraService = new VirtualCameraService();
+            //_cameraService = _container.Resolve<ICameraService>("VirtualCamera");
+            //CameraInfo.Concat(_cameraService.DiscoveryDeviceList().ToList());
 
             // 绑定命令
             BindingCommand();
@@ -103,6 +115,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
             _logger.LogInformation("启动设备模块");
         }
+
 
         public void BindingCommand()
         {
@@ -119,6 +132,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             // 订阅打开IP配置对话框事件 
             _aggregator.GetEvent<CameraPubSubEvent>().Subscribe(OnOpenIpConfigDialog,
                 commandType => commandType == "OpenIpConfigDialog");
+
 
             // 断开相机命令
             DisconnectCameraCommand = new DelegateCommand(() =>
@@ -141,7 +155,32 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 _aggregator.GetEvent<CameraPubSubEvent>().Publish("OpenIpConfigDialog");
             });
 
+            // 选择相机命令
+            CameraSelectionChangedCommand = new DelegateCommand(OnCameraSelected);
 
+        }
+
+        private void OnCameraSelected()
+        {
+            if (SelectedIndex < 0)
+            {
+                return;
+            }
+            if (CamList.Count < SelectedIndex)
+            {
+                return;
+            }
+
+            //// 判断新相机当前是否在连接状态
+            //if (CameraInfo != null && CameraInfo.Status == "已连接")
+            //{
+            //    // 先断开相机
+            //    return;
+            //}
+
+            CameraInfo = CamList[SelectedIndex];
+            // 切换成响应的服务
+            _cameraService = _container.Resolve<ICameraService>(CameraInfo.Band);
         }
 
         private void OnDisconnectCamera(string commandType)
@@ -186,13 +225,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     {
                         CameraInfoModel curCameraInfo = _cameraService.GetCameraInfo();
                         CameraInfo = curCameraInfo;
-                        DeviceInfo = null;
-                        DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
-
-                        List<CameraInfoModel> tmpcamlist = CamList;
-                        tmpcamlist[0] = curCameraInfo;
-                        CamList = new List<CameraInfoModel>();
-                        CamList = tmpcamlist;
+                        CamList[SelectedIndex] = curCameraInfo;
                     }));
                 }
                 else
@@ -202,23 +235,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             }
         }
 
-        public DeviceInfoModel ConvertCameraInfo2DeviceInfo(CameraInfoModel cameraInfo)
-        {
-            DeviceInfoModel deviceinfo = new DeviceInfoModel();
-            deviceinfo.CameraIP = cameraInfo.CameraIP;
-            deviceinfo.MacAdress = cameraInfo.MacAdress;
-            deviceinfo.Model = cameraInfo.Model;
-            deviceinfo.Name = cameraInfo.Name;
-            deviceinfo.Serial = cameraInfo.Serial;
-            deviceinfo.Status = cameraInfo.Status;
-            deviceinfo.UserIP = cameraInfo.UserIP;
-            deviceinfo.irHeight = cameraInfo.irHeight;
-            deviceinfo.irWidth = cameraInfo.irWidth;
-            deviceinfo.irPerNum = cameraInfo.irPerNum;
-            deviceinfo.textureHeight = cameraInfo.textureHeight;
-            deviceinfo.textureWidth = cameraInfo.textureWidth;
-            return deviceinfo;
-        }
+       
 
         /// <summary>
         /// 打开IP配置对话框
@@ -319,34 +336,23 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             // 更新界面
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
             {
+                if (SelectedIndex == -1)
+                    return;
                 CameraInfo = curCameraInfo;
-                DeviceInfo = null;
-                DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
-                List<CameraInfoModel> tmpcamlist = CamList;
-                tmpcamlist[0] = curCameraInfo;
-                CamList = new List<CameraInfoModel>();
-                CamList = tmpcamlist;
-                RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera");
+                CamList[SelectedIndex] = curCameraInfo;
+
+                NavigationParameters pairs = new NavigationParameters();
+                pairs.Add("CamBand", _camBandList[SelectedIndex]);
+
+                RegionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera",
+                    (NavigationResult nr) =>
+                    {
+                        var error = nr.Error;
+                        var result = nr.Result;
+                    }, pairs);
             }));
         }
-
-        /// <summary>
-        /// 更新相机信息到界面
-        /// </summary>
-        /// <param name="cameraInfo"></param>
-        public void ConnectCameraUpdate(CameraInfoModel cameraInfo)
-        {
-            CameraInfo.Status = cameraInfo.Status;
-            CamList[0].Status = CameraInfo.Status;
-            _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewCamera",
-                (NavigationResult nr) =>
-                {
-                    var error = nr.Error;
-                    var result = nr.Result;
-                });
-
-        }
-
+        
         /// <summary>
         /// 发现相机事件,启动线程扫描设备
         /// </summary>
@@ -409,17 +415,26 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     CamList = new List<CameraInfoModel>();
                 }
 
-                List<CameraInfoModel> camList = _cameraService.DiscoveryDeviceList();
+                List<CameraInfoModel> camList = new List<CameraInfoModel>();
+                // 扫描虚拟相机
+               
+                foreach (var camname in _camBandList)
+                {
+                    _cameraService = _container.Resolve<ICameraService>(camname);
+                    camList = camList.Concat(_cameraService.DiscoveryDeviceList()).ToList<CameraInfoModel>();
+
+                }
+                
                 CamList = camList;
                 if (camList.Count > 0)
                 {
 
                     CameraInfoModel tmpCameraInfo = camList[0];
-
-
                     CameraInfo = tmpCameraInfo;
-                    DeviceInfo = null;
-                    DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
+                    SelectedIndex = 0;
+                    _cameraService = _container.Resolve<ICameraService>(_camBandList[SelectedIndex]);
+                    //DeviceInfo = null;
+                    //DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
                 }
                 else
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
@@ -10,6 +11,16 @@ namespace OkEye.Services.Interfaces
     /// </summary>
     public class CameraInfoModel
     {
+        [Category("1设备参数"), PropertyOrder(9)]
+        [DisplayName("品牌"), ReadOnly(true)]
+        [Browsable(true)]
+        public string Band { get; set; }
+
+        [Category("1设备参数"), PropertyOrder(10)]
+        [DisplayName("示意图"), ReadOnly(true)]
+        [Browsable(true)]
+        public string Pic { get; set; }
+
         [Category("1设备参数"), PropertyOrder(11)]
         [DisplayName("状态"), ReadOnly(true)]
         [Browsable(true)]
@@ -95,7 +106,10 @@ namespace OkEye.Services.Interfaces
         public int irPerNum { get; set; }
 
         // 带默认参数的构造函数
-        public CameraInfoModel(string status="未连接", 
+        public CameraInfoModel(
+            string band = "VirtualCamera",
+            string pic = null,
+            string status="未连接", 
             string name = "CS6100", 
             string cameraIP="192.168.11.23", 
             string userIP = "192.168.11.100", 
@@ -111,6 +125,8 @@ namespace OkEye.Services.Interfaces
             int irHeight = 2000, 
             int irPerNum = 3000)
         {
+            Band = band;
+            Pic = pic;
             Status = status;
             Name = name;
             CameraIP = cameraIP;
@@ -149,97 +165,6 @@ namespace OkEye.Services.Interfaces
 
 
         //}
-
-    }
-
-    /// <summary>
-    /// 设备信息，包括相机硬件相关的信息
-    /// </summary>
-    public class DeviceInfoModel
-    {
-        [Category("1设备参数"), PropertyOrder(11)]
-        [DisplayName("状态"), ReadOnly(true)]
-        [Browsable(true)]
-        public string Status { get; set; }
-
-        [Category("1设备参数"), PropertyOrder(11)]
-        [DisplayName("名称"), ReadOnly(true)]
-        [Browsable(true)]
-        public string Name { get; set; }
-
-        [Category("1设备参数"), PropertyOrder(12)]
-        [DisplayName("相机IP"), ReadOnly(true)]
-        [Browsable(true)]
-        public string CameraIP { get; set; }
-
-        [Category("1设备参数"), PropertyOrder(12)]
-        [DisplayName("用户IP"), ReadOnly(true)]
-        [Browsable(true)]
-        public string UserIP { get; set; }
-
-        // 相机序号
-        [Category("1设备参数"), PropertyOrder(13)]
-        [DisplayName("相机序号"), ReadOnly(true)]
-        [Browsable(true)]
-        public string Serial { get; set; }
-
-        [Category("1设备参数"), PropertyOrder(14)]
-        [DisplayName("MAC地址"), ReadOnly(true)]
-        [Browsable(true)]
-        public string MacAdress { get; set; }
-
-        [Category("1设备参数"), PropertyOrder(17)]
-        [DisplayName("相机类型"), ReadOnly(true)]
-        [Browsable(true)]
-        public string Model { get; set; }
-        
-        // 图像宽度
-        [Category("2相机参数"), PropertyOrder(11)]
-        [DisplayName("图像宽度"), ReadOnly(true)]
-        [Browsable(true)]
-        public int textureWidth { get; set; }
-
-        // 图像高度
-        [Category("2相机参数"), PropertyOrder(12)]
-        [DisplayName("图像高度"), ReadOnly(true)]
-        [Browsable(true)]
-        public int textureHeight { get; set; }
-
-        // ir宽度
-        [Category("2相机参数"), PropertyOrder(13)]
-        [DisplayName("IR宽度"), ReadOnly(true)]
-        [Browsable(true)]
-        public int irWidth { get; set; }
-
-        // ir高度
-        [Category("2相机参数"), PropertyOrder(14)]
-        [DisplayName("IR高度"), ReadOnly(true)]
-        [Browsable(true)]
-        public int irHeight { get; set; }
-
-        // irPerNum
-        [Category("2相机参数"), PropertyOrder(15)]
-        [DisplayName("IR像素位"), ReadOnly(true)]
-        [Browsable(true)]
-        public int irPerNum { get; set; }
-
-        public DeviceInfoModel()
-        {
-            Status = "未连接";
-            Name = "";
-            CameraIP = "";
-            UserIP = "";
-            Serial = "";
-            MacAdress = "";
-            Model = "";
-            textureWidth = 0;
-            textureHeight = 0;
-            irWidth = 0;
-            irHeight = 0;
-            irPerNum = 0;
-
-
-        }
 
     }
 

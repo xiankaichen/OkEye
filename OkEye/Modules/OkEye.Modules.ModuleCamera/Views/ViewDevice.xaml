@@ -7,13 +7,16 @@
              xmlns:viewmodels="clr-namespace:OkEye.Modules.ModuleCamera.ViewModels"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:interactivity="http://prismlibrary.com/"
              d:DataContext="{d:DesignInstance Type=viewmodels:ViewDeviceViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="600" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -24,7 +27,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
                     <Grid >
-                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding DeviceInfo, Mode=TwoWay}"   Margin="10,10,0,0"  PropertyValueChanged="_propertyGrid_PropertyValueChanged" ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" Background="{x:Null}" BorderBrush="{x:Null}" >
+                        <xctk:PropertyGrid x:Name="_propertyGrid"  SelectedObject="{Binding CameraInfo, Mode=TwoWay}"   Margin="10,10,0,0"   ShowSearchBox="False" ShowSortOptions="False" ShowSummary="False" ShowTitle="False" Background="{x:Null}" BorderBrush="{x:Null}" >
                             <xctk:PropertyGrid.Foreground>
                                 <ImageBrush/>
                             </xctk:PropertyGrid.Foreground>
@@ -45,40 +48,64 @@
 
             </Grid>
         </Grid>
-        <Grid Column="1">
+        <GridSplitter Grid.Column="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      Background="DimGray" 
+                      ShowsPreview="True"
+                      Height="5"
+        />
+        <Grid Column="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="35" />
                 </Grid.RowDefinitions>
-                <!--<Label Content="虚拟相机" FontSize="16" Grid.Row="0"></Label>
+                <Label Content="相机列表" FontSize="16" Grid.Row="0"></Label>
                 <DockPanel Grid.Row="1">
-                    <ListView ItemsSource="{Binding Path=CamList }">
-                        </ListView>
-                    </DockPanel>-->
-                <Label Content="设备列表" FontSize="16" Grid.Row="0"></Label>
-                <DockPanel Grid.Row="1">
+                    <ListBox Name="lstFileManager" Background ="Transparent"
+                             SelectedIndex ="{Binding SelectedIndex }"
+                             ItemsSource="{Binding Path=CamList}" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                             ScrollViewer.CanContentScroll="True" 
 
-
-                    <ListView ItemsSource="{Binding Path=CamList }">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="相机信息">
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Serial}" Header="相机序号" Width="150"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=CameraIP}" Width="120">
-                                    <GridViewColumnHeader>相机IP
-                                        <GridViewColumnHeader.ContextMenu>
-                                            <ContextMenu  Name="LastNameCM">
-                                                <MenuItem Header="Ascending" />
-                                                <MenuItem Header="Descending" />
-                                            </ContextMenu>
-                                        </GridViewColumnHeader.ContextMenu>
-                                    </GridViewColumnHeader>
-                                </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Path=Status}" Header="状态" Width="120"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                             >
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <interactivity:InvokeCommandAction Command="{Binding CameraSelectionChangedCommand}"
+                                                           AutoEnable="true" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="1" BorderBrush="DimGray">
+                                    
+                                    <Grid Margin="10" Width="150" Height="150">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" ></RowDefinition>
+                                        <RowDefinition Height="Auto" ></RowDefinition>
+                                        <RowDefinition Height="Auto" ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                    
+                                    <Image  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" OpacityMask="White" >
+                                        <Image.Source>
+                                            <BitmapImage DecodePixelWidth="320"  UriSource="{Binding Pic}" />
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock Text="{Binding Model}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                                    <TextBlock Text="{Binding Status}" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                                    </Grid>
+                                </Border >
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </DockPanel>
                 <StackPanel Grid.Row ="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Name="BtnIcon" Content="{materialDesign:PackIcon CameraFlip, Size=24}"

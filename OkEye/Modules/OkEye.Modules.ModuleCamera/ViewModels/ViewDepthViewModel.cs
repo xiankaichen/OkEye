@@ -27,7 +27,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             set { SetProperty(ref depthFrame, value); }
         }
 
-        ICameraService _cameraService;
         ILogger _logger;
         private IEventAggregator _depthAggregator;
 
@@ -35,14 +34,12 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// 构造函数
         /// </summary>
         /// <param name="regionManager"></param>    区域管理器
-        /// <param name="cameraService"></param>      相机服务
         /// <param name="logger"></param>                   日志服务
         /// <param name="depthAggregator"></param>  深度事件聚合器
-        public ViewDepthViewModel(IRegionManager regionManager, ICameraService cameraService, 
+        public ViewDepthViewModel(IRegionManager regionManager, 
             ILogger<ViewDepthViewModel> logger, IEventAggregator depthAggregator) :
             base(regionManager)
         {
-            _cameraService = cameraService;             // 注入相机服务
             _logger = logger;                                       // 注入日志服务
             _depthAggregator = depthAggregator;    // 注入深度事件聚合器
             _depthAggregator.GetEvent<DepthPubSubEvent>().Subscribe(UpdateDepthAsync);  // 订阅更新深度事件

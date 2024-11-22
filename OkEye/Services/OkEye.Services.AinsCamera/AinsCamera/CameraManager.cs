@@ -311,7 +311,9 @@ namespace OkEye.Services.AinsCamera
                 {
                     return 0;
                 }
-
+                cameraInfoModel.Band = "AinsCamera";
+                string path = AppDomain.CurrentDomain.BaseDirectory;
+                cameraInfoModel.Pic = path + "data\\ains3dcam.png";
                 cameraInfoModel.Status = "已连接";
                 cameraInfoModel.CameraIP = currCamInfo.cameraIP;
                 cameraInfoModel.UserIP = currCamInfo.userIP;

@@ -36,8 +36,8 @@ namespace OkEye
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
-            //containerRegistry.RegisterSingleton<ICameraService, VirtualCameraService>();
-            containerRegistry.RegisterSingleton < ICameraService, AinsCameraService>();
+            containerRegistry.RegisterSingleton<ICameraService, VirtualCameraService>("VirtualCamera");
+            containerRegistry.RegisterSingleton<ICameraService, AinsCameraService>("AinsCamera");
             containerRegistry.RegisterSingleton<ISystemInfoService, SystemInfoService>();
         }
 

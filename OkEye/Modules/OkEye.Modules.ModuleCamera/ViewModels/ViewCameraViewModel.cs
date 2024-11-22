@@ -19,6 +19,7 @@ using System.Windows;
 using MessageBox = System.Windows.MessageBox;
 using OkEye.Modules.ModuleCamera.Views;
 using Prism.Ioc;
+using System.Reflection.Metadata;
 
 namespace OkEye.Modules.ModuleCamera.ViewModels
 {
@@ -99,14 +100,15 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="logger"></param>                        日志服务
         /// <param name="imageAggregator"></param>      显示图像聚合事件
         public ViewCameraViewModel(IRegionManager regionManager,
-            ICameraService cameraService,
-            Logger<ViewCameraViewModel> logger, IEventAggregator imageAggregator) :
+            Logger<ViewCameraViewModel> logger, IEventAggregator imageAggregator,
+            IContainerExtension container
+            ) :
             base(regionManager)
         {
             _imageAggregator = imageAggregator;
-
-            _cameraService = cameraService;
             _logger = logger;
+            _container = container;
+
             _logger.LogInformation("初始化相机模块");
 
             OnceSnapButtonBackground = new SolidColorBrush(Color.FromRgb(103,58,183));
@@ -149,11 +151,14 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 ImageButtonBackground = new SolidColorBrush(Colors.Orange); 
             });
             
-            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
+            RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage", r =>
+            {
+               // string err = r.Error.ToString();
+            });
             RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
             RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
 
-            CameraInfo = _cameraService.GetCameraInfo();
+            
 
         }
         
@@ -342,7 +347,13 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         /// <param name="navigationContext"></param>
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            // TODO: do something
+            if (navigationContext.Parameters.ContainsKey("CamBand"))
+            {
+                string camBand = navigationContext.Parameters.GetValue<string>("CamBand");
+                _logger.LogInformation("导航到相机页面，参数：" + camBand);
+                _cameraService = _container.Resolve<ICameraService>(camBand);
+                CameraInfo = _cameraService.GetCameraInfo();
+            }
         }
     }
 }

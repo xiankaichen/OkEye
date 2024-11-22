@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using gen3d;
 using OkEye.Services.Interfaces;
@@ -239,6 +240,9 @@ namespace OkEye.Services
             for (int i = 0; i < cameraInfoVector.Count; i++)
             {
                 CameraInfoModel cameraInfoModel = new CameraInfoModel();
+                cameraInfoModel.Band = "AinsCamera";
+                string path = AppDomain.CurrentDomain.BaseDirectory;
+                cameraInfoModel.Pic = path + "data\\ains3dcam.png";
                 cameraInfoModel.Name = cameraInfoVector[i].cameraName;
                 cameraInfoModel.Serial = cameraInfoVector[i].serialNum;
                 cameraInfoModel.CameraIP = cameraInfoVector[i].cameraIP;

@@ -25,7 +25,12 @@ namespace OkEye.Modules.ModuleCamera.Views
             InitializeComponent();
         }
 
-        private void _propertyGrid_PropertyValueChanged(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventArgs e)
+        private void lstFileManager_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void lstFileManager_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

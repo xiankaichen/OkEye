@@ -31,9 +31,5 @@ namespace OkEye.Modules.ModuleCamera.Views
             RegionManager.UpdateRegions();
         }
 
-        private void _propertyGrid_PropertyValueChanged(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyValueChangedEventArgs e)
-        {
-
-        }
     }
 }

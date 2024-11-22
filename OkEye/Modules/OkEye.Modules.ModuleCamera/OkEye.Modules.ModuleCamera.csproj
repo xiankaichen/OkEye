@@ -57,6 +57,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OkEye.Core\OkEye.Core.csproj" />
     <ProjectReference Include="..\..\Services\OkEye.Services.Interfaces\OkEye.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Services\OkEye.Services.VirtualCamera\OkEye.Services.VirtualCamera.csproj" />
     <ProjectReference Include="..\Kitware.mummy.Runtime\Kitware.mummy.Runtime.csproj" />
     <ProjectReference Include="..\Kitware.VTK\Kitware.VTK.csproj" />
     <ProjectReference Include="..\OkEye.Modules.NLogViewer\src\NLogViewer\OkEye.Modules.NLogViewer.csproj" />

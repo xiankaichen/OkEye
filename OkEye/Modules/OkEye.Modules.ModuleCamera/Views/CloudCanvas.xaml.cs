@@ -77,8 +77,8 @@ namespace OkEye.Modules.ModuleCamera.Views
             try
             {
                 // 使用vtkRenderer将vtkActor添加到vtkRenderer中
-                if (renderer == null)
-                    renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
+                
+                renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
 
                 // 添加一个独立的坐标系到右下角，缩放不改变大小，有x/y/z标签
                 vtkAxesActor axes = vtkAxesActor.New();
@@ -141,8 +141,7 @@ namespace OkEye.Modules.ModuleCamera.Views
                 camera.Azimuth(0);
                 camera.Elevation(0);
                 camera.Zoom(1.1);
-
-
+                
             }
             catch (Exception ex)
             {
@@ -173,7 +172,7 @@ namespace OkEye.Modules.ModuleCamera.Views
             {
                 return;
             }
-
+            //pcViewerControl.RenderWindow.GetRenderers().RemoveAllItems();
             renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
 
             // clear all objects

@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using LayUI.Wpf.Extensions;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Logging;
 using OkEye.Core.Mvvm;
 using OkEye.Modules.ModuleCamera.Events;
@@ -27,6 +28,11 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         // 语言设置命令
         public DelegateCommand ChineseLangCommand { get; private set; }
         public DelegateCommand EnglishLangCommand { get; private set; }
+
+        // 主题设置命令
+        public DelegateCommand LightThemeCommand { get; private set; }
+        public DelegateCommand DarkThemeCommand { get; private set; }
+        public DelegateCommand InheritThemeCommand { get; private set; }
 
         /// <summary>
         /// 菜单栏视图模型
@@ -87,7 +93,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ChineseLangCommand = new DelegateCommand(() =>
             {
                 LanguageExtension.LoadResourceKey("zh_CN");
-                // 更新语言设置到配置文件app.conig中
+                // save language setting to th app.config file
                 Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 cfa.AppSettings.Settings["Language"].Value = "zh_CN";//
                 cfa.Save(ConfigurationSaveMode.Modified);
@@ -96,14 +102,75 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             EnglishLangCommand = new DelegateCommand(() =>
             {
                 LanguageExtension.LoadResourceKey("en_US");
-                // 程序所在的路径
-               
+                // Save the language setting to the app.config file
                 Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 cfa.AppSettings.Settings["Language"].Value = "en_US";//
                 cfa.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");//保存修改并刷新
             });
+
+            // 置主题命令回调
+            LightThemeCommand = new DelegateCommand(() =>
+            {
+                ModifyTheme("Light");
+                SaveTheme("Light");
+            });
+            DarkThemeCommand = new DelegateCommand(() =>
+            {
+                ModifyTheme("Dark");
+                SaveTheme("Dark");
+            });
+            InheritThemeCommand = new DelegateCommand(() =>
+            {
+                ModifyTheme("Inherit");
+                SaveTheme("Inherit");
+            });
             return;
+        }
+
+        /// <summary>
+        /// 保存主题
+        /// </summary>
+        /// <param name="theme"></param>
+        private void SaveTheme(string theme)
+        {
+            Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            cfa.AppSettings.Settings["Theme"].Value = theme;//
+            cfa.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");//保存修改并刷新
+        }
+
+        /// <summary>
+        /// 应用主题
+        /// </summary>
+        /// <param name="themeStyle"></param>
+        private static void ModifyTheme(string themeStyle)
+        {
+            if (themeStyle == "Light")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+
+                theme.SetBaseTheme(BaseTheme.Light);
+                paletteHelper.SetTheme(theme);
+            }
+            else if(themeStyle == "Dark")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+
+                theme.SetBaseTheme(BaseTheme.Dark);
+                paletteHelper.SetTheme(theme);
+            }
+            else
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+
+                theme.SetBaseTheme(BaseTheme.Inherit);
+                paletteHelper.SetTheme(theme);
+            }
+           
         }
 
         /// <summary>

@@ -33,6 +33,12 @@ namespace OkEye.ViewModels
             // 初始化多语言服务
             string languageAppSetting = ConfigurationManager.AppSettings["Language"];
             LanguageExtension.LoadResourceKey(languageAppSetting);
+
+            // 设置主题
+            string themeAppSetting = ConfigurationManager.AppSettings["Theme"];
+            ModifyTheme(themeAppSetting);
+
+            // 订阅关闭程序事件
             _aggregator.GetEvent<CameraPubSubEvent>().Subscribe((msg) =>
             {
                 if (msg == "CloseApp")
@@ -40,7 +46,41 @@ namespace OkEye.ViewModels
                     System.Windows.Application.Current.Shutdown();
                 }
             });
+
             _logger.LogInformation("启主程序VM模块");
+
+        }
+
+        /// <summary>
+        /// 应用主题
+        /// </summary>
+        /// <param name="themeStyle"></param>
+        private static void ModifyTheme(string themeStyle)
+        {
+            if (themeStyle == "Light")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+
+                theme.SetBaseTheme(BaseTheme.Light);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (themeStyle == "Dark")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+
+                theme.SetBaseTheme(BaseTheme.Dark);
+                paletteHelper.SetTheme(theme);
+            }
+            else
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+
+                theme.SetBaseTheme(BaseTheme.Inherit);
+                paletteHelper.SetTheme(theme);
+            }
 
         }
 

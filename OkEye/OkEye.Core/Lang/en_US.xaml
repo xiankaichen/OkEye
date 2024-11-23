@@ -23,6 +23,7 @@
     <system:String x:Key="Menu_Theme">Theme</system:String>
     <system:String x:Key="Menu_ThemeLight">Light</system:String>
     <system:String x:Key="Menu_ThemeDark">Dark</system:String>
+    <system:String x:Key="Menu_ThemeInherit">Inherit</system:String>
     <system:String x:Key="Menu_ConfigIP">IP Config</system:String>
     <system:String x:Key="Menu_ConfigApp">App Config</system:String>
         <!--主菜单-帮助-->

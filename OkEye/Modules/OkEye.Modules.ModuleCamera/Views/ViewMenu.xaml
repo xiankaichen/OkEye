@@ -38,6 +38,7 @@
                 <MenuItem Header="{extensions:Language Key='Menu_Theme'}" >
                     <MenuItem Header="{extensions:Language Key='Menu_ThemeLight'}"  Command="{Binding LightThemeCommand}" />
                     <MenuItem Header="{extensions:Language Key='Menu_ThemeDark'}"  Command="{Binding DarkThemeCommand}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_ThemeInherit'}"  Command="{Binding InheritThemeCommand}" />
                     </MenuItem>
                 <MenuItem Header="{extensions:Language Key='Menu_ConfigIP'}" Command="{Binding OpenIpConfigDialogCommand}" />
                 <MenuItem Header="{extensions:Language Key='Menu_ConfigApp'}" />

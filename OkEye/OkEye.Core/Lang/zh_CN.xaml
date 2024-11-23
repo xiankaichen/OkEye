@@ -27,6 +27,7 @@
     <system:String x:Key="Menu_Theme">主题</system:String>
     <system:String x:Key="Menu_ThemeLight">浅色</system:String>
     <system:String x:Key="Menu_ThemeDark">深色</system:String>
+    <system:String x:Key="Menu_ThemeInherit">跟随系统</system:String>
     <system:String x:Key="Menu_ConfigIP">IP设置</system:String>
     <system:String x:Key="Menu_ConfigApp">应用设置</system:String>
     <!--主菜单-帮助-->

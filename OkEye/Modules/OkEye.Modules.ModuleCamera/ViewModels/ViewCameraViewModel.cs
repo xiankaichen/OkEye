@@ -128,7 +128,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowCloudCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud");
-                //_region.Activate(_viewCloud);
                 DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 CloudButtonBackground = new SolidColorBrush(Colors.Orange); 
                 ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
@@ -136,7 +135,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowDepthCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewDepth");
-                //_region.Activate(_viewDepth);
                 DepthButtonBackground = new SolidColorBrush(Colors.Orange);
                 CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 ImageButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
@@ -145,7 +143,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             ShowImageCommand = new DelegateCommand(() =>
             {
                 RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage");
-                //_region.Activate(_viewImage);
                 DepthButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 ImageButtonBackground = new SolidColorBrush(Colors.Orange); 

@@ -90,17 +90,19 @@
                                     <Grid Margin="10" Width="150" Height="150">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" ></RowDefinition>
-                                        <RowDefinition Height="Auto" ></RowDefinition>
-                                        <RowDefinition Height="Auto" ></RowDefinition>
+                                            <RowDefinition Height="Auto" ></RowDefinition>
+                                            <RowDefinition Height="Auto" ></RowDefinition>
+                                            <RowDefinition Height="Auto" ></RowDefinition>
                                         </Grid.RowDefinitions>
                                     
-                                    <Image  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" OpacityMask="White" >
+                                    <Image  HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80" OpacityMask="White" >
                                         <Image.Source>
                                             <BitmapImage DecodePixelWidth="320"  UriSource="{Binding Pic}" />
                                         </Image.Source>
                                     </Image>
-                                    <TextBlock Text="{Binding Model}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
-                                    <TextBlock Text="{Binding Status}" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                                        <TextBlock Text="{Binding Model}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                                    <TextBlock Text="{Binding CameraIP}" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                                    <TextBlock Text="{Binding Status}" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"/>
                                     </Grid>
                                 </Border >
                             </DataTemplate>

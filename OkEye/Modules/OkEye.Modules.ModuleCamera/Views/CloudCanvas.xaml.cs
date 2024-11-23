@@ -1,19 +1,9 @@
 ﻿using Kitware.VTK;
 using OpenCvSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace OkEye.Modules.ModuleCamera.Views
 {
@@ -126,14 +116,32 @@ namespace OkEye.Modules.ModuleCamera.Views
                 renderer.SetBackground(0, 0, 0);
 
                 // 添加一个视角，设置相机位置
+                //vtkCamera camera = renderer.GetActiveCamera();
+                //camera.SetPosition(0, 0, 10);
+                //camera.SetFocalPoint(0, 0, 0);
+                //camera.SetViewUp(0, 1, 0);
+                //camera.Azimuth(30);
+                //camera.Elevation(30);
+                //camera.Zoom(1);
+
+                // 根据点云范围设置合适的相机位置
+                double[] bounds = { -180,335, -260,242,724,790};
+                double[] center = {76,0,750};
+                center[0] = (bounds[0] + bounds[1]) / 2;
+                center[1] = (bounds[2] + bounds[3]) / 2;
+                center[2] = (bounds[4] + bounds[5]) / 2;
+                double radius = Math.Sqrt((bounds[1] - bounds[0]) * (bounds[1] - bounds[0]) +
+                    (bounds[3] - bounds[2]) * (bounds[3] - bounds[2]) +
+                    (bounds[5] - bounds[4]) * (bounds[5] - bounds[4])) / 2;
+                double distance = radius / Math.Sin(30 * Math.PI / 180);
                 vtkCamera camera = renderer.GetActiveCamera();
-                camera.SetPosition(0, 0, 10);
-                camera.SetFocalPoint(0, 0, 0);
-                camera.SetViewUp(0, 1, 0);
-                camera.Azimuth(30);
-                camera.Elevation(30);
-                camera.Zoom(1);
-                
+                camera.SetFocalPoint(center[0], center[1], center[2]);
+                camera.SetPosition(center[0], center[1], center[2] - distance * 2);
+                camera.SetViewUp(0, -1, 0);
+                camera.Azimuth(0);
+                camera.Elevation(0);
+                camera.Zoom(1.1);
+
 
             }
             catch (Exception ex)
@@ -224,23 +232,23 @@ namespace OkEye.Modules.ModuleCamera.Views
 
             renderer.AddActor(actor);
 
-            // 根据点云范围设置合适的相机位置
-            double[] bounds = polyData.GetBounds();
-            double[] center = new double[3];
-            center[0] = (bounds[0] + bounds[1]) / 2;
-            center[1] = (bounds[2] + bounds[3]) / 2;
-            center[2] = (bounds[4] + bounds[5]) / 2;
-            double radius = Math.Sqrt((bounds[1] - bounds[0]) * (bounds[1] - bounds[0]) +
-                (bounds[3] - bounds[2]) * (bounds[3] - bounds[2]) +
-                (bounds[5] - bounds[4]) * (bounds[5] - bounds[4])) / 2;
-            double distance = radius / Math.Sin(30 * Math.PI / 180);
-            vtkCamera camera = renderer.GetActiveCamera();
-            camera.SetFocalPoint(center[0], center[1], center[2]);
-            camera.SetPosition(center[0], center[1], center[2] + distance * 3);
-            camera.SetViewUp(0, 1, 0);
-            camera.Azimuth(30);
-            camera.Elevation(30);
-            camera.Zoom(1);
+            //// 根据点云范围设置合适的相机位置
+            //double[] bounds = polyData.GetBounds();
+            //double[] center = new double[3];
+            //center[0] = (bounds[0] + bounds[1]) / 2;
+            //center[1] = (bounds[2] + bounds[3]) / 2;
+            //center[2] = (bounds[4] + bounds[5]) / 2;
+            //double radius = Math.Sqrt((bounds[1] - bounds[0]) * (bounds[1] - bounds[0]) +
+            //    (bounds[3] - bounds[2]) * (bounds[3] - bounds[2]) +
+            //    (bounds[5] - bounds[4]) * (bounds[5] - bounds[4])) / 2;
+            //double distance = radius / Math.Sin(30 * Math.PI / 180);
+            //vtkCamera camera = renderer.GetActiveCamera();
+            //camera.SetFocalPoint(center[0], center[1], center[2]);
+            //camera.SetPosition(center[0], center[1], center[2] + distance * 3);
+            //camera.SetViewUp(0, 1, 0);
+            //camera.Azimuth(30);
+            //camera.Elevation(30);
+            //camera.Zoom(1);
 
             points.Modified();
 

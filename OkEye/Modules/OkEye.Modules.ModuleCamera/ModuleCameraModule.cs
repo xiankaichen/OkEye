@@ -31,8 +31,6 @@ namespace OkEye.Modules.ModuleCamera
             RegionManager.UpdateRegions();
             _regionManager.RequestNavigate(RegionNames.MainRegion, "ViewMain");
             _regionManager.RequestNavigate(RegionNames.ContentRegionMenu, "ViewMenu");
-            //_regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewCloud"); ;
-            //_regionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage"); ;
             _regionManager.RequestNavigate(RegionNames.ContentRegionMain, "ViewDevice",
                 (r) =>
                 {

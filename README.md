@@ -49,6 +49,8 @@ OkEye 是一个3D相机查看平台，提供虚拟相机、相机发现、连接
 软件相机图像界面，如下图所示：
 ![软件相机图像界面](OkEye/Doc/CameraImagePage.png "软件相机图像看界面")
 
+软件多国语言支持，如下图所示：
+![软件多国语言支持](OkEye/Doc/MultiLanguage.png "软件多国语言支持")
 软件关于界面，如下图所示：
 ![软件关于](OkEye/Doc/AboutDialog.png "软件相机图像看界面")
 

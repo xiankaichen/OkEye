@@ -174,19 +174,18 @@ namespace OkEye.Modules.ModuleCamera.Views
                 return;
             }
 
-            if (renderer == null)
-                renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
+            renderer = pcViewerControl.RenderWindow.GetRenderers().GetFirstRenderer();
 
-            // 清空界面上的点云
+            // clear all objects
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
             {
                 renderer.RemoveAllViewProps();
             }));
 
-            // 将点云转成vtkPoints 
+            // convert Mat to vtkPoints 
             vtkPoints points = new vtkPoints();
             vtkCellArray vtkCellArray = new vtkCellArray();
-            // 从Mat中获取点云数据
+            // read point cloud data from Mat
             for (int i = 0; i < cloud.Rows; i++)
             {
                 for (int j = 0; j < cloud.Cols; j++)
@@ -201,7 +200,6 @@ namespace OkEye.Modules.ModuleCamera.Views
                 }
             }
 
-            // 将点云数据转成vtkPolyData
             vtkPolyData polyData = new vtkPolyData();
             polyData.SetPoints(points);
             polyData.SetVerts(vtkCellArray);
@@ -219,18 +217,20 @@ namespace OkEye.Modules.ModuleCamera.Views
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
             vtkAlgorithmOutput algoutput = elevationFilter.GetOutputPort(0);
             mapper.SetInputConnection(algoutput);
-            //mapper.SetInputData(polyData);
 
             // 使用vtkActor将vtkPolyDataMapper转成vtkActor
             vtkActor actor = vtkActor.New();
             actor.SetMapper(mapper);
 
-            // 点云颜色，绿色
-            //actor.GetProperty().SetColor(0, 1, 0);
             // 点云的点大小，设置为2
             actor.GetProperty().SetPointSize(2);
 
             renderer.AddActor(actor);
+
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                pcViewerControl.RenderWindow.Render();
+            }));
 
             //// 根据点云范围设置合适的相机位置
             //double[] bounds = polyData.GetBounds();
@@ -244,20 +244,15 @@ namespace OkEye.Modules.ModuleCamera.Views
             //double distance = radius / Math.Sin(30 * Math.PI / 180);
             //vtkCamera camera = renderer.GetActiveCamera();
             //camera.SetFocalPoint(center[0], center[1], center[2]);
-            //camera.SetPosition(center[0], center[1], center[2] + distance * 3);
-            //camera.SetViewUp(0, 1, 0);
-            //camera.Azimuth(30);
-            //camera.Elevation(30);
+            //camera.SetPosition(center[0], center[1], center[2] - distance * 2);
+            //camera.SetViewUp(0, -1, 0);
+            //camera.Azimuth(0);
+            //camera.Elevation(0);
             //camera.Zoom(1);
-
-            points.Modified();
 
             System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                renderer.Render();
-                // 刷新界面
                 pcViewerControl.RenderWindow.Render();
-                pcViewerControl.Refresh();
             }));
         }
 

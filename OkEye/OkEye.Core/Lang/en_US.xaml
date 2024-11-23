@@ -1,0 +1,80 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:String x:Key="AppTitle">OkEye 3D Camera Viewer</system:String>
+    <system:String x:Key="AppVersion">Version</system:String>
+    <!--主菜单-文件-->
+    <system:String x:Key="Menu_File">File</system:String>
+    <system:String x:Key="Menu_AppClose">Close</system:String>
+        <!--主菜单-操作-->
+    <system:String x:Key="Menu_Operate">Operate</system:String>
+    <system:String x:Key="Menu_Refresh">Refresh</system:String>
+    <system:String x:Key="Menu_Connect">Connect</system:String>
+    <system:String x:Key="Menu_Disconnect">Disconnect</system:String>
+    <system:String x:Key="Menu_Log">Log</system:String>
+    <system:String x:Key="Menu_LogClear">Clear</system:String>
+    <system:String x:Key="Menu_LogAutoScroll">Auto Scroll</system:String>
+    <system:String x:Key="Menu_LogPause">Pause</system:String>
+        <!--主菜单-设置-->
+    <system:String x:Key="Menu_Setting">Setting</system:String>
+    <system:String x:Key="Menu_Lang">Language</system:String>
+    <system:String x:Key="Menu_LangCh">Chinese</system:String>
+    <system:String x:Key="Menu_LangEn">English</system:String>
+    <system:String x:Key="Menu_Theme">Theme</system:String>
+    <system:String x:Key="Menu_ThemeLight">Light</system:String>
+    <system:String x:Key="Menu_ThemeDark">Dark</system:String>
+    <system:String x:Key="Menu_ConfigIP">IP Config</system:String>
+    <system:String x:Key="Menu_ConfigApp">App Config</system:String>
+        <!--主菜单-帮助-->
+    <system:String x:Key="Menu_Help">Help</system:String>
+    <system:String x:Key="Menu_HelpDoc">Document</system:String>
+    <system:String x:Key="Menu_HelpAbout">About</system:String>
+
+
+    <!--状态栏-->
+    <system:String x:Key="StatusBar_State">Status</system:String>
+    <system:String x:Key="StatusBar_CpuRate">Cpu Rate：</system:String>
+    <system:String x:Key="StatusBar_RamRate">Ram Rate：</system:String>
+
+    <!--日志页面-->
+    <system:String x:Key="ViewLog_Index">Index</system:String>
+    <system:String x:Key="ViewLog_Time">Time</system:String>
+    <system:String x:Key="ViewLog_Level">Level</system:String>
+    <system:String x:Key="ViewLog_Module">Module</system:String>
+    <system:String x:Key="ViewLog_Content">Content</system:String>
+    <system:String x:Key="ViewLog_Pause">Pause log update</system:String>
+    <system:String x:Key="ViewLog_AutoScroll">Auto scroll to bottom</system:String>
+    <system:String x:Key="ViewLog_Clear">Clear log</system:String>
+
+    <!--设备页面-->
+    <system:String x:Key="ViewDevice_DeviceList">Device List</system:String>
+    <system:String x:Key="ViewDevice_ConnectCamera">Connect camera</system:String>
+    <system:String x:Key="ViewDevice_DisconnectCamera">Disconnect camera</system:String>
+    <system:String x:Key="ViewDevice_RefreshCamera">Refresh and found camera</system:String>
+    <system:String x:Key="ViewDevice_ConfigIP">Config camera IP or computer/user IP</system:String>
+
+    <!--相机页面-->
+    <system:String x:Key="ViewCamera_DisconnectCamera">Disconnect camera</system:String>
+    <system:String x:Key="ViewCamera_SnapOnce">Snap once</system:String>
+    <system:String x:Key="ViewCamera_SnapContinue">Snap continue</system:String>
+    <system:String x:Key="ViewCamera_SaveParam">Apply camera param setting</system:String>
+    <system:String x:Key="ViewCamera_ExportParam">Export camera param setting</system:String>
+    <system:String x:Key="ViewCamera_CameraParam">Camera Parameter</system:String>
+    <system:String x:Key="ViewCamera_ShowCloud">Show point cloud</system:String>
+    <system:String x:Key="ViewCamera_ShowDepth">Show depth image</system:String>
+    <system:String x:Key="ViewCamera_ShowImage">Show image</system:String>
+
+    <!--IP配置页面-->
+    <system:String x:Key="ViewIpConfig_CameraIP">Camera IP:</system:String>
+    <system:String x:Key="ViewIpConfig_CameraIPMask">Camera IP Mask:</system:String>
+    <system:String x:Key="ViewIpConfig_UserIP">User IP:</system:String>
+    <system:String x:Key="ViewIpConfig_UserIPMask">User IP Mask:</system:String>
+    <system:String x:Key="ViewIpConfig_Apply">Apply</system:String>
+    <system:String x:Key="ViewIpConfig_Cancel">Cancel</system:String>
+
+    <!--相机属性-->
+    <system:String x:Key="Camera_Name">Name</system:String>
+    <system:String x:Key="Camera_CamIP">Camera IP</system:String>
+    <system:String x:Key="Camera_UserIP">User IP</system:String>
+
+</ResourceDictionary>

@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Configuration;
+using System.Runtime.CompilerServices;
+using LayUI.Wpf.Extensions;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Logging;
 using NLog;
@@ -27,6 +29,10 @@ namespace OkEye.ViewModels
         {
             _logger = logger;
             _aggregator = aggregator;
+
+            // 初始化多语言服务
+            string languageAppSetting = ConfigurationManager.AppSettings["Language"];
+            LanguageExtension.LoadResourceKey(languageAppSetting);
             _aggregator.GetEvent<CameraPubSubEvent>().Subscribe((msg) =>
             {
                 if (msg == "CloseApp")

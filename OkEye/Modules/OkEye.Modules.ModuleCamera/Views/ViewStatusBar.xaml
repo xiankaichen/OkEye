@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views"
+             xmlns:extensions="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="800">
     <Grid Background="#FF535353">
@@ -13,13 +14,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Label Content="状态：" Margin="0,0,10,0"></Label>
-            <Label Content="未连接"  Margin="0,0,20,0"></Label>
+            <Label Content="{extensions:Language Key='StatusBar_State'}" Margin="0,0,10,0"></Label>
+            <Label Content=""  Margin="0,0,20,0"></Label>
         </StackPanel>
         <StackPanel Grid.Column="2"  Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Label Content="CPU占用：" Margin="0,0,10,0" Width="68"></Label>
+            <Label Content="{extensions:Language Key='StatusBar_CpuRate'}" Margin="0,0,10,0" Width="68"></Label>
             <Label Content="{Binding CpuRate}"  Margin="0,0,5,0" Width="50"></Label>
-            <Label Content="内存占用：" Margin="0,0,5,0" Width="70"></Label>
+            <Label Content="{extensions:Language Key='StatusBar_RamRate'}" Margin="0,0,5,0" Width="70"></Label>
             <Label Content="{Binding RamRate}"  Width="50"></Label>
         </StackPanel>
     </Grid>

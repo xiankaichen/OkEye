@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using NLog;
-using OkEye.Core;
+﻿using System.Configuration;
+using LayUI.Wpf.Extensions;
+using Microsoft.Extensions.Logging;
 using OkEye.Core.Mvvm;
 using OkEye.Modules.ModuleCamera.Events;
 using OkEye.Modules.ModuleCamera.Views;
-using OkEye.Services.Interfaces;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -18,12 +17,16 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private IDialogService _dialgoService;                             // 对话框服务
         private IEventAggregator _aggregator;                             // 事件聚合器
 
-        public DelegateCommand OpenAboutDialog { get; private set; }                            // 打开关于对话框命令
+        public DelegateCommand OpenAboutDialogCommand { get; private set; }                            // 打开关于对话框命令
         public DelegateCommand ConnectCameraCommand { get; private set; }               // 连接相机命令
         public DelegateCommand DisconnectCameraCommand { get; private set; }          // 断开相机命令
         public DelegateCommand DiscoverCameraCommand { get; private set; }              // 刷新相机命令
         public DelegateCommand OpenIpConfigDialogCommand { get; private set; }       // IP配置对话框命令
         public DelegateCommand CloseAppCommand { get; private set; }                         // 关闭程序命令
+
+        // 语言设置命令
+        public DelegateCommand ChineseLangCommand { get; private set; }
+        public DelegateCommand EnglishLangCommand { get; private set; }
 
         /// <summary>
         /// 菜单栏视图模型
@@ -53,7 +56,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             });
 
             // 关于对话框命令回调
-            OpenAboutDialog = new DelegateCommand(() =>
+            OpenAboutDialogCommand = new DelegateCommand(() =>
             {
                 AboutDialog about = new AboutDialog();
                 _dialgoService.ShowDialog("AboutDialog");
@@ -78,6 +81,27 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             DiscoverCameraCommand = new DelegateCommand(() =>
             {
                 _aggregator.GetEvent<CameraPubSubEvent>().Publish("DiscoverCamera");
+            });
+
+            // 语言设置命令回调
+            ChineseLangCommand = new DelegateCommand(() =>
+            {
+                LanguageExtension.LoadResourceKey("zh_CN");
+                // 更新语言设置到配置文件app.conig中
+                Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                cfa.AppSettings.Settings["Language"].Value = "zh_CN";//
+                cfa.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");//保存修改并刷新
+            });
+            EnglishLangCommand = new DelegateCommand(() =>
+            {
+                LanguageExtension.LoadResourceKey("en_US");
+                // 程序所在的路径
+               
+                Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                cfa.AppSettings.Settings["Language"].Value = "en_US";//
+                cfa.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");//保存修改并刷新
             });
             return;
         }

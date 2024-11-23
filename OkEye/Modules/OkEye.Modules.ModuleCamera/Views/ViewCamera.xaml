@@ -10,6 +10,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:core="clr-namespace:OkEye.Core;assembly=OkEye.Core"
+             xmlns:extensions="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -29,32 +30,32 @@
                 <StackPanel Orientation="Horizontal">
                     <Button  Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon LinkOff, Size=24}"
-                            ToolTip="断开相机"
+                            ToolTip="{extensions:Language Key='ViewCamera_DisconnectCamera'}"
                             Command="{Binding DisconnectCameraCommand}" Margin="5,0,0,0"></Button>
                     <Button Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon RepeatOnce, Size=24}"
                             Background="{Binding OnceSnapButtonBackground}"
-                            ToolTip="单次拍照"
+                            ToolTip="{extensions:Language Key='ViewCamera_SnapOnce'}"
                             Command="{Binding SnapOnceCommand}" Margin="5,0,0,0"></Button>
                     <Button Width="60" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon Repeat, Size=24}"
                             Background="{Binding RepeatSnapButtonBackground}"
-                            ToolTip="连续拍照"
+                            ToolTip="{extensions:Language Key='ViewCamera_SnapContinue'}"
                             Command="{Binding SnapRepeatCommand}" Margin="5,0,0,0"></Button>
                     <Button Width="55" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon CloudOutline, Size=24}"
                             Background="{Binding CloudButtonBackground}"
-                            ToolTip="点云"
+                            ToolTip="{extensions:Language Key='ViewCamera_ShowCloud'}"
                             Command="{Binding ShowCloudCommand}" Margin="100,0,0,0" ></Button>
                     <Button Width="55" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon ImageMultiple, Size=24}"
                             Background="{Binding DepthButtonBackground}"
-                            ToolTip="深度图"
+                            ToolTip="{extensions:Language Key='ViewCamera_ShowDepth'}"
                             Command="{Binding ShowDepthCommand}" Margin="5,0,0,0" ></Button>
                     <Button Width="55" HorizontalAlignment="Left"
                             Content="{materialDesign:PackIcon Image, Size=24}"
                             Background="{Binding ImageButtonBackground}"
-                            ToolTip="图像"
+                            ToolTip="{extensions:Language Key='ViewCamera_ShowImage'}"
                             Command="{Binding ShowImageCommand}" Margin="5,0,0,0"></Button>
                 </StackPanel>
 
@@ -80,7 +81,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="40" />
                             </Grid.RowDefinitions>
-                            <Label Content="相机参数" FontSize="18" Grid.Row="0"></Label>
+                            <Label Content="{extensions:Language Key='ViewCamera_CameraParam'}" FontSize="18" Grid.Row="0"></Label>
                             <DockPanel Grid.Row="1">
                                 <Grid >
                                     <xctk:PropertyGrid x:Name="_propertyGrid" 
@@ -104,11 +105,11 @@
                             <StackPanel Grid.Row ="2" Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Button 
                                             Content="{materialDesign:PackIcon ContentSaveCog, Size=24}"
-                                            ToolTip="保存参数"
+                                            ToolTip="{extensions:Language Key='ViewCamera_SaveParam'}"
                                         FontSize="16" Width="60" Height="30" Margin="5,0,0,0"></Button>
                                 <Button 
                                             Content="{materialDesign:PackIcon ExportVariant, Size=24}"
-                                            ToolTip="导出参数"
+                                            ToolTip="{extensions:Language Key='ViewCamera_ExportParam'}"
                                             FontSize="16" Width="60" Height="30" Margin="5,0,5,0"></Button>
 
                             </StackPanel>

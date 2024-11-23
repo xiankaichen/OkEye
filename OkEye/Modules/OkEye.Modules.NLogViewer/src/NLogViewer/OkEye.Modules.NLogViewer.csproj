@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>DJ</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -79,10 +79,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="HandyControl" Version="3.0.0" />
+    <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
     <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
     <PackageReference Include="NLog" Version="5.0.1" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\OkEye.Core\OkEye.Core.csproj" />
   </ItemGroup>
   
   <ItemGroup>

@@ -12,8 +12,14 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.deeppurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Lime.xaml" />
+            
+                <ResourceDictionary Source="pack://application:,,,/OkEye.Core;component/Lang/zh_CN.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/OkEye.Core;component/Lang/zh_CN.xaml" />
+            <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/OkEye.Core;component/Lang/en_US.xaml"/>
         </ResourceDictionary>
     </Application.Resources>
+
+
 
 </prism:PrismApplication>

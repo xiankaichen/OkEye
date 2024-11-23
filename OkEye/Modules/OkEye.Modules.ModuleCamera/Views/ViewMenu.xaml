@@ -4,46 +4,47 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OkEye.Modules.ModuleCamera.Views" 
-             xmlns:viewmodels="clr-namespace:OkEye.Modules.ModuleCamera.ViewModels" 
+             xmlns:viewmodels="clr-namespace:OkEye.Modules.ModuleCamera.ViewModels"
+             xmlns:extensions="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="800">
 <DockPanel>
         <Menu DockPanel.Dock="Top"  FontSize="12">
-            <MenuItem Header="文件" Height="30">
+            <MenuItem Header="{extensions:Language Key='Menu_File'}" Height="30">
                 <!--<MenuItem Header="新建" />
                 <MenuItem Header="打开" />
                 <MenuItem Header="保存" />
                 <Separator />-->
-                <MenuItem Header="退出"  Command="{Binding CloseAppCommand}"/>
+                <MenuItem Header="{extensions:Language Key='Menu_AppClose'}"  Command="{Binding CloseAppCommand}"/>
             </MenuItem>
-            <MenuItem Header="操作" Height="30">
-                
-                <MenuItem Header="刷新" Command="{Binding DiscoverCameraCommand}" />
-                <MenuItem Header="连接" Command="{Binding ConnectCameraCommand}"/>
-                <MenuItem Header="断开" Command="{Binding DisconnectCameraCommand}"/>
+            <MenuItem Header="{extensions:Language Key='Menu_Operate'}" Height="30">
+
+                <MenuItem Header="{extensions:Language Key='Menu_Refresh'}" Command="{Binding DiscoverCameraCommand}" />
+                <MenuItem Header="{extensions:Language Key='Menu_Connect'}" Command="{Binding ConnectCameraCommand}"/>
+                <MenuItem Header="{extensions:Language Key='Menu_Disconnect'}" Command="{Binding DisconnectCameraCommand}"/>
                 <Separator />
-                <MenuItem Header="日志">
-                    <MenuItem Header="清空" />
-                    <MenuItem Header="自动下滚" />
-                    <MenuItem Header="暂停刷新" />
+                <MenuItem Header="{extensions:Language Key='Menu_Log'}">
+                    <MenuItem Header="{extensions:Language Key='Menu_LogClear'}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_LogAutoScroll'}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_LogPause'}" />
                 </MenuItem>
                     
             </MenuItem>
-                <MenuItem Header="设置" Height="30">
-            <MenuItem Header="语言" >
-                    <MenuItem Header="中文"  Command="{Binding ChineseLangCommand}"  />
-                    <MenuItem Header="英文"  Command="{Binding EnglishLangCommand}" />
+            <MenuItem Header="{extensions:Language Key='Menu_Setting'}" Height="30">
+                <MenuItem Header="{extensions:Language Key='Menu_Lang'}" >
+                    <MenuItem Header="{extensions:Language Key='Menu_LangCh'}"  Command="{Binding ChineseLangCommand}"  />
+                    <MenuItem Header="{extensions:Language Key='Menu_LangEn'}"  Command="{Binding EnglishLangCommand}" />
             </MenuItem>
-                    <MenuItem Header="主题" >
-                    <MenuItem Header="浅色"  Command="{Binding LightThemeCommand}" />
-                    <MenuItem Header="深色"  Command="{Binding DarkThemeCommand}" />
+                <MenuItem Header="{extensions:Language Key='Menu_Theme'}" >
+                    <MenuItem Header="{extensions:Language Key='Menu_ThemeLight'}"  Command="{Binding LightThemeCommand}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_ThemeDark'}"  Command="{Binding DarkThemeCommand}" />
                     </MenuItem>
-                <MenuItem Header="配置IP..." Command="{Binding OpenIpConfigDialogCommand}" />
-                <MenuItem Header="选项..." />
+                <MenuItem Header="{extensions:Language Key='Menu_ConfigIP'}" Command="{Binding OpenIpConfigDialogCommand}" />
+                <MenuItem Header="{extensions:Language Key='Menu_ConfigApp'}" />
         </MenuItem>
-            <MenuItem Header="帮助" Height="30">
-                <MenuItem Header="帮助文档" Command="{Binding HelpDocumentCommand  }"  />
-                <MenuItem Header="关于" Command="{Binding OpenAboutDialogCommand  }" />
+            <MenuItem Header="{extensions:Language Key='Menu_Help'}" Height="30">
+                <MenuItem Header="{extensions:Language Key='Menu_HelpDoc'}" Command="{Binding HelpDocumentCommand  }"  />
+                <MenuItem Header="{extensions:Language Key='Menu_HelpAbout'}" Command="{Binding OpenAboutDialogCommand  }" />
         </MenuItem>
     </Menu>
     </DockPanel>

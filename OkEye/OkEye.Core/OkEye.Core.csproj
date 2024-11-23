@@ -4,6 +4,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <Page Remove="Lang\en_US.xaml" />
+    <Page Remove="Lang\zh_CN.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Lang\en_US.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Lang\zh_CN.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Setting\" />
   </ItemGroup>
 </Project>

@@ -23,6 +23,9 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private string title;
         public string Title { get; set; }
 
+        // 关闭对话框命令
+        public DelegateCommand CloseDialogCommand { get; private set; }
+
         /// <summary>
         /// 对话框服务
         /// </summary>
@@ -32,7 +35,12 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             Title = "关于";
 
             _logger = logger;   // 注入日志服务
+            CloseDialogCommand = new DelegateCommand(() =>
+            {
+                // 关闭窗口
+                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
 
+            });
             _logger.LogInformation("打开关于窗口窗口");
         }
 

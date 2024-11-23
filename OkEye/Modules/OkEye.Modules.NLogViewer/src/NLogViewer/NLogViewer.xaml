@@ -9,7 +9,9 @@
              xmlns:listViewLayoutManager="clr-namespace:DJ.Helper.ListViewLayoutManager"
              xmlns:xamlMultiValueConverter="clr-namespace:DJ.XamlMultiValueConverter"
              xmlns:helper="clr-namespace:DJ.Helper"
-             xmlns:hc="https://handyorg.github.io/handycontrol" x:Class="DJ.NLogViewer"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:extensions="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+             x:Class="DJ.NLogViewer"
              mc:Ignorable="d"
              SizeChanged="UserControl_SizeChanged"
              >
@@ -97,7 +99,7 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <helper:AutoSizedGridView>
-                    <GridViewColumn Header="序号" Width="40 " >
+                    <GridViewColumn Header="{extensions:Language Key='ViewLog_Index' }" Width="40 " >
                         <GridViewColumn.DisplayMemberBinding>
                             <MultiBinding Converter="{StaticResource ILogEventResolverToStringConverter}">
                                 <Binding Path="."/>
@@ -105,7 +107,7 @@
                             </MultiBinding>
                         </GridViewColumn.DisplayMemberBinding>
                     </GridViewColumn>
-                    <GridViewColumn Header="等级" Width="40" >
+                    <GridViewColumn Header="{extensions:Language Key='ViewLog_Level'}" Width="40" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Image x:Name="Image" RenderOptions.BitmapScalingMode="Linear"
@@ -145,7 +147,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="时间" Width="100">
+                    <GridViewColumn Header="{extensions:Language Key='ViewLog_Time'}" Width="100">
                         <GridViewColumn.DisplayMemberBinding>
                             <MultiBinding Converter="{StaticResource ILogEventResolverToStringConverter}">
                                 <Binding Path="."/>
@@ -153,7 +155,7 @@
                             </MultiBinding>
                         </GridViewColumn.DisplayMemberBinding>
                     </GridViewColumn>
-                    <GridViewColumn Header="模块" Width="100">
+                    <GridViewColumn Header="{extensions:Language Key='ViewLog_Module'}" Width="100">
                         <GridViewColumn.DisplayMemberBinding>
                             <MultiBinding Converter="{StaticResource ILogEventResolverToStringConverter}">
                                 <Binding Path="."/>
@@ -161,7 +163,7 @@
                             </MultiBinding>
                         </GridViewColumn.DisplayMemberBinding>
                     </GridViewColumn>
-                    <GridViewColumn Header="内容" Width="Auto" listViewLayoutManager:RangeColumn.IsFillColumn="True">
+                    <GridViewColumn Header="{extensions:Language Key='ViewLog_Content'}" Width="Auto" listViewLayoutManager:RangeColumn.IsFillColumn="True">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox
@@ -186,14 +188,14 @@
 
         <StackPanel Grid.Column="2"  Orientation="Vertical" VerticalAlignment="Bottom" Margin="0,0,0,0" >
             <Button
-                    Margin="0,0,0,5" Width="60" Height="30" Content="{materialDesign:PackIcon Broom, Size=24}" ToolTip="清空日志" 
+                    Margin="0,0,0,5" Width="60" Height="30" Content="{materialDesign:PackIcon Broom, Size=24}" ToolTip="{extensions:Language Key='ViewLog_Clear'}" 
                     Command="{Binding ClearCommand}">
             </Button>
-            <ToggleButton Width="60" Height="30" Content="{materialDesign:PackIcon ArrowVerticalLock, Size=24}" ToolTip="日志窗口自动滚动" 
+            <ToggleButton Width="60" Height="30" Content="{materialDesign:PackIcon ArrowVerticalLock, Size=24}" ToolTip="{extensions:Language Key='ViewLog_AutoScroll'}" 
                               IsChecked="{Binding AutoScroll, Mode=TwoWay}">
             </ToggleButton>
             <ToggleButton Margin="0,5,0,0" Width="60" Height="30" Content="{materialDesign:PackIcon Pause, Size=24}" 
-                              ToolTip="日志显示启用或关闭"
+                              ToolTip="{extensions:Language Key='ViewLog_Pause'}"
                               IsChecked="{Binding Pause, Mode=TwoWay}">
             </ToggleButton>
         </StackPanel>

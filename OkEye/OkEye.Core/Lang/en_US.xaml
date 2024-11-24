@@ -39,7 +39,7 @@
 
         <!--主菜单-帮助-->
     <system:String x:Key="Menu_Help">Help</system:String>
-    <system:String x:Key="Menu_HelpDoc">Document</system:String>
+    <system:String x:Key="Menu_HelpDoc">Online Document</system:String>
     <system:String x:Key="Menu_HelpAbout">About</system:String>
 
     <!--状态栏-->

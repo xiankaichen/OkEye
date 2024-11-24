@@ -43,7 +43,7 @@
 
     <!--主菜单-帮助-->
     <system:String x:Key="Menu_Help">帮助</system:String>
-    <system:String x:Key="Menu_HelpDoc">文档</system:String>
+    <system:String x:Key="Menu_HelpDoc">在线文档</system:String>
     <system:String x:Key="Menu_HelpAbout">关于</system:String>
 
     <!--状态栏-->

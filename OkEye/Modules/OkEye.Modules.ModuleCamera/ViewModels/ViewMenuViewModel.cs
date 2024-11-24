@@ -20,7 +20,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         private IDialogService _dialgoService;                             // 对话框服务
         private IEventAggregator _aggregator;                             // 事件聚合器
 
-        public DelegateCommand OpenAboutDialogCommand { get; private set; }                            // 打开关于对话框命令
+        public DelegateCommand OpenAboutDialogCommand { get; private set; }            // 打开关于对话框命令
+        public DelegateCommand HelpDocumentCommand { get; private set; }                 // 打开帮助文档命令
         public DelegateCommand ConnectCameraCommand { get; private set; }               // 连接相机命令
         public DelegateCommand DisconnectCameraCommand { get; private set; }          // 断开相机命令
         public DelegateCommand DiscoverCameraCommand { get; private set; }              // 刷新相机命令
@@ -45,6 +46,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand DeepPurplePrimaryColorCommand { get; private set; }
 
 
+
         /// <summary>
         /// 菜单栏视图模型
         /// </summary>
@@ -67,7 +69,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             // 设置主题颜色
             string colorAppSetting = ConfigurationManager.AppSettings["PrimaryColor"];
             ModifyThemePrimaryColor(colorAppSetting);
-            
+
             _logger.LogInformation("初始化菜单模块");
         }
 
@@ -175,6 +177,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 ModifyThemePrimaryColor("DeepPurple");
                 SaveThemePrimaryColor("DeepPurple");
             });
+
+            HelpDocumentCommand = new DelegateCommand(OnOnlineDocument);
             return;
         }
 
@@ -223,7 +227,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Teal];
                 theme.SetPrimaryColor(color);
                 paletteHelper.SetTheme(theme);
-            }else if (colorStyle == "Orange")
+            }
+            else if (colorStyle == "Orange")
             {
                 var paletteHelper = new PaletteHelper();
                 var theme = paletteHelper.GetTheme();
@@ -246,7 +251,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.BlueGrey];
                 theme.SetPrimaryColor(color);
                 paletteHelper.SetTheme(theme);
-            }else if (colorStyle == "DeepPurple")
+            }
+            else if (colorStyle == "DeepPurple")
             {
                 var paletteHelper = new PaletteHelper();
                 var theme = paletteHelper.GetTheme();
@@ -270,7 +276,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 theme.SetBaseTheme(BaseTheme.Light);
                 paletteHelper.SetTheme(theme);
             }
-            else if(themeStyle == "Dark")
+            else if (themeStyle == "Dark")
             {
                 var paletteHelper = new PaletteHelper();
                 var theme = paletteHelper.GetTheme();
@@ -285,7 +291,16 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 theme.SetBaseTheme(BaseTheme.Inherit);
                 paletteHelper.SetTheme(theme);
             }
-           
+
+        }
+
+        /// <summary>
+        /// 浏览在线文档
+        /// </summary>
+        public void OnOnlineDocument()
+        {
+            //访问网站 https://github.com/xiankaichen/OkEye
+            System.Diagnostics.Process.Start("explorer.exe", "https://github.com/xiankaichen/OkEye");
         }
 
         /// <summary>

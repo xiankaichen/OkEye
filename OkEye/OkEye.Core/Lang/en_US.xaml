@@ -64,6 +64,7 @@
     <system:String x:Key="ViewCamera_ShowCloud">Show point cloud</system:String>
     <system:String x:Key="ViewCamera_ShowDepth">Show depth image</system:String>
     <system:String x:Key="ViewCamera_ShowImage">Show image</system:String>
+    <system:String x:Key="ViewCamera_SaveFrame">Save frame data</system:String>
 
     <!--IP配置页面-->
     <system:String x:Key="ViewIpConfig_CameraIP">Camera IP:</system:String>

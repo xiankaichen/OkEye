@@ -35,12 +35,12 @@ namespace OkEye.ViewModels
             string languageAppSetting = ConfigurationManager.AppSettings["Language"];
             LanguageExtension.LoadResourceKey(languageAppSetting);
 
-            // 设置主题
-            string themeAppSetting = ConfigurationManager.AppSettings["Theme"];
-            ModifyTheme(themeAppSetting);
-            // 设置主题颜色
-            string colorAppSetting = ConfigurationManager.AppSettings["PrimaryColor"];
-            ModifyThemePrimaryColor(colorAppSetting);
+            //// 设置主题
+            //string themeAppSetting = ConfigurationManager.AppSettings["Theme"];
+            //ModifyTheme(themeAppSetting);
+            //// 设置主题颜色
+            //string colorAppSetting = ConfigurationManager.AppSettings["PrimaryColor"];
+            //ModifyThemePrimaryColor(colorAppSetting);
 
             // 订阅关闭程序事件
             _aggregator.GetEvent<CameraPubSubEvent>().Subscribe((msg) =>
@@ -101,11 +101,11 @@ namespace OkEye.ViewModels
                 theme.SetPrimaryColor(color);
                 paletteHelper.SetTheme(theme);
             }
-            else if (colorStyle == "LightBlue")
+            else if (colorStyle == "Teal")
             {
                 var paletteHelper = new PaletteHelper();
                 var theme = paletteHelper.GetTheme();
-                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.LightBlue];
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Teal];
                 theme.SetPrimaryColor(color);
                 paletteHelper.SetTheme(theme);
             }

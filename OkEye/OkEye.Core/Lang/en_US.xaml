@@ -3,40 +3,44 @@
                     xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <system:String x:Key="AppTitle">OkEye 3D Camera Viewer</system:String>
     <system:String x:Key="AppVersion">Version</system:String>
+
     <!--主菜单-文件-->
     <system:String x:Key="Menu_File">File</system:String>
     <system:String x:Key="Menu_AppClose">Close</system:String>
+
         <!--主菜单-操作-->
     <system:String x:Key="Menu_Operate">Operate</system:String>
     <system:String x:Key="Menu_Refresh">Refresh</system:String>
     <system:String x:Key="Menu_Connect">Connect</system:String>
     <system:String x:Key="Menu_Disconnect">Disconnect</system:String>
     <system:String x:Key="Menu_Log">Log</system:String>
+    <system:String x:Key="Menu_LogExplore">Open Explore</system:String>
     <system:String x:Key="Menu_LogClear">Clear</system:String>
     <system:String x:Key="Menu_LogAutoScroll">Auto Scroll</system:String>
     <system:String x:Key="Menu_LogPause">Pause</system:String>
-        <!--主菜单-设置-->
+    <!--主菜单-设置-->
     <system:String x:Key="Menu_Setting">Setting</system:String>
     <system:String x:Key="Menu_Lang">Language</system:String>
     <system:String x:Key="Menu_LangCh">Chinese</system:String>
     <system:String x:Key="Menu_LangEn">English</system:String>
     <system:String x:Key="Menu_Theme">Theme</system:String>
-    <system:String x:Key="Menu_ThemeLight">Theme.Light</system:String>
-    <system:String x:Key="Menu_ThemeDark">Theme.Dark</system:String>
+    <system:String x:Key="Menu_ThemeLight">Light</system:String>
+    <system:String x:Key="Menu_ThemeDark">Dark</system:String>
     <system:String x:Key="Menu_ThemeInherit">Theme.Inherit</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_Blue">Color.Blue</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_LightBlue">Color.LightBlue</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_Orange">Color.Orange</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_DeepOrange">Color.DeepOrange</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_Purple">Color.Purple</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_DeepPurple">Color.DeepPurple</system:String>
-<system:String x:Key="Menu_ConfigIP">IP Config</system:String>
+    <system:String x:Key="Menu_PrimaryColor">Primary Color</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Blue">Blue</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Teal">Teal</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Orange">Orange</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Cyan">Cyan</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_BlueGrey">BlueGrey</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_DeepPurple">DeepPurple</system:String>
+    <system:String x:Key="Menu_ConfigIP">IP Config</system:String>
     <system:String x:Key="Menu_ConfigApp">App Config</system:String>
+
         <!--主菜单-帮助-->
     <system:String x:Key="Menu_Help">Help</system:String>
     <system:String x:Key="Menu_HelpDoc">Document</system:String>
     <system:String x:Key="Menu_HelpAbout">About</system:String>
-
 
     <!--状态栏-->
     <system:String x:Key="StatusBar_State">Status</system:String>

@@ -24,6 +24,7 @@
                 <MenuItem Header="{extensions:Language Key='Menu_Disconnect'}" Command="{Binding DisconnectCameraCommand}"/>
                 <Separator />
                 <MenuItem Header="{extensions:Language Key='Menu_Log'}">
+                    <MenuItem Header="{extensions:Language Key='Menu_LogExplore'}" />
                     <MenuItem Header="{extensions:Language Key='Menu_LogClear'}" />
                     <MenuItem Header="{extensions:Language Key='Menu_LogAutoScroll'}" />
                     <MenuItem Header="{extensions:Language Key='Menu_LogPause'}" />
@@ -39,11 +40,13 @@
                     <MenuItem Header="{extensions:Language Key='Menu_ThemeLight'}"  Command="{Binding LightThemeCommand}" />
                     <MenuItem Header="{extensions:Language Key='Menu_ThemeDark'}"  Command="{Binding DarkThemeCommand}" />
                     <MenuItem Header="{extensions:Language Key='Menu_ThemeInherit'}"  Command="{Binding InheritThemeCommand}" />
+                </MenuItem>
+                <MenuItem Header="{extensions:Language Key='Menu_PrimaryColor'}" >
                     <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Blue'}"  Command="{Binding BluePrimaryColorCommand}" />
-                    <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_LightBlue'}"  Command="{Binding LightBluePrimaryColorCommand}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Teal'}"  Command="{Binding TealPrimaryColorCommand}" />
                     <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Orange'}"  Command="{Binding OrangePrimaryColorCommand}" />
-                    <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_DeepOrange'}"  Command="{Binding DeepOrangePrimaryColorCommand}" />
-                    <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Purple'}"  Command="{Binding PurplePrimaryColorCommand}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Cyan'}"  Command="{Binding CyanPrimaryColorCommand}" />
+                    <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_BlueGrey'}"  Command="{Binding BlueGreyPrimaryColorCommand}" />
                     <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_DeepPurple'}"  Command="{Binding DeepPurplePrimaryColorCommand}" />
 
                 </MenuItem>

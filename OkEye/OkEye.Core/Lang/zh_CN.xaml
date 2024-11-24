@@ -17,6 +17,7 @@
     <system:String x:Key="Menu_Connect">连接</system:String>
     <system:String x:Key="Menu_Disconnect">断开</system:String>
     <system:String x:Key="Menu_Log">日志</system:String>
+    <system:String x:Key="Menu_LogExplore">文件夹浏览</system:String>
     <system:String x:Key="Menu_LogClear">清空</system:String>
     <system:String x:Key="Menu_LogAutoScroll">自动下滚</system:String>
     <system:String x:Key="Menu_LogPause">暂停</system:String>
@@ -27,14 +28,15 @@
     <system:String x:Key="Menu_LangCh">中文</system:String>
     <system:String x:Key="Menu_LangEn">英文</system:String>
     <system:String x:Key="Menu_Theme">主题</system:String>
-    <system:String x:Key="Menu_ThemeLight">主题.浅色</system:String>
-    <system:String x:Key="Menu_ThemeDark">主题.深色</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_Blue">主色.蓝色</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_LightBlue">主色.浅蓝色</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_Orange">主色.橙色</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_DeepOrange">主色.深橙色</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_Purple">主色.紫色</system:String>
-    <system:String x:Key="Menu_Theme_PrimaryColor_DeepPurple">主色.深紫色</system:String>
+    <system:String x:Key="Menu_ThemeLight">浅色</system:String>
+    <system:String x:Key="Menu_ThemeDark">深色</system:String>
+    <system:String x:Key="Menu_PrimaryColor">主色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Blue">蓝色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Teal">茶色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Orange">橙色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Cyan">青色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_BlueGrey">蓝灰色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_DeepPurple">深紫色</system:String>
     <system:String x:Key="Menu_ThemeInherit">跟随系统</system:String>
     <system:String x:Key="Menu_ConfigIP">IP设置</system:String>
     <system:String x:Key="Menu_ConfigApp">应用设置</system:String>
@@ -77,7 +79,6 @@
     <system:String x:Key="ViewCamera_ShowDepth">显示深度图</system:String>
     <system:String x:Key="ViewCamera_ShowImage">显示图像</system:String>
     <system:String x:Key="ViewCamera_SaveFrame">保存帧数据</system:String>
-    
 
     <!--IP配置页面-->
     <system:String x:Key="ViewIpConfig_CameraIP">相机IP</system:String>

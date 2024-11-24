@@ -4,18 +4,18 @@
 
 ##	Index
 
-1. [Introduction](#section_1)
-2. [Function](#section_2)
-3. [Environment](#section_3)
-4. [Demo](#section_4)
-5. [Surface](#section_5)
+1. [Introduction](#section_introduction)
+2. [Function](#section_function)
+3. [Environment](#section_enviroment)
+4. [Demo](#section_demo)
+5. [Interface](#section_interface)
 
-<a name="section_1"></a>
+<a name="section_introduction"></a>
 ## Introduction
 OkEye is a 3D camera viewer platform based on the Prism architecture, supporting virtual camera, camera discovery, camera connection, and viewing camera images, point clouds, depth maps, etc. It also supports single shot, continuous shot, save image, save point cloud, save depth map, etc. Developed based on the Prism architecture, 
 OkEye supports plug-in development, allowing users to develop custom plug-ins to extend the platform's functionality. It is compatible with multiple camera brands and models and follows the camera interface standard. 
 
-<a name="section_2"></a>
+<a name="section_function"></a>
 ## Function
 
 Application Management
@@ -26,19 +26,19 @@ Camera management
 * Single shot * Continuous shot * Point cloud display * Depth map display * Image display * Camera parameter setting
 
 
-<a name="section_3"></a>
+<a name="section_environment"></a>
 ## Evnironment
 IDE ：Visual Studio 2022
 Dependency ：Prism、VL.OpenCV、Activiz
 Operation System ：Windows 10/11
 
-<a name="section_4"></a>
+<a name="section_demo"></a>
 ## Demo
 The software demo is as follows:
 ![Software Demo](OkEye/Doc/Demo.gif "Software Demo")
 
-<a name="section_5"></a>
-## Surface
+<a name="section_interface"></a>
+## Interface
 Software main interface, as shown in the following figure:
 ![Software main interface](OkEye/Doc/MainPage.png "Software main interface, device connection interface")
 

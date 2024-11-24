@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OkEye.Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,21 +21,21 @@ namespace OkEye.Services.Interfaces
         /// </summary>
         /// <param name="cameraInfo"></param>   相机信息
         /// <returns></returns>
-        int ConnectCamera(CameraInfoModel cameraInfo);
+        OkEyeCode ConnectCamera(CameraInfoModel cameraInfo);
 
         /// <summary>
         /// 断开相机
         /// </summary>
         /// <param name="cameraInfo"></param> 相机信息
         /// <returns></returns>
-        int DisconnectCamera(CameraInfoModel cameraInfo);
-        
+        OkEyeCode DisconnectCamera(CameraInfoModel cameraInfo);
+
         /// <summary>
         /// 拍照
         /// </summary>
         /// <param name="frame"></param>
         /// <returns></returns>
-        int Capture(ref OkFrameData frame);
+        OkEyeCode Capture(ref OkFrameData frame);
 
         /// <summary>
         /// 获取相机信息
@@ -47,7 +48,14 @@ namespace OkEye.Services.Interfaces
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        int SetCameraParam(CameraInfoModel  param);
+        OkEyeCode SetCameraParam(CameraInfoModel  param);
+
+        /// <summary>
+        /// 保存帧
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        OkEyeCode SaveFrame(string path);
 
         /// <summary>
         /// 设置相机IP
@@ -55,7 +63,7 @@ namespace OkEye.Services.Interfaces
         /// <param name="oldip"></param>
         /// <param name="newip"></param>
         /// <returns></returns>
-        int SetCameraIP(string oldip, string newip);
+        OkEyeCode SetCameraIP(string oldip, string newip);
 
     }
 }

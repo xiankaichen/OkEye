@@ -5,96 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using gen3d;
+using OkEye.Core;
 using OkEye.Services.Interfaces;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace OkEye.Services.AinsCamera
 {
-    // CameraInfoModel is a class that stores the camera information, and is used to display the camera information in the property grid
-    // CameraInfoModel is Model class
-    //public class CameraInfoModel
-    //{
-    //    [Category("1设备参数"), PropertyOrder(11)]
-    //    [DisplayName("状态"), ReadOnly(true)]
-    //    public string Status { get; set; }
-
-    //    [Category("1设备参数"), PropertyOrder(11)]
-    //    [DisplayName("名称"), ReadOnly(true)]
-    //    public string Name { get; set; }
-
-    //    [Category("1设备参数"), PropertyOrder(12)]
-    //    [DisplayName("相机IP"), ReadOnly(true)]
-    //    public string CameraIP { get; set; }
-
-    //    [Category("1设备参数"), PropertyOrder(12)]
-    //    [DisplayName("用户IP"), ReadOnly(true)]
-    //    public string UserIP { get; set; }
-
-    //    // 相机序号
-    //    [Category("1设备参数"), PropertyOrder(13)]
-    //    [DisplayName("相机序号"), ReadOnly(true)]
-    //    public string Serial { get; set; }
-
-    //    [Category("1设备参数"), PropertyOrder(14)]
-    //    [DisplayName("MAC地址"), ReadOnly(true)]
-    //    public string MacAdress { get; set; }
-
-    //    // 设置曝光
-    //    [Category("1设备参数"), PropertyOrder(15)]
-    //    [DisplayName("曝光(ms)")]
-    //    public string Exposure { get; set; }
-
-    //    // 增益
-    //    [Category("1设备参数"), PropertyOrder(16)]
-    //    [DisplayName("增益")]
-    //    public string Gain { get; set; }
-
-    //    // 拍照模式，两种：高精度，快速，默认高精度，下拉列表
-    //    [Category("1设备参数"), PropertyOrder(17)]
-    //    [DisplayName("拍照模式")]
-    //    public string CameMode { get; set; }
-
-    //    // 图像宽度
-    //    [Category("2图像参数"), PropertyOrder(11)]
-    //    [DisplayName("图像宽度"), ReadOnly(true)]
-    //    public int textureWidth { get; set; }
-
-    //    // 图像高度
-    //    [Category("2图像参数"), PropertyOrder(12)]
-    //    [DisplayName("图像高度"), ReadOnly(true)]
-    //    public int textureHeight { get; set; }
-
-    //    // ir宽度
-    //    [Category("2图像参数"), PropertyOrder(13)]
-    //    [DisplayName("IR宽度"), ReadOnly(true)]
-    //    public int irWidth { get; set; }
-
-    //    // ir高度
-    //    [Category("2图像参数"), PropertyOrder(14)]
-    //    [DisplayName("IR高度"), ReadOnly(true)]
-    //    public int irHeight { get; set; }
-
-    //    // irPerNum
-    //    [Category("2图像参数"), PropertyOrder(15)]
-    //    [DisplayName("IR像素位"), ReadOnly(true)]
-    //    public int irPerNum { get; set; }
-
-    //}
-
-    //// 相机模式
-    //public enum CameraMode
-    //{
-    //    高精度,
-    //    快速
-    //}
-
-
     public class Camera3DManager
     {
         // CameraManager is a singleton class
         private static Camera3DManager? instance;
         // List of cameras
         public  Gen3DCamera? cam3d;
+        private FrameData? _frameData;
         public CameraInfo? currCamInfo;
         public CameraInfoVector? camInfoVector;
 
@@ -150,7 +73,7 @@ namespace OkEye.Services.AinsCamera
             }
         }
 
-        public int SetCameraIP(string oldip, string newip)
+        public OkEyeCode SetCameraIP(string oldip, string newip)
         {
             try
             {
@@ -162,7 +85,7 @@ namespace OkEye.Services.AinsCamera
                 CameraInfoVector cameraInfos = DiscoverCameras();
                 if (cameraInfos.Count() <= 0)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
 
                 // 查找对应ip的相机信息
@@ -178,7 +101,7 @@ namespace OkEye.Services.AinsCamera
                 if (cameraInfo.cameraIP != oldip)
                 {
                     // 没有查找到对应ip的相机
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
 
                 cam3d.cam.SetCameraIP(cameraInfo, newip);
@@ -189,10 +112,10 @@ namespace OkEye.Services.AinsCamera
                     Console.WriteLine(e);
                     throw;
             }
-            return 0;
+            return OkEyeCode.Ok;
         }
 
-        public int ConnectCamera(string ip)
+        public OkEyeCode ConnectCamera(string ip)
         {
             try
             {
@@ -206,7 +129,7 @@ namespace OkEye.Services.AinsCamera
                 if (cameraInfos.Count() <= 0)
                 {
                     cameraInfoModel.Status = "无相机";
-                    return -1;
+                    return OkEyeCode.Failed;
                 }
 
                 // 查找对应ip的相机信息
@@ -223,57 +146,57 @@ namespace OkEye.Services.AinsCamera
                 {
                     // 没有查找到对应ip的相机
                     cameraInfoModel.Status = "未连接";
-                    return -1;
+                    return OkEyeCode.Failed;
                 }
                 if (cam3d.cam.Open(cameraInfo) != CameraPro.AC_OK)
                 {
                     cameraInfoModel.Status = "未连接";
-                    return -1;
+                    return OkEyeCode.Failed;
                 }
                 currCamInfo = cameraInfo;
 
                 UpdateCameraInfoModel(); 
-                return 0;
+                return OkEyeCode.Ok;
             }
             catch (Exception ex)
             {
-                return -1;
+                return OkEyeCode.Failed;
             }
         }
 
-        public int DisconnectCamera()
+        public OkEyeCode DisconnectCamera()
         {
             try
             {
                 if (cam3d == null)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
                 
                 cam3d.cam.Close(currCamInfo);
                 CameraPro.DestoryCamera(cam3d.cam);
                 cam3d = null;
                 cameraInfoModel.Status = "未连接";
-                return 0;
+                return OkEyeCode.Ok;
             }
             catch (Exception ex)
             {
-                return 0;
+                return OkEyeCode.Failed;
             }
         }
 
         // Capture point cloud
-        public int CapturePointCloud(ref FrameData frameData)
+        public OkEyeCode Capture(ref FrameData frameData)
         {
             try
             {
                 if (cam3d == null)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
                 if(currCamInfo == null)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
                 CameraParam cameraParam = currCamInfo.camParam;
                 Util tools = new Util();
@@ -283,33 +206,34 @@ namespace OkEye.Services.AinsCamera
                 if (ret != CameraPro.AC_OK)
                 {
                     Console.ReadLine();
-                    return -1;
+                    return OkEyeCode.Failed;
                 }
-                return 0;
+                _frameData = (FrameData)frameData.Clone();
+                return OkEyeCode.Ok;
             }
             catch (Exception ex)
             {
-                return 0;
+                return OkEyeCode.Failed;
             }
         }
 
-        public int UpdateCameraInfoModel()
+        public OkEyeCode UpdateCameraInfoModel()
         {
             // 更新相机信息
             try
             {
                 if (this.cam3d == null)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
 
                 if (currCamInfo == null)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
                 if (cameraInfoModel == null)
                 {
-                    return 0;
+                    return OkEyeCode.Failed;
                 }
                 cameraInfoModel.Band = "AinsCamera";
                 string path = AppDomain.CurrentDomain.BaseDirectory;
@@ -352,13 +276,10 @@ namespace OkEye.Services.AinsCamera
             }
             catch (Exception ex)
             {
-                return 0;
+                return OkEyeCode.Failed;
             }
-
             
-
-
-            return 0;
+            return OkEyeCode.Ok;
         }
 
         public void SetOutputSettings(ref CameraInfo cameraInfo)
@@ -385,6 +306,45 @@ namespace OkEye.Services.AinsCamera
                 cameraInfo.outputSettings.sendTriangleIndices = true;
                 cameraInfo.outputSettings.sendRemapTexture = true;
             }
+        }
+
+        public OkEyeCode SaveFrame(string path)
+        {
+            if (_frameData == null)
+            {
+                return OkEyeCode.FrameSaveError;
+            }
+            // 判断图像是否为空
+            if (_frameData.textureSize <= 0 || _frameData.depthmapSize <= 0 || currCamInfo is null)
+            {
+                return OkEyeCode.FrameSaveError;
+            }
+
+            // 判断文件夹是否存在
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+
+            unsafe
+            {
+                Util util = new Util();
+                // 保存图像
+                util.save_rgb(_frameData.texture, currCamInfo.camParam, path);
+                // 保存深度图
+                float[] depthmap = new float[_frameData.depthmapSize];
+                for (int i = 0; i < _frameData.depthmapSize; i++)
+                {
+                    depthmap[i] = _frameData.depthmap[i];
+                }
+                util.save_deepmap(depthmap, currCamInfo.camParam, path);
+                // 保存点云为tiff文件
+                util.save_point2tiff(ref _frameData, currCamInfo.camParam, path);
+                // 保存点云为ply文件
+                util.save_point2ply(ref _frameData, path);
+            }
+
+            return 0;
         }
 
 

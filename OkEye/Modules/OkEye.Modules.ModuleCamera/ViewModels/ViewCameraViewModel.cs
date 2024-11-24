@@ -42,7 +42,10 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand ShowCloudCommand { get; private set; }                   // 按钮事件，显示点云命令
         public DelegateCommand ShowDepthCommand { get; private set; }                   // 按钮事件，显示深度图命令
         public DelegateCommand ShowImageCommand { get; private set; }                   // 按钮事件，显示图像命令
-        
+        public DelegateCommand SaveFrameCommand { get; private set; }                    // 按钮事件，保存图像命令
+       
+        public DelegateCommand<CameraInfoModel> PropertyValueChangedCommand { get; private set; }       // 相机属性窗口值发生改变
+
         // 单次拍照按钮背景色
         SolidColorBrush _onceSnapButtonBackground;
         public SolidColorBrush OnceSnapButtonBackground
@@ -89,8 +92,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             set { SetProperty(ref cameraInfo, value); }
         }
 
-        // 相机属性窗口值发生改变
-        public DelegateCommand<CameraInfoModel> PropertyValueChangedCommand { get; private set; }
 
         /// <summary>
         /// 相机页面的构造函数，包含相机拍照，断开，显示图像，相机参数，拍照参数的显示与设置
@@ -147,7 +148,32 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 CloudButtonBackground = new SolidColorBrush(Color.FromArgb(200, 103, 58, 183));
                 ImageButtonBackground = new SolidColorBrush(Colors.Orange); 
             });
-            
+
+            SaveFrameCommand = new DelegateCommand(() =>
+            {
+                // 判断是否有数据
+                if (_cameraService == null)
+                {
+                    _logger.LogError("相机服务模块未初始化！");
+                    return;
+                }
+                // 获取保存帧数据的路径 存在程序的data/Images文件夹下，并按照日期时间命名文件夹，数据保存在该文件夹下
+                string savePath = AppDomain.CurrentDomain.BaseDirectory + "data\\Images\\" + DateTime.Now.ToString("yyyyMMddHHmmss") +"\\";
+                // 调用cameraService的保存图像函数
+                if (OkEyeCode.Ok ==_cameraService.SaveFrame(savePath))
+                {
+                    _logger.LogInformation("保存图像成功！" + savePath);
+                    // 打开文件所在的位置
+                    Process.Start("explorer.exe", savePath);
+
+                }
+                else
+                {
+                    _logger.LogWarning("保存图像失败！");
+                }
+            });
+
+
             RegionManager.RequestNavigate(RegionNames.FrameDataRegion, "ViewImage", r =>
             {
                // string err = r.Error.ToString();
@@ -250,7 +276,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             Stopwatch sw = new Stopwatch();
             sw.Start();
             OkFrameData frameData = new OkFrameData();
-            if (0 == _cameraService.Capture(ref frameData))
+            if (OkEyeCode.Ok == _cameraService.Capture(ref frameData))
             {
                 _imageAggregator.GetEvent<ImagePubSubEvent>().Publish(frameData.image); // 更新图片到界面
                 _imageAggregator.GetEvent<DepthPubSubEvent>().Publish(frameData.depth); // 更新深度图到界面
@@ -302,7 +328,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
                 return;
             }
-            if (0 == _cameraService.DisconnectCamera(camm))
+            if (OkEyeCode.Ok == _cameraService.DisconnectCamera(camm))
             {
                 _logger.LogInformation("关闭相机成功！");
 
@@ -326,8 +352,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 return;
             }
 
-            int flag = _cameraService.SetCameraParam(camInfos);
-            if (flag == 0)
+            OkEyeCode flag = _cameraService.SetCameraParam(camInfos);
+            if (flag == OkEyeCode.Ok)
             {
                 _logger.LogInformation("相机参数设置成功");
             }

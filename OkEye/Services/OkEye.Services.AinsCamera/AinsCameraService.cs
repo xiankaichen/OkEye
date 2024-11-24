@@ -7,6 +7,7 @@ using OkEye.Services.Interfaces;
 using OkEye.Services.AinsCamera;
 using OpenCvSharp;
 using CameraInfoModel = OkEye.Services.Interfaces.CameraInfoModel;
+using OkEye.Core;
 
 namespace OkEye.Services
 {
@@ -30,10 +31,10 @@ namespace OkEye.Services
         /// </summary>
         /// <param name="frame"></param>  帧数据
         /// <returns></returns>
-        public int Capture(ref OkFrameData frame)
+        public OkEyeCode Capture(ref OkFrameData frame)
         {
             FrameData framedata = new FrameData();
-            camera3DManager.CapturePointCloud(ref framedata);
+            camera3DManager.Capture(ref framedata);
             //framedata = framedata;
 
             // 获取图像数据，转成Mat格式
@@ -50,7 +51,7 @@ namespace OkEye.Services
             if (framedata.textureSize == 0)
             {
                 // 图像数据无效
-                return -1;
+                return OkEyeCode.CameraFrameDataEmpty;
 
             }
             unsafe
@@ -82,13 +83,13 @@ namespace OkEye.Services
                frame.cloud = outPointMat;
                frame.cloudSize = (int)framedata.point3DSize;
             }
-            return 0;
+            return OkEyeCode.Ok;
         }
 
 
         // 将点云转换到RGB大小，坐标系为左相机的坐标系,参考samples中的CalibrationParams
         // Convert the point cloud to RGB size, with the coordinate system of the left camera, referring to CalibrationParams in samples
-        public unsafe int GetPointsByRGB(ref FrameData frameData, ref CameraParam camParam, ref Mat outPoints)
+        public unsafe OkEyeCode GetPointsByRGB(ref FrameData frameData, ref CameraParam camParam, ref Mat outPoints)
         {
             var point3D = frameData.point3D;
             var pointUV = frameData.pointUV;
@@ -99,7 +100,7 @@ namespace OkEye.Services
 
             if (point3D == null || pointUV == null)
             {
-                return -1;
+                return OkEyeCode.Failed;
             }
 
             Mat pointMat = new Mat(textureHeight, textureWidth, MatType.CV_32FC3, new Scalar(0));
@@ -123,7 +124,7 @@ namespace OkEye.Services
             }
 
             outPoints = pointMat;
-            return 0;
+            return OkEyeCode.Ok;
         }
 
         /// <summary>
@@ -158,10 +159,10 @@ namespace OkEye.Services
         /// <param name="oldip"></param>
         /// <param name="newip"></param>
         /// <returns></returns>
-        public int SetCameraIP(string oldip, string newip)
+        public OkEyeCode SetCameraIP(string oldip, string newip)
         {
             camera3DManager.SetCameraIP(oldip, newip);
-            return 0;
+            return OkEyeCode.Ok;
         }
 
         /// <summary>
@@ -169,18 +170,18 @@ namespace OkEye.Services
         /// </summary>
         /// <param name="cameraInfo"></param>
         /// <returns></returns>
-        public int ConnectCamera(CameraInfoModel cameraInfo)
+        public OkEyeCode ConnectCamera(CameraInfoModel cameraInfo)
         {
-            int flag =  camera3DManager.ConnectCamera(cameraInfo.CameraIP);
-            if (flag == 0)
+            OkEyeCode flag =  camera3DManager.ConnectCamera(cameraInfo.CameraIP);
+            if (flag == OkEyeCode.Ok)
             {
                 cameraInfo.Status = "已连接";
-                return 0;
+                return OkEyeCode.Ok;
             }
             else
             {
                 cameraInfo.Status = "连接失败";
-                return -1;
+                return OkEyeCode.CameraConnectFailed;
             }
 
         }
@@ -194,7 +195,7 @@ namespace OkEye.Services
             return camera3DManager.cameraInfoModel;
         }
 
-        public int SetCameraParam(CameraInfoModel param)
+        public OkEyeCode SetCameraParam(CameraInfoModel param)
         {
             float value = param.Exposure;
             StringVector paramGroupNames = new StringVector();
@@ -205,12 +206,12 @@ namespace OkEye.Services
                 int ret = camera3DManager.cam3d.cam.ApplyParamGroup(camera3DManager.currCamInfo, "HighQualityConfig");
                 if (ret != CameraPro.AC_OK)
                 {
-                    return -1;
+                    return OkEyeCode.Failed;
                 }
             }
             else
-                return -1;
-            return 0;
+                return OkEyeCode.Failed;
+            return OkEyeCode.Ok;
         }
 
         /// <summary>
@@ -218,13 +219,13 @@ namespace OkEye.Services
         /// </summary>
         /// <param name="cameraInfo"></param>   相机信息
         /// <returns></returns>
-        public int DisconnectCamera(CameraInfoModel cameraInfo)
+        public OkEyeCode DisconnectCamera(CameraInfoModel cameraInfo)
         {
             if (0 != camera3DManager.DisconnectCamera())
             {
-                return -1;
+                return OkEyeCode.CameraDisConnectFailed;
             }
-            return 0;
+            return OkEyeCode.Ok;
         }
 
         /// <summary>
@@ -260,6 +261,11 @@ namespace OkEye.Services
                 list.Add(cameraInfoModel);
             }
             return list;
+        }
+
+        public OkEyeCode SaveFrame(string path)
+        {
+            return camera3DManager.SaveFrame(path);
         }
     }
 }

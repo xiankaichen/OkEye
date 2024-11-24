@@ -186,8 +186,8 @@ namespace gen3d
                 }
             }
 
-            string name = rootPath + "/depth.bmp";
-            string name_gray = rootPath + "/gray_depth.bmp";
+            string name = rootPath + "\\depth.bmp";
+            string name_gray = rootPath + "\\gray_depth.bmp";
 
             Mat color = new Mat();
 
@@ -276,7 +276,7 @@ namespace gen3d
             int length = camparam.textureWidth * camparam.textureHeight * 3;
             int width = camparam.textureWidth;
             int height = camparam.textureHeight;
-            string savePath = rootPath + "/t.bmp";
+            string savePath = rootPath + "\\image.bmp";
 
             Scalar s = new Scalar(0, 0, 0);
             Mat matpic = new Mat(height, width, MatType.CV_8UC3, s);
@@ -630,7 +630,7 @@ namespace gen3d
 
         unsafe public int save_point2ply(ref FrameData output, string rootPath)
         {
-            string pcdPath = rootPath + "/t.ply";
+            string pcdPath = rootPath + "\\cloud.ply";
 
             if (!File.Exists(pcdPath))
             {
@@ -672,7 +672,7 @@ namespace gen3d
 
         unsafe public int save_point2ply_b(ref FrameData output, string rootPath)
         {
-            string plyPath = rootPath + "/ply_b.ply";
+            string plyPath = rootPath + "\\ply_b.ply";
             FileStream fs = null;
 
             if (!File.Exists(plyPath))
@@ -929,7 +929,7 @@ namespace gen3d
         {
             int width = camparam.irWidth;
             int height = camparam.irHeight;
-            string tiffPath = rootPath + "/point_t.tiff";
+            string tiffPath = rootPath + "\\point_t.tiff";
 
             using (Tiff tif = Tiff.Open(tiffPath, "w"))
             {

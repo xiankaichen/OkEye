@@ -216,7 +216,7 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 {
                     return;
                 }
-                if (0 == _cameraService.DisconnectCamera(CameraInfo))
+                if (OkEyeCode.Ok == _cameraService.DisconnectCamera(CameraInfo))
                 {
                     _logger.LogInformation("关闭相机成功！");
 
@@ -320,8 +320,8 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 return;
             }
 
-            int flag = _cameraService.ConnectCamera(CameraInfo);
-            if (flag == 0)
+            OkEyeCode flag = _cameraService.ConnectCamera(CameraInfo);
+            if (flag == OkEyeCode.Ok)
             {
                 _logger.LogInformation("连接相机成功！");
             }
@@ -433,8 +433,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                     CameraInfo = tmpCameraInfo;
                     SelectedIndex = 0;
                     _cameraService = _container.Resolve<ICameraService>(_camBandList[SelectedIndex]);
-                    //DeviceInfo = null;
-                    //DeviceInfo = ConvertCameraInfo2DeviceInfo(CameraInfo);
                 }
                 else
                 {

@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
+using System.Drawing;
 using LayUI.Wpf.Extensions;
+using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Logging;
 using OkEye.Core.Mvvm;
@@ -33,6 +35,15 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand LightThemeCommand { get; private set; }
         public DelegateCommand DarkThemeCommand { get; private set; }
         public DelegateCommand InheritThemeCommand { get; private set; }
+
+        // 主题主色命令
+        public DelegateCommand BluePrimaryColorCommand { get; private set; }
+        public DelegateCommand LightBluePrimaryColorCommand { get; private set; }
+        public DelegateCommand OrangePrimaryColorCommand { get; private set; }
+        public DelegateCommand DeepOrangePrimaryColorCommand { get; private set; }
+        public DelegateCommand PurplePrimaryColorCommand { get; private set; }
+        public DelegateCommand DeepPurplePrimaryColorCommand { get; private set; }
+
 
         /// <summary>
         /// 菜单栏视图模型
@@ -125,6 +136,38 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
                 ModifyTheme("Inherit");
                 SaveTheme("Inherit");
             });
+
+            // 主题主色命令回调
+            BluePrimaryColorCommand = new DelegateCommand(() =>
+            {
+                ModifyThemePrimaryColor("Blue");
+                SaveThemePrimaryColor("Blue");
+            });
+            LightBluePrimaryColorCommand = new DelegateCommand(() =>
+            {
+                ModifyThemePrimaryColor("LightBlue");
+                SaveThemePrimaryColor("LightBlue");
+            });
+            OrangePrimaryColorCommand = new DelegateCommand(() =>
+            {
+                ModifyThemePrimaryColor("Orange");
+                SaveThemePrimaryColor("Orange");
+            });
+            DeepOrangePrimaryColorCommand = new DelegateCommand(() =>
+            {
+                ModifyThemePrimaryColor("DeepOrange");
+                SaveThemePrimaryColor("DeepOrange");
+            });
+            PurplePrimaryColorCommand = new DelegateCommand(() =>
+            {
+                ModifyThemePrimaryColor("Purple");
+                SaveThemePrimaryColor("Purple");
+            });
+            DeepPurplePrimaryColorCommand = new DelegateCommand(() =>
+            {
+                ModifyThemePrimaryColor("DeepPurple");
+                SaveThemePrimaryColor("DeepPurple");
+            });
             return;
         }
 
@@ -141,6 +184,73 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         }
 
         /// <summary>
+        /// 保存主题主色调
+        /// </summary>
+        /// <param name="colorStyle"></param>
+        private void SaveThemePrimaryColor(string colorStyle)
+        {
+            Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            cfa.AppSettings.Settings["PrimaryColor"].Value = colorStyle;//
+            cfa.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");//保存修改并刷新
+        }
+
+        /// <summary>
+        /// 应用主题
+        /// </summary>
+        /// <param name="colorStyle"></param>
+        private static void ModifyThemePrimaryColor(string colorStyle)
+        {
+            if (colorStyle == "Blue")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Blue];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "LightBlue")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.LightBlue];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }else if (colorStyle == "Orange")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Orange];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "DeepOrange")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.DeepOrange];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "Purple")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Purple];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }else if (colorStyle == "DeepPurple")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.DeepPurple];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+
+        }
+
+        /// <summary>
         /// 应用主题
         /// </summary>
         /// <param name="themeStyle"></param>
@@ -150,7 +260,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
                 var paletteHelper = new PaletteHelper();
                 var theme = paletteHelper.GetTheme();
-
                 theme.SetBaseTheme(BaseTheme.Light);
                 paletteHelper.SetTheme(theme);
             }
@@ -158,7 +267,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
                 var paletteHelper = new PaletteHelper();
                 var theme = paletteHelper.GetTheme();
-
                 theme.SetBaseTheme(BaseTheme.Dark);
                 paletteHelper.SetTheme(theme);
             }

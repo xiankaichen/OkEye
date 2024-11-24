@@ -21,10 +21,16 @@
     <system:String x:Key="Menu_LangCh">Chinese</system:String>
     <system:String x:Key="Menu_LangEn">English</system:String>
     <system:String x:Key="Menu_Theme">Theme</system:String>
-    <system:String x:Key="Menu_ThemeLight">Light</system:String>
-    <system:String x:Key="Menu_ThemeDark">Dark</system:String>
-    <system:String x:Key="Menu_ThemeInherit">Inherit</system:String>
-    <system:String x:Key="Menu_ConfigIP">IP Config</system:String>
+    <system:String x:Key="Menu_ThemeLight">Theme.Light</system:String>
+    <system:String x:Key="Menu_ThemeDark">Theme.Dark</system:String>
+    <system:String x:Key="Menu_ThemeInherit">Theme.Inherit</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Blue">Color.Blue</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_LightBlue">Color.LightBlue</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Orange">Color.Orange</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_DeepOrange">Color.DeepOrange</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Purple">Color.Purple</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_DeepPurple">Color.DeepPurple</system:String>
+<system:String x:Key="Menu_ConfigIP">IP Config</system:String>
     <system:String x:Key="Menu_ConfigApp">App Config</system:String>
         <!--主菜单-帮助-->
     <system:String x:Key="Menu_Help">Help</system:String>

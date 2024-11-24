@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Runtime.CompilerServices;
 using LayUI.Wpf.Extensions;
+using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Logging;
 using NLog;
@@ -37,6 +38,9 @@ namespace OkEye.ViewModels
             // 设置主题
             string themeAppSetting = ConfigurationManager.AppSettings["Theme"];
             ModifyTheme(themeAppSetting);
+            // 设置主题颜色
+            string colorAppSetting = ConfigurationManager.AppSettings["PrimaryColor"];
+            ModifyThemePrimaryColor(colorAppSetting);
 
             // 订阅关闭程序事件
             _aggregator.GetEvent<CameraPubSubEvent>().Subscribe((msg) =>
@@ -79,6 +83,62 @@ namespace OkEye.ViewModels
                 var theme = paletteHelper.GetTheme();
 
                 theme.SetBaseTheme(BaseTheme.Inherit);
+                paletteHelper.SetTheme(theme);
+            }
+        }
+
+        /// <summary>
+        /// 应用主题
+        /// </summary>
+        /// <param name="colorStyle"></param>
+        private static void ModifyThemePrimaryColor(string colorStyle)
+        {
+            if (colorStyle == "Blue")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Blue];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "LightBlue")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.LightBlue];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "Orange")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Orange];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "DeepOrange")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.DeepOrange];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "Purple")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.Purple];
+                theme.SetPrimaryColor(color);
+                paletteHelper.SetTheme(theme);
+            }
+            else if (colorStyle == "DeepPurple")
+            {
+                var paletteHelper = new PaletteHelper();
+                var theme = paletteHelper.GetTheme();
+                System.Windows.Media.Color color = SwatchHelper.Lookup[MaterialDesignColor.DeepPurple];
+                theme.SetPrimaryColor(color);
                 paletteHelper.SetTheme(theme);
             }
 

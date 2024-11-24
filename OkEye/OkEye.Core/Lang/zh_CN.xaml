@@ -27,8 +27,14 @@
     <system:String x:Key="Menu_LangCh">中文</system:String>
     <system:String x:Key="Menu_LangEn">英文</system:String>
     <system:String x:Key="Menu_Theme">主题</system:String>
-    <system:String x:Key="Menu_ThemeLight">浅色</system:String>
-    <system:String x:Key="Menu_ThemeDark">深色</system:String>
+    <system:String x:Key="Menu_ThemeLight">主题.浅色</system:String>
+    <system:String x:Key="Menu_ThemeDark">主题.深色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Blue">主色.蓝色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_LightBlue">主色.浅蓝色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Orange">主色.橙色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_DeepOrange">主色.深橙色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_Purple">主色.紫色</system:String>
+    <system:String x:Key="Menu_Theme_PrimaryColor_DeepPurple">主色.深紫色</system:String>
     <system:String x:Key="Menu_ThemeInherit">跟随系统</system:String>
     <system:String x:Key="Menu_ConfigIP">IP设置</system:String>
     <system:String x:Key="Menu_ConfigApp">应用设置</system:String>

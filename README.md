@@ -25,12 +25,12 @@ Device management
 Camera management
 * Single shot * Continuous shot * Point cloud display * Depth map display * Image display * Camera parameter setting
 
-
 <a name="section_environment"></a>
 ## Evnironment
-IDE ：Visual Studio 2022
-Dependency ：Prism、VL.OpenCV、Activiz
-Operation System ：Windows 10/11
+* Language ：C#、XAML、WPF 
+* IDE ：Visual Studio 2022
+* Dependency ：Prism、VL.OpenCV、Activiz
+* Operating System ：Windows 10/11
 
 <a name="section_demo"></a>
 ## Demo
@@ -43,7 +43,7 @@ Software main interface, as shown in the following figure:
 ![Software main interface](OkEye/Doc/MainPage.png "Software main interface, device connection interface")
 
 Software camera cloud interface, as shown in the following figure:
-![Software Cloud Page](OkEye/Doc/CloudPage.png "Software Cloud Page")
+![Software Cloud Page](OkEye/Doc/CameraCloudPage.png "Software Cloud Page")
 
 Software Camera Depth Map Interface, as shown in the following figure:
 ![Software Camera Depth Map Interface](OkEye/Doc/CameraDepthPage.png "Software Camera Depth Map Interface")

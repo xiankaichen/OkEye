@@ -2,7 +2,7 @@
 > OkEye - OkEye 3D Camera Viewer
 # OkEye
 
-##	INDEX
+##	Index
 
 1. [Introduction](#section_1)
 2. [Function](#section_2)

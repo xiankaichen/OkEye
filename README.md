@@ -1,58 +1,65 @@
 ![LOGO](OkEye/Doc/logo128.png ) [![Build status](https://ci.appveyor.com/api/projects/status/j00uyvqnm54rdlkb?svg=true)](https://ci.appveyor.com/project/khellang/scrutor)
-> OkEye - OkEye的用户界面设计直观且易于使用，即使是初次接触3D视觉技术的用户也能迅速掌握。该平台提供灵活的API接口，允许开发者通过编程方式控制相机和处理数据，实现自动化和定制化的应用。此外，OkEye还拥有强大的数据处理能力，能够实时分析和处理采集到的图像和点云数据，为用户提供即时的视觉反馈。其稳定性和兼容性已经过严格测试，确保在各种工业环境中都能可靠运行。
+> OkEye - OkEye 3D Camera Viewer, a 3D camera viewer platform based on Prism architecture, supporting virtual camera, camera discovery, camera connection, and viewing camera images, point clouds, depth maps, etc. It also supports single shot, continuous shot, save image, save point cloud, save depth map, etc. Developed based on the Prism architecture, OkEye supports plug-in development, allowing users to develop custom plug-ins to extend the platform's functionality. It is compatible with multiple camera brands and models and follows the camera interface standard.
 
 # OkEye
 
-## 目录
+##	INDEX
 
-1. [软件简介](#section_1)
-2. [软件功能](#section_2)
-3. [运行环境](#section_3)
-4. [软件演示](#section_4)
-5. [软件界面](#section_5)
+1. [Introduction](#section_1)
+2. [Function](#section_2)
+3. [Environment](#section_3)
+4. [Demo](#section_4)
+5. [Surface](#section_5)
 
 <a name="section_1"></a>
-## 软件简介
-OkEye 是一个3D相机查看平台，提供虚拟相机、相机发现、连接相机以及查看相机图片、点云、深度图等功能；同时支持单次拍照、连续拍照、保存图片、保存点云、保存深度图等操作。基于Prism架构开发的OkEye，支持插件化开发，使用户能够根据个人需求开发定制插件，以扩展平台功能。它兼容多种相机品牌和型号，并遵循相机接口化标准。
-
+## Introduction
+OkEye is a 3D camera viewer platform based on the Prism architecture, supporting virtual camera, camera discovery, camera connection, and viewing camera images, point clouds, depth maps, etc. It also supports single shot, continuous shot, save image, save point cloud, save depth map, etc. Developed based on the Prism architecture, 
+OkEye supports plug-in development, allowing users to develop custom plug-ins to extend the platform's functionality. It is compatible with multiple camera brands and models and follows the camera interface standard. 
 
 <a name="section_2"></a>
-## 软件功能
+## Function
 
-设备管理
-* 发现设备 * 设备链接 * 设备断开
-相机管理
-* 单次拍照 * 连续拍照 * 点云显示 * 深度图显示 * 图像显示 * 相机参数设置
+Application Management
+* Application startup * Application shutdown * Application restart * Application exit * Application language switching *Application Theme Switching
+Device management
+* Device scanning * Device Connection * Device Disconnection * Device Information Display * Application Setting
+Camera management
+* Single shot * Continuous shot * Point cloud display * Depth map display * Image display * Camera parameter setting
+
 
 <a name="section_3"></a>
-## 运行环境
-开发环境：Visual Studio 2022
-依赖库：Prism、VL.OpenCV、Activiz
-操作系统：Windows 10/11
+## Evnironment
+IDE ：Visual Studio 2022
+Dependency ：Prism、VL.OpenCV、Activiz
+Operation System ：Windows 10/11
 
 <a name="section_4"></a>
-## 软件演示
-软件演示，如下图所示：
-![软件演示](OkEye/Doc/Demo.gif "软件演示，软件显示界面")
+## Demo
+The software demo is as follows:
+![Software Demo](OkEye/Doc/Demo.gif "Software Demo")
 
 <a name="section_5"></a>
-## 软件界面
-软件主界面，如下图所示：
-![软件主界面](OkEye/Doc/MainPage.png "软件主界面，设备连接界面")
+## Surface
+Software main interface, as shown in the following figure:
+![Software main interface](OkEye/Doc/MainPage.png "Software main interface, device connection interface")
 
-软件相机点云界面，如下图所示：
-![软件相机点云界面](OkEye/Doc/CameraCloudPage.png "软件相机点云看界面")
+Software camera cloud interface, as shown in the following figure:
+![Software Cloud Page](OkEye/Doc/CloudPage.png "Software Cloud Page")
 
-软件相机深度图界面，如下图所示：
-![软件相机深度图界面](OkEye/Doc/CameraDepthPage.png "软件相机深度图界面")
+Software Camera Depth Map Interface, as shown in the following figure:
+![Software Camera Depth Map Interface](OkEye/Doc/CameraDepthPage.png "Software Camera Depth Map Interface")
 
-软件相机图像界面，如下图所示：
-![软件相机图像界面](OkEye/Doc/CameraImagePage.png "软件相机图像看界面")
+Software camera image interface, as shown in the following figure:
+![Software Camera Image Interface](OkEye/Doc/CameraImagePage.png "Software Camera Image Interface")
 
-软件多国语言支持，如下图所示：
-![软件多国语言支持](OkEye/Doc/MultiLanguage.png "软件多国语言支持")
+Software multi-language support, as shown in the following figure:
+![Software multi-language support](OkEye/Doc/MultiLanguage.png "Software multi-language support")
 
-软件关于界面，如下图所示：
-![软件关于](OkEye/Doc/AboutDialog.png "软件相机图像看界面")
+
+Software IpConfig interface, as shown in the following figure:
+![Software IpConfig](OkEye/Doc/IpConfigDialog.png "Software IpConfig Dialog")
+
+Software About interface, as shown in the following figure:
+![Software About](OkEye/Doc/AboutDialog.png "Software About")
 
 

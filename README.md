@@ -1,5 +1,4 @@
-![LOGO](OkEye/Doc/logo128.png ) [![Build status](https://ci.appveyor.com/api/projects/status/j00uyvqnm54rdlkb?svg=true)](https://ci.appveyor.com/project/khellang/scrutor)
-> OkEye - OkEye 3D Camera Viewer
+![LOGO](OkEye/Doc/logo128.png ) > OkEye - OkEye 3D Camera Viewer
 # OkEye
 
 ##	Index
@@ -39,26 +38,28 @@ The software demo is as follows:
 
 <a name="section_interface"></a>
 ## Interface
-Software main interface, as shown in the following figure:
+* Software main interface, as shown in the following figure:
 ![Software main interface](OkEye/Doc/MainPage.png "Software main interface, device connection interface")
 
-Software camera cloud interface, as shown in the following figure:
+* Software camera cloud interface, as shown in the following figure:
 ![Software Cloud Page](OkEye/Doc/CameraCloudPage.png "Software Cloud Page")
 
-Software Camera Depth Map Interface, as shown in the following figure:
+* Software Camera Depth Map Interface, as shown in the following figure:
 ![Software Camera Depth Map Interface](OkEye/Doc/CameraDepthPage.png "Software Camera Depth Map Interface")
 
-Software camera image interface, as shown in the following figure:
+* Software camera image interface, as shown in the following figure:
 ![Software Camera Image Interface](OkEye/Doc/CameraImagePage.png "Software Camera Image Interface")
 
-Software multi-language support, as shown in the following figure:
+* Software multi-language support, as shown in the following figure:
 ![Software multi-language support](OkEye/Doc/MultiLanguage.png "Software multi-language support")
 
-
-Software IpConfig interface, as shown in the following figure:
+* Software IpConfig interface, as shown in the following figure:
 ![Software IpConfig](OkEye/Doc/IpConfigDialog.png "Software IpConfig Dialog")
 
-Software About interface, as shown in the following figure:
+* Software About interface, as shown in the following figure:
 ![Software About](OkEye/Doc/AboutDialog.png "Software About")
 
+## Contributors
 
+[Xiankai Chen](https://github.com/xiankaichen)
+[ZhiGang Liu](https://github.com/2412594263)

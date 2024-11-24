@@ -1,6 +1,5 @@
 ![LOGO](OkEye/Doc/logo128.png ) [![Build status](https://ci.appveyor.com/api/projects/status/j00uyvqnm54rdlkb?svg=true)](https://ci.appveyor.com/project/khellang/scrutor)
-> OkEye - OkEye 3D Camera Viewer, a 3D camera viewer platform based on Prism architecture, supporting virtual camera, camera discovery, camera connection, and viewing camera images, point clouds, depth maps, etc. It also supports single shot, continuous shot, save image, save point cloud, save depth map, etc. Developed based on the Prism architecture, OkEye supports plug-in development, allowing users to develop custom plug-ins to extend the platform's functionality. It is compatible with multiple camera brands and models and follows the camera interface standard.
-
+> OkEye - OkEye 3D Camera Viewer
 # OkEye
 
 ##	INDEX

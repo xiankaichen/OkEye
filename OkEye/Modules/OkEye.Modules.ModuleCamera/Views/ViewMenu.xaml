@@ -18,68 +18,129 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0">
+        <Label Grid.Column="0" ToolTip="{extensions:Language Key=AppTitle}">
             <Label.Background>
                 <ImageBrush ImageSource="/OkEye.Modules.ModuleCamera;component/Resources/image/logo128.png" Stretch="Uniform"/>
             </Label.Background>
 
         </Label>
-        
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0"  Orientation="Horizontal">
-                    <Menu DockPanel.Dock="Top"  FontSize="12" 
-          >
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"  Orientation="Horizontal">
+                <Menu DockPanel.Dock="Top"  FontSize="12">
                     <MenuItem Header="{extensions:Language Key='Menu_File'}" Height="30">
-                        <MenuItem Header="{extensions:Language Key='Menu_AppClose'}"  Command="{Binding CloseAppCommand}"/>
+                        <MenuItem Header="{extensions:Language Key='Menu_AppClose'}"  Command="{Binding CloseAppCommand}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="Close" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{extensions:Language Key='Menu_Operate'}" Height="30">
-
-                        <MenuItem Header="{extensions:Language Key='Menu_Refresh'}" Command="{Binding DiscoverCameraCommand}" />
-                        <MenuItem Header="{extensions:Language Key='Menu_Connect'}" Command="{Binding ConnectCameraCommand}"/>
-                        <MenuItem Header="{extensions:Language Key='Menu_Disconnect'}" Command="{Binding DisconnectCameraCommand}"/>
+                        <MenuItem Header="{extensions:Language Key='Menu_Refresh'}" Command="{Binding DiscoverCameraCommand}" >
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="CameraRefresh" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{extensions:Language Key='Menu_Connect'}" Command="{Binding ConnectCameraCommand}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="Link" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{extensions:Language Key='Menu_Disconnect'}" Command="{Binding DisconnectCameraCommand}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="LinkOff" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <Separator />
                         <MenuItem Header="{extensions:Language Key='Menu_Log'}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="Forum" />
+                            </MenuItem.Icon>
                             <MenuItem Header="{extensions:Language Key='Menu_LogExplore'}" />
                             <MenuItem Header="{extensions:Language Key='Menu_LogClear'}" />
                             <MenuItem Header="{extensions:Language Key='Menu_LogAutoScroll'}" />
                             <MenuItem Header="{extensions:Language Key='Menu_LogPause'}" />
                         </MenuItem>
-
                     </MenuItem>
                     <MenuItem Header="{extensions:Language Key='Menu_Setting'}" Height="30">
                         <MenuItem Header="{extensions:Language Key='Menu_Lang'}" >
-                            <MenuItem Header="{extensions:Language Key='Menu_LangCh'}"  Command="{Binding ChineseLangCommand}"  />
-                            <MenuItem Header="{extensions:Language Key='Menu_LangEn'}"  Command="{Binding EnglishLangCommand}" />
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="Language" />
+                            </MenuItem.Icon>
+                            <MenuItem Header="{extensions:Language Key='Menu_LangCh'}"  Command="{Binding ChineseLangCommand}"  >
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Height="15" Width="15" Kind="Language" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{extensions:Language Key='Menu_LangEn'}"  Command="{Binding EnglishLangCommand}" >
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Height="15" Width="15" Kind="Language" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </MenuItem>
                         <MenuItem Header="{extensions:Language Key='Menu_Theme'}" >
-                            <MenuItem Header="{extensions:Language Key='Menu_ThemeLight'}"  Command="{Binding LightThemeCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_ThemeDark'}"  Command="{Binding DarkThemeCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_ThemeInherit'}"  Command="{Binding InheritThemeCommand}" />
-                        </MenuItem>
-                        <MenuItem Header="{extensions:Language Key='Menu_PrimaryColor'}" >
-                            <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Blue'}"  Command="{Binding BluePrimaryColorCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Teal'}"  Command="{Binding TealPrimaryColorCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Orange'}"  Command="{Binding OrangePrimaryColorCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Cyan'}"  Command="{Binding CyanPrimaryColorCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_BlueGrey'}"  Command="{Binding BlueGreyPrimaryColorCommand}" />
-                            <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_DeepPurple'}"  Command="{Binding DeepPurplePrimaryColorCommand}" />
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="ThemeLightDark" />
+                            </MenuItem.Icon>
+                            <MenuItem Header="{extensions:Language Key='Menu_ThemeLight'}"  Command="{Binding LightThemeCommand}" >
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Height="15" Width="15" Kind="WhiteBalanceSunny" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{extensions:Language Key='Menu_ThemeDark'}"  Command="{Binding DarkThemeCommand}" >
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Height="15" Width="15" Kind="WeatherNight" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{extensions:Language Key='Menu_ThemeInherit'}"  Command="{Binding InheritThemeCommand}" >
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Height="15" Width="15" Kind="ThemeLightDark" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{extensions:Language Key='Menu_PrimaryColor'}" >
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Height="15" Width="15" Kind="Palette" />
+                                </MenuItem.Icon>
+                                <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Blue'}"  Command="{Binding BluePrimaryColorCommand}" />
+                                <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Teal'}"  Command="{Binding TealPrimaryColorCommand}" />
+                                <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Orange'}"  Command="{Binding OrangePrimaryColorCommand}" />
+                                <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_Cyan'}"  Command="{Binding CyanPrimaryColorCommand}" />
+                                <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_BlueGrey'}"  Command="{Binding BlueGreyPrimaryColorCommand}" />
+                                <MenuItem Header="{extensions:Language Key='Menu_Theme_PrimaryColor_DeepPurple'}"  Command="{Binding DeepPurplePrimaryColorCommand}" />
 
+                            </MenuItem>
+                            
                         </MenuItem>
-                        <MenuItem Header="{extensions:Language Key='Menu_ConfigIP'}" Command="{Binding OpenIpConfigDialogCommand}" />
-                        <MenuItem Header="{extensions:Language Key='Menu_ConfigApp'}" />
+                        <MenuItem Header="{extensions:Language Key='Menu_ConfigIP'}" Command="{Binding OpenIpConfigDialogCommand}" >
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="IpNetwork" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{extensions:Language Key='Menu_ConfigApp'}" >
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="SettingsApplications" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{extensions:Language Key='Menu_Help'}" Height="30">
-                        <MenuItem Header="{extensions:Language Key='Menu_HelpDoc'}" Command="{Binding HelpDocumentCommand  }"  />
-                        <MenuItem Header="{extensions:Language Key='Menu_HelpAbout'}" Command="{Binding OpenAboutDialogCommand  }" />
+                        <MenuItem Header="{extensions:Language Key='Menu_HelpDoc'}" Command="{Binding HelpDocumentCommand  }"  >
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="FileDocument" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{extensions:Language Key='Menu_HelpAbout'}" Command="{Binding OpenAboutDialogCommand  }" >
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Height="15" Width="15" Kind="About" />
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
 
-                    
                 </Menu>
-                </StackPanel>
+            </StackPanel>
             <ContentControl Grid.Column="1"  >
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="MouseDoubleClick">
@@ -91,9 +152,9 @@
                     <Label Content=""></Label>
                 </DockPanel>
             </ContentControl>
-    </Grid>
-        
-        
+        </Grid>
+
+
         <Grid Grid.Column="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
@@ -139,6 +200,6 @@
                     Kind="Close" />
             </Button>
         </Grid>
-        
+
     </Grid>
 </UserControl>

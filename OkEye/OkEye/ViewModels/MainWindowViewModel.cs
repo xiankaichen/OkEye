@@ -43,11 +43,36 @@ namespace OkEye.ViewModels
             //ModifyThemePrimaryColor(colorAppSetting);
 
             // 订阅关闭程序事件
-            _aggregator.GetEvent<CameraPubSubEvent>().Subscribe((msg) =>
+            _aggregator.GetEvent<AppPubSubEvent>().Subscribe((msg) =>
             {
                 if (msg == "CloseApp")
                 {
                     System.Windows.Application.Current.Shutdown();
+                }
+            });
+
+            // 订阅最小化程序事件
+            _aggregator.GetEvent<AppPubSubEvent>().Subscribe((msg) =>
+            {
+                if (msg == "MinimizeApp")
+                {
+                    System.Windows.Application.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized;
+                }
+            });
+
+            // 订阅最大化程序事件
+            _aggregator.GetEvent<AppPubSubEvent>().Subscribe((msg) =>
+            {
+                if (msg == "MaximizeApp")
+                {
+                    if (System.Windows.Application.Current.MainWindow.WindowState == System.Windows.WindowState.Maximized)
+                    {
+                        System.Windows.Application.Current.MainWindow.WindowState = System.Windows.WindowState.Normal;
+                    }
+                    else
+                    {
+                        System.Windows.Application.Current.MainWindow.WindowState = System.Windows.WindowState.Maximized;
+                    }
                 }
             });
 

@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using System.Drawing;
+using System.Windows;
 using LayUI.Wpf.Extensions;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
@@ -26,7 +27,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand DisconnectCameraCommand { get; private set; }          // 断开相机命令
         public DelegateCommand DiscoverCameraCommand { get; private set; }              // 刷新相机命令
         public DelegateCommand OpenIpConfigDialogCommand { get; private set; }       // IP配置对话框命令
-        public DelegateCommand CloseAppCommand { get; private set; }                         // 关闭程序命令
 
         // 语言设置命令
         public DelegateCommand ChineseLangCommand { get; private set; }
@@ -45,7 +45,10 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
         public DelegateCommand BlueGreyPrimaryColorCommand { get; private set; }
         public DelegateCommand DeepPurplePrimaryColorCommand { get; private set; }
 
-
+        // 最大最小关闭App命令
+        public DelegateCommand MinimizeAppCommand { get; private set; }                     // 最小化程序命令
+        public DelegateCommand MaximizeAppCommand { get; private set; }                     // 最大化程序命令
+        public DelegateCommand CloseAppCommand { get; private set; }                            // 关闭程序命令
 
         /// <summary>
         /// 菜单栏视图模型
@@ -75,12 +78,6 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
 
         public void RegistCommand()
         {
-            // 关闭程序命令回调
-            CloseAppCommand = new DelegateCommand(() =>
-            {
-                _aggregator.GetEvent<CameraPubSubEvent>().Publish("CloseApp");
-            });
-
             // 关于对话框命令回调
             OpenAboutDialogCommand = new DelegateCommand(() =>
             {
@@ -176,6 +173,22 @@ namespace OkEye.Modules.ModuleCamera.ViewModels
             {
                 ModifyThemePrimaryColor("DeepPurple");
                 SaveThemePrimaryColor("DeepPurple");
+            });
+
+            // 最小化最大化关闭App命令回调
+            MinimizeAppCommand = new DelegateCommand(() =>
+            {
+                // 最小化程序
+                _aggregator.GetEvent<AppPubSubEvent>().Publish("MinimizeApp");
+            });
+            MaximizeAppCommand = new DelegateCommand(() =>
+            {
+                // 最大化程序
+                _aggregator.GetEvent<AppPubSubEvent>().Publish("MaximizeApp");
+            });
+            CloseAppCommand = new DelegateCommand(() =>
+            {
+                _aggregator.GetEvent<AppPubSubEvent>().Publish("CloseApp");
             });
 
             HelpDocumentCommand = new DelegateCommand(OnOnlineDocument);

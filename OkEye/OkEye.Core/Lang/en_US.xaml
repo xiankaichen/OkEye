@@ -42,6 +42,11 @@
     <system:String x:Key="Menu_HelpDoc">Online Document</system:String>
     <system:String x:Key="Menu_HelpAbout">About</system:String>
 
+    <!--主菜单-最大最小关闭-->
+    <system:String x:Key="Menu_MinApp">Minimize App Window</system:String>
+    <system:String x:Key="Menu_MaxApp">Maximize App Window</system:String>
+    <system:String x:Key="Menu_CloseApp">Exit App</system:String>
+
     <!--状态栏-->
     <system:String x:Key="StatusBar_State">Status</system:String>
     <system:String x:Key="StatusBar_CpuRate">Cpu Rate：</system:String>

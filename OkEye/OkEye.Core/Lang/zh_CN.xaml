@@ -46,6 +46,11 @@
     <system:String x:Key="Menu_HelpDoc">在线文档</system:String>
     <system:String x:Key="Menu_HelpAbout">关于</system:String>
 
+    <!--主菜单-最大最小关闭-->
+    <system:String x:Key="Menu_MinApp">窗口最小化</system:String>
+    <system:String x:Key="Menu_MaxApp">窗口最大化</system:String>
+    <system:String x:Key="Menu_CloseApp">退出程序</system:String>
+
     <!--状态栏-->
     <system:String x:Key="StatusBar_State">状态</system:String>
     <system:String x:Key="StatusBar_CpuRate">CPU占用：</system:String>
